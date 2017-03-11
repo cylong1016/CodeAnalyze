@@ -4,8 +4,10 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.net.URLEncoder;
 import java.util.List;
 import java.util.Map;
 
@@ -78,8 +80,8 @@ public class NewTestRequest {
 	            conn.setRequestProperty("user-agent",
 	                    "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1;SV1)");
 	            conn.setRequestProperty("Accept", "application/json");
-//	            conn.setRequestProperty("api_token", "2drew0z1Eifw2P5g7jBO");
-		        conn.setRequestProperty("project_token", "c5d874dd422948c08601fc752dc0e5f5");
+	            conn.setRequestProperty("api_token", "2drew0z1Eifw2P5g7jBO");
+//		        conn.setRequestProperty("project_token", "c5d874dd422948c08601fc752dc0e5f5");
 	            // 发送POST请求必须设置如下两行
 	            conn.setDoOutput(true);
 	            conn.setDoInput(true);
@@ -131,21 +133,21 @@ public class NewTestRequest {
 //				"");
 //		System.out.println(sr);
 		
-//    	try {
+    	try {
 //			String url=URLEncoder.encode("src/main/webapp/statics/js/jquery.min.js","utf-8");
 //			System.out.println(url);
 //			String token="url="+url;
 //			String ssr=NewTestRequest.sendGet("https://api.codacy.com/2.0/project/file/data/"+url, "");
 //			System.out.println(ssr);
     		
-//			String url=URLEncoder.encode("https://github.com/lsySummer/tss.git","utf-8");
-//			System.out.println(url);
-//			String token="url="+url;
-//			String ssr=NewTestRequest.sendPost("https://api.codacy.com/2.0/project/create/public", token);
-//			System.out.println(ssr);
-//		} catch (UnsupportedEncodingException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
+			String url=URLEncoder.encode("https://github.com/lsySummer/tss.git","utf-8");
+			String token="url="+url+"&name=tss";
+			System.out.println(token);
+			String ssr=NewTestRequest.sendPost("https://api.codacy.com/2.0/project/create/public", token);
+			System.out.println(ssr);
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }
