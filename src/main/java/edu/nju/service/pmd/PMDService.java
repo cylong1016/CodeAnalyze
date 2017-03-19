@@ -72,29 +72,43 @@ public class PMDService {
 //			measure.setCoupling(readHtml(resultPath));
 //			dao.saveIssueNum(measure);
 //		}
+		for(int i=0;i<names.length;i++){
+			for(int j=0;j<rules.length;j++){
+				parseHTML(1,names[i],rules[j]);
+			}
+		}
 		
 	}
 	
-	public void parseHTML(String path){
+	public void parseHTML(int iter,String name,String type){
 		//E:\\Documents\\graduate\\report\\iter1\\StockEy\\coupling.html
+		String path = "E:\\Documents\\graduate\\report\\iter"+iter+"\\"+name+"\\"+type+".html";
 		 File input = new File(path); 
 		 try {
 			Document doc = Jsoup.parse(input,"UTF-8","http://www.oschina.net/");
-			 Elements links = doc.select("a[href]"); // 具有 href 属性的链接
+			Elements trs = doc.select("tr");
 			 ArrayList<String> qArr = new ArrayList<String>();
-			for(int i=0;i<links.size();i++){
-				PMD_FileIssues issues = new PMD_FileIssues();
-				String ques = links.get(i).text();
-				if(!qArr.contains(ques)){
-					qArr.add(ques);
+			for(int i=1;i<trs.size();i++){
+				String info=trs.get(i).select("td>a").text();
+				if(!qArr.contains(info)){
+					PMD_FileIssues issues = new PMD_FileIssues();
+					qArr.add(info);
+					String link=trs.get(i).select("td>a").attr("href");
+					String filePath=trs.get(i).select("td").get(1).text();
+					int line = Integer.parseInt(trs.get(i).select("td").get(2).text());
+					issues.setFilePath(filePath);
+					issues.setIter(iter);
+					issues.setLine(line);
+					issues.setProblem(info);
+					issues.setLink(link);
+					issues.setIssueType(type);
+					issues.setGroupName(name);
+					dao.saveFileIssues(issues);
 				}
 			}
-			System.out.println(qArr.size());
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	
 	}
 	
 	  public boolean createDir(String destDirName) {  
@@ -163,8 +177,12 @@ public class PMDService {
 	 * @param issueType 问题类型
 	 * 获取某一组的问题列表
 	 */
-	public void getOneGroup(int iter,String issueType){
-		
+	public List<PMD_FileIssues> getOneGroup(int iter,String issueType,String groupName){
+		List<PMD_FileIssues> list = dao.getOneGroup(iter,issueType,groupName);
+		for(int i=0;i<list.size();i++){
+			System.out.println(list.get(i).toString());
+		}
+		return list;
 	}
 	
 	/**

@@ -17,7 +17,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <body>
     This is my JSP page. <br>
    
-    <form action="api/pmd/getAll" method="get">
+    <form action="api/pmd/getOneGroup" method="get">
 			<input class="btn btn-success" type="submit" value="测试">
 		</form>
    

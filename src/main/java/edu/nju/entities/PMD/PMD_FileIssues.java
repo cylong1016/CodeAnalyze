@@ -17,6 +17,8 @@ public class PMD_FileIssues {
 	private String filePath;
 	private int line;
 	private String problem;
+	private String link;
+	private String groupName;
 	
 	@Id
 	@Column(length = 32)
@@ -27,6 +29,23 @@ public class PMD_FileIssues {
 	}
 	public void setId(String id) {
 		this.id = id;
+	}
+	public String getGroupName() {
+		return groupName;
+	}
+	public void setGroupName(String groupName) {
+		this.groupName = groupName;
+	}
+	@Override
+	public String toString() {
+		return "PMD_FileIssues [id=" + id + ", iter=" + iter + ", issueType=" + issueType + ", filePath=" + filePath
+				+ ", line=" + line + ", problem=" + problem + ", link=" + link + "]";
+	}
+	public String getLink() {
+		return link;
+	}
+	public void setLink(String link) {
+		this.link = link;
 	}
 	public int getIter() {
 		return iter;

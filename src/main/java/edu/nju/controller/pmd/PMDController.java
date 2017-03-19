@@ -30,4 +30,12 @@ public class PMDController {
 		service.getAllGroup(1);;
 		return "{\"success\"}";
 	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/getOneGroup", method = RequestMethod.GET)
+	public String getOneGroup()
+	{
+		service.getOneGroup(1, "basic","StockEy");
+		return "{\"success\"}";
+	}
 }
