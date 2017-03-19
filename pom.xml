@@ -135,12 +135,14 @@
       <version>1.2</version>
     </dependency>
     
+	    
     <dependency>
-	    <groupId>com.codacy</groupId>
-	    <artifactId>codacy-api-java</artifactId>
-	    <version>1.10</version>
+	  <!-- jsoup HTML parser library @ http://jsoup.org/ -->
+	  <groupId>org.jsoup</groupId>
+	  <artifactId>jsoup</artifactId>
+	  <version>1.10.2</version>
 	</dependency>
-
+	
   </dependencies>
    <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

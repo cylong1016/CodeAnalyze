@@ -79,6 +79,12 @@ public class PMD_Measure {
 	public void setCoupling(int coupling) {
 		this.coupling = coupling;
 	}
+	@Override
+	public String toString() {
+		return "PMD_Measure [id=" + id + ", groupName=" + groupName + ", basic=" + basic + ", naming=" + naming
+				+ ", unusedcode=" + unusedcode + ", codesize=" + codesize + ", clone=" + clone + ", coupling="
+				+ coupling + ", iter=" + iter + "]";
+	}
 	
 	
 }
