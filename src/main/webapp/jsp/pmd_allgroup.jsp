@@ -40,12 +40,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				
 				<div class="tab-content">
 					<div class="tab-pane  active" id="panel-298840">
-						<select class="form-control" style="float:left;width:130px;margin-top:1%;margin-bottom:1%"> 
-							<option value="1">迭代一</option> 
-							<option value="2">迭代二</option> 
-							<option value="3">迭代三</option> 
+					 <form id="select_query">
+						<select id="iter" name="iter" class="form-control commonSelect" style="width:130px"> 
 						</select>
-						
+					</form>
 					
 						<table class="table table-striped table-bordered" id="dataTable">
 						  <thead>
@@ -60,72 +58,20 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 							  <th datatype="int">coupling</th>
 							</tr>
 						  </thead>
-						  <tbody>
-							<tr>
-							  <td>1</td>
-							  <td><a href="onegroup.html">141250107</a></td>
-							  <td>0</td>
-							  <td>25</td>
-							  <td>2</td>
-							  <td>0</td>
-							  <td>0</td>
-							  <td>6</td>
-							</tr>
-							<tr>
-							  <td>2</td>
-							  <td><a href="onegroup.html">GitMining</a></td>
-							  <td>82</td>
-							  <td>663</td>
-							  <td>103</td>
-							  <td>64</td>
-							  <td>0</td>
-							  <td>1407</td>
-							</tr>
-							<tr>
-							  <td>3</td>
-							  <td><a href="onegroup.html">StockEy</a></td>
-							  <td>6</td>
-							  <td>614</td>
-							  <td>272</td>
-							  <td>108</td>
-							  <td>3</td>
-							  <td>2683</td>
-							</tr>		
-							<tr>
-							  <td>4</td>
-							  <td><a href="onegroup.html">StockWizard</a></td>
-							  <td>4</td>
-							  <td>645</td>
-							  <td>38</td>
-							  <td>125</td>
-							  <td>0</td>
-							  <td>1184
-							  </td>
-							</tr>
+						  <tbody id="tbody_content">
+							
 						  </tbody>
 						</table>
 					</div>
 					
-					<script src="js/groupBar.js"></script>
+					
 					<div class="tab-pane" id="panel-912874">
 						<!--<canvas id="myChart" width="300" height="300"></canvas>-->
 						
-							<table class="pmdtable">
-								<tbody>
+							<table style="float:left;width:200px;margin-top:10%;">
+								<tbody  id="squareBody">
 									<tr>
-										<td colspan=2><b>Median statistics</b></td>
-									</tr>
-									<tr>
-										<td align="center"><div class="square" style="background:#dcdcdc"></div></td>
-										<td>Iterator Ⅰ</td>
-									</tr>
-									<tr>
-										<td align="center"><div class="square" style="background:#97bbcd"></div></td>
-										<td>Iterator Ⅱ</td>
-									</tr>
-									<tr>
-										<td align="center"><div class="square" style="background:#9370DB"></div></td>
-										<td>Iterator Ⅲ</td>
+										<td colspan=2><b>Average statistics</b></td>
 									</tr>
 								</tbody>
 							</table>
@@ -135,9 +81,103 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				</div>
 			</div>
 	
-
-	
 </div>
+
+	<script type="text/javascript">
+	 	var getIter=function(){
+	 		$.getJSON("api/pmd/getIter",function(data){
+	 			var colorArr=new Array('#dcdcdc','#97bbcd','#9370DB');
+	 			var code = data.code;
+ 				if(code=="0"){
+ 					var iter=data.data;
+ 					for (var i=iter;i>0;i--)
+ 					{
+ 						var html='<option value='+i+'>'+'Iterator'+i+'</option>';
+ 					 	$("#iter").append(html);
+ 					}
+ 					for(var i=1;i<iter+1;i++){
+ 						var color=colorArr[i-1];
+ 					 	var tr='<tr><td height=40 align=center><div class="square" style="background:'+color+'"></div></td>'+
+ 					 	'<td>Iterator'+i+'</td></tr>';
+ 						$("#squareBody").append(tr);
+ 					}
+ 				}
+	 		});
+	 	}
+	 	
+	 	
+	 	var getBar=function(){
+	 		$.getJSON("api/pmd/getAve",function(data){
+	 			var code = data.code;
+	 			var fillColorArr=new Array('rgba(220,220,220,0.5)','rgba(151,187,205,0.5)','rgba(147,112,219,0.5)');
+ 				if(code=="0"){
+ 				var dataArr=data.data;
+	 			var barArr=new Array(dataArr.length);
+					for(var i=0;i<dataArr.length;i++){
+						barArr[i]={
+								barItemName: "name1",
+								fillColor : fillColorArr[i],
+								strokeColor : fillColorArr[i],
+								data : dataArr[i]
+							};
+					}
+					var barData = {
+							labels : ["Basic","Clone","Codesize","Coupling","Naming","Unusedcode"],
+							datasets : barArr
+						};
+					setBar(barData);
+	 				}
+	 		});
+	 	}
+	 	
+	 	var getAll=function(iter){
+	 		$("#tbody_content").empty();
+	 		 var param = $("#select_query").serializeArray();
+	 		 param.push({name:"iter",value:iter});
+	 		$.getJSON("api/pmd/getAll",param,function(data){
+	 			var code = data.code;
+ 				if(code=="0"){
+ 					var arr=data.data;
+ 					var html;
+ 					 $.each(arr,function(index){
+ 						var groupName=arr[index].groupName;
+ 						var basic=arr[index].basic;
+ 						var naming=arr[index].naming;
+ 						var unusedcode=arr[index].unusedcode;
+ 						var codesize=arr[index].codesize;
+ 						var clone=arr[index].clone;
+ 						var coupling=arr[index].coupling;
+ 						html=html+'<tr>'+
+							  '<td>'+(index+1)+'</td>'+
+							  '<td><a href="pmd_onegroup.jsp">'+groupName+'</a></td>'+
+							  '<td>'+basic+'</td>'+
+							  '<td>'+naming+'</td>'+
+							  '<td>'+unusedcode+'</td>'+
+							  '<td>'+codesize+'</td>'+
+							  '<td>'+clone+'</td>'+
+							  '<td>'+coupling+'</td>'+
+							  '</tr>';
+ 					 });
+ 						$("#tbody_content").append(html);
+ 				}
+	 		});
+	 	}
+	 	
+	 	 $(function(){
+	 		getIter();
+	 		getAll(0);
+	 		getBar();
+	 	 });
+	 </script>
+	 <script src="js/groupBar.js"></script>
+	 
+	 <script>
+	 $("#iter").change(function(){
+		 var iterValue=$("#iter").val();
+		 getAll(iterValue);;
+		});
+	 </script>
+
 <script src="http://code.jquery.com/jquery-latest.js"></script>
 <script src="js/bootstrap.min.js"></script>
 </body>

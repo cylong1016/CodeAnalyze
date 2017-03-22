@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import edu.nju.service.pmd.PMDService;
+import edu.nju.service.pmd.PMD_Analyze;
 
 @Controller
 @RequestMapping("/pmd")
@@ -18,11 +19,15 @@ public class PMDController {
 	@Autowired
 	private PMDService service;
 	
+	@Autowired
+	private PMD_Analyze analyze;
+	
+	
 	@ResponseBody
 	@RequestMapping(value = "/download", method = RequestMethod.GET)
 	public String download()
 	{
-		service.download();;
+		analyze.download();;
 		return "{\"success\"}";
 	}
 	
@@ -30,7 +35,7 @@ public class PMDController {
 	@RequestMapping(value = "/analyze", method = RequestMethod.GET)
 	public String analyze()
 	{
-		service.analyze();;
+		analyze.analyze();;
 		return "{\"success\"}";
 	}
 	
@@ -38,56 +43,49 @@ public class PMDController {
 	@RequestMapping(value = "/getIter", method = RequestMethod.GET)
 	public String getIter()
 	{
-		service.getIter();
-		return "{\"success\"}";
+		return analyze.getIter();
 	}
 	
 	@ResponseBody
 	@RequestMapping(value = "/getAll", method = RequestMethod.GET)
 	public String getAll(int iter)
 	{
-		service.getAllGroup(iter);;
-		return "{\"success\"}";
+		return service.getAllGroup(iter);
 	}
 	
 	@ResponseBody
 	@RequestMapping(value = "/getAve", method = RequestMethod.GET)
 	public String getAve()
 	{
-		service.getAve();;
-		return "{\"success\"}";
+		return service.getAve();
 	}
 	
 	@ResponseBody
 	@RequestMapping(value = "/getOneGroup", method = RequestMethod.GET)
 	public String getOneGroup(int iter,String type,String groupName)
 	{
-		service.getOneGroup(1, "basic","StockEy");
-		return "{\"success\"}";
+		return service.getOneGroup(iter,type,groupName);
 	}
 	
 	@ResponseBody
 	@RequestMapping(value = "/export", method = RequestMethod.GET)
-	public String export(HttpServletRequest req, HttpServletResponse resp)
+	public String export(int iter,String type,String groupName,HttpServletRequest req, HttpServletResponse resp)
 	{
-		service.exportDetail(1, "basic","StockEy",resp);
-		return "{\"success\"}";
+		return service.exportDetail(iter,type,groupName,resp);
 	}
 	
 	@ResponseBody
 	@RequestMapping(value = "/getOneMeasure", method = RequestMethod.GET)
-	public String getOneMeasure()
+	public String getOneMeasure(int iter,String groupName)
 	{
-		service.getMeasure(1, "StockEy");
-		return "{\"success\"}";
+		return 	service.getMeasure(iter,groupName);
 	}
 	
 	@ResponseBody
 	@RequestMapping(value = "/getCurrent", method = RequestMethod.GET)
-	public String getCurrent()
+	public String getCurrent(String groupName)
 	{
-		service.getCurrent("StockEy");
-		return "{\"success\"}";
+		return 	service.getCurrent(groupName);
 	}
 	
 }

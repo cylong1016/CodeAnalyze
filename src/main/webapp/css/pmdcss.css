@@ -2,16 +2,10 @@
 	width:25px;height:25px;opacity:0.5;
 }
 
-  .pmdtable{ 
-        float:left;width:200px;margin-top:10%;
-     } 
-    .pmdtable tr{ 
-         height:40
-     } 
-    .pmdtable td{ 
-		height:30;
-     } 
-
+.pmdtable{ 
+    float:left;width:200px;margin-top:10%;
+  } 
+  
 .commonDiv{
 	text-align:center;margin-top:2%;float:left
 }

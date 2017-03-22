@@ -31,6 +31,9 @@ public class PMDDaoImpl implements PMDDao{
 
 	@Override
 	public List<PMD_Measure> getAllGroup(int iter) {
+		if(iter==0){
+			iter=getIter();
+		}
 		String hql = "from PMD_Measure where iter = "+iter;
 		List<PMD_Measure> list = baseDao.find(hql);
 		return list;
@@ -124,9 +127,8 @@ public class PMDDaoImpl implements PMDDao{
 			darr[4]=Double.parseDouble(df.format(naming/listSize));
 			darr[5]=Double.parseDouble(df.format(unused/listSize));
 			result.add(darr);
-			return result;
 		}
-		return null;
+		return result;
 	}
 
 
