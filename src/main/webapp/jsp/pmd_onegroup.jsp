@@ -21,6 +21,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			tableSort($('#dataTable'));
 		})
 	</script>
+	
 <title>All Group</title>
 </head>
 <body>
@@ -41,21 +42,32 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				<div class="tab-content">
 				<!--第一个tab-->
 					<div class="tab-pane  active" id="panel-298840">
-						<select class="form-control commonSelect" style="width:130px;"> 
-							<option value="1">Iterator Ⅰ</option> 
-							<option value="2">Iterator Ⅱ</option> 
-							<option value="3">Iterator Ⅲ</option> 
+						<select id="iterSelect" class="form-control commonSelect" style="width:130px;"> 
 						</select>
 						
-						<select class="form-control commonSelect" style="width:130px;margin-left:20px"> 
-							<option value="1">Basic</option> 
-							<option value="2">Unusedcode</option> 
-							<option value="3">Clone</option> 
+						<select id="issueType" class="form-control commonSelect" style="width:130px;margin-left:20px"> 
+							<option value="basic">basic</option> 
+							<option value="naming">naming</option> 
+							<option value="unusedcode">unusedcode</option> 
+							<option value="codesize">codesize</option> 
+							<option value="clone">clone</option> 
+							<option value="coupling">coupling</option> 
 						</select>
-						<br/>&nbsp &nbsp
-						<span class="commonSpan"><a href="#">Export Details</a></span>
+						<button class="btn btn-default" style="margin-top:10px;margin-left:20px">Submit</button>
 						
-						<center><h3>Problems found</h3></center><table align="center" cellspacing="0" cellpadding="3"><tr>
+						
+						<form id="exportForm" action="api/pmd/export">
+							<center>
+							<h3>Problems found</h3>
+							<span class="commonSpan">
+								<a href="javascript:exportDetail()">Export Details</a>
+								<input type="hidden" name="iter" id="iterHidden">
+								<input type="hidden" name="type" id="typeHidden">
+								<input type="hidden" name="groupName" id="nameHidden">
+							</span>
+							</center>
+						</form>
+						<table align="center" cellspacing="0" cellpadding="3"><tr>
 						<th>#</th><th>File</th><th>Line</th><th>Problem</th></tr>
 						<tr bgcolor="lightgrey"> 
 						<td align="center">1</td>
@@ -157,6 +169,40 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				</div>
 	</div>
 	
+			<script  type="text/javascript">
+				var getParameterByName = function (name, url) {
+				    if (!url) url = window.location.href;
+				    name = name.replace(/[\[\]]/g, "\\$&");
+				    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+				        results = regex.exec(url);
+				    if (!results) return null;
+				    if (!results[2]) return '';
+				    return decodeURIComponent(results[2].replace(/\+/g, " "));
+				}
+			
+				
+				var groupName = getParameterByName("groupName");
+				var iter = getParameterByName("iter");
+				for (var i=iter;i>0;i--)
+				{
+					var html='<option value='+i+'>'+'Iterator'+i+'</option>';
+				 	$("#iterSelect").append(html);
+				}
+				
+				var init=function(){
+				}
+			</script>
+		<script type="text/javascript">
+		
+		function exportDetail(){
+			 var iterValue=$("#iterSelect").val();
+			 var issueType=$("#issueType").val();
+			 $("#iterHidden").val(iterValue);
+			 $("#typeHidden").val(issueType);
+			 $("#nameHidden").val(groupName);
+			 document.getElementById('exportForm').submit();
+		};
+		</script>
 	
 	<script src="js/projectPie.js"></script>
 	<script src="js/projectBar.js"></script>

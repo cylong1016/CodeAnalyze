@@ -80,7 +80,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					</div>
 				</div>
 			</div>
-	
+	<input type="hidden" id="iterHidden">
 </div>
 
 	<script type="text/javascript">
@@ -90,6 +90,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	 			var code = data.code;
  				if(code=="0"){
  					var iter=data.data;
+ 					 $("#iterHidden").val(iter);
  					for (var i=iter;i>0;i--)
  					{
  						var html='<option value='+i+'>'+'Iterator'+i+'</option>';
@@ -149,7 +150,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
  						var coupling=arr[index].coupling;
  						html=html+'<tr>'+
 							  '<td>'+(index+1)+'</td>'+
-							  '<td><a href="pmd_onegroup.jsp">'+groupName+'</a></td>'+
+							  '<td><a href="jsp/pmd_onegroup.jsp?groupName='+groupName+'&iter='+$("#iterHidden").val()+'">'+groupName+'</a></td>'+
 							  '<td>'+basic+'</td>'+
 							  '<td>'+naming+'</td>'+
 							  '<td>'+unusedcode+'</td>'+

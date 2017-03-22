@@ -78,7 +78,7 @@ public class PMDService {
 	public String exportDetail(int iter,String type,String groupName,HttpServletResponse response){
 		resultObj = new JSONObject();
 		String path = "E:\\Documents\\graduate\\report\\iter"+iter+"\\"+groupName+"\\"+type+".html";
-        try {
+		try {
             // path是指欲下载的文件的路径。
             File file = new File(path);
             // 取得文件名。
