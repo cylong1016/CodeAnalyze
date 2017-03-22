@@ -14,7 +14,7 @@
 		<li class=""><a href="#">Test2 <span class="sr-only">(current)</span></a></li>
 
       </ul>
-     
+
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>
