@@ -23,7 +23,6 @@ import org.springframework.stereotype.Service;
 
 import edu.nju.dao.pmd.PMDDao;
 import edu.nju.entities.pmd.PMD_FileIssues;
-import edu.nju.entities.pmd.PMD_Measure;
 import edu.nju.utils.pmd.Constants;
 import edu.nju.utils.pmd.RESCODE;
 
@@ -65,25 +64,25 @@ public class PMD_Analyze {
 //		} catch (IOException e) {
 //			e.printStackTrace();
 //		}
-		for(int i=0;i<names.length;i++){
-			PMD_Measure measure= new PMD_Measure();
-			measure.setGroupName(names[i]);
-			measure.setIter(iter);
-			String resultFolder = "E:\\Documents\\graduate\\report\\iter"+iter+"\\"+names[i];
-			String resultPath = "file:///"+resultFolder+"\\basic.html";
-			measure.setBasic(readHtml(resultPath));
-			resultPath="file:///"+resultFolder+"\\naming.html";
-			measure.setNaming(readHtml(resultPath));
-			resultPath="file:///"+resultFolder+"\\unusedcode.html";
-			measure.setUnusedcode(readHtml(resultPath));
-			resultPath="file:///"+resultFolder+"\\codesize.html";
-			measure.setCodesize(readHtml(resultPath));
-			resultPath="file:///"+resultFolder+"\\clone.html";
-			measure.setClone(readHtml(resultPath));
-			resultPath="file:///"+resultFolder+"\\coupling.html";
-			measure.setCoupling(readHtml(resultPath));
-			dao.saveIssueNum(measure);
-		}
+//		for(int i=0;i<names.length;i++){
+//			PMD_Measure measure= new PMD_Measure();
+//			measure.setGroupName(names[i]);
+//			measure.setIter(iter);
+//			String resultFolder = "E:\\Documents\\graduate\\report\\iter"+iter+"\\"+names[i];
+//			String resultPath = "file:///"+resultFolder+"\\basic.html";
+//			measure.setBasic(readHtml(resultPath));
+//			resultPath="file:///"+resultFolder+"\\naming.html";
+//			measure.setNaming(readHtml(resultPath));
+//			resultPath="file:///"+resultFolder+"\\unusedcode.html";
+//			measure.setUnusedcode(readHtml(resultPath));
+//			resultPath="file:///"+resultFolder+"\\codesize.html";
+//			measure.setCodesize(readHtml(resultPath));
+//			resultPath="file:///"+resultFolder+"\\clone.html";
+//			measure.setClone(readHtml(resultPath));
+//			resultPath="file:///"+resultFolder+"\\coupling.html";
+//			measure.setCoupling(readHtml(resultPath));
+//			dao.saveIssueNum(measure);
+//		}
 		for(int i=0;i<names.length;i++){
 			for(int j=0;j<rules.length;j++){
 				parseHTML(iter,names[i],rules[j]);
@@ -119,6 +118,7 @@ public class PMD_Analyze {
 					qArr.add(info);
 					String link=trs.get(i).select("td>a").attr("href");
 					String filePath=trs.get(i).select("td").get(1).text();
+					filePath=filePath.replace("E:\\Documents\\graduate\\project\\iter"+iter+"\\", "");
 					int line = Integer.parseInt(trs.get(i).select("td").get(2).text());
 					issues.setFilePath(filePath);
 					issues.setIter(iter);

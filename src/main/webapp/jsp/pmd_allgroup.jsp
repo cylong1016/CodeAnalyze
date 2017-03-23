@@ -91,6 +91,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
  				if(code=="0"){
  					var iter=data.data;
  					 $("#iterHidden").val(iter);
+ 					 alert(iter);
  					for (var i=iter;i>0;i--)
  					{
  						var html='<option value='+i+'>'+'Iterator'+i+'</option>';

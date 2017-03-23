@@ -16,13 +16,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<script src="js/jquery-1.8.3.min.js"></script>
 	<script src="js/table.js"></script>
 	<script src="js/Chart-1.0.1-beta.4.js"></script>
-	<script>
-		$(function(){
-			tableSort($('#dataTable'));
-		})
-	</script>
 	
-<title>All Group</title>
+<title>One Group</title>
 </head>
 <body>
 	<%@ include file="nav.jsp" %>
@@ -53,7 +48,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 							<option value="clone">clone</option> 
 							<option value="coupling">coupling</option> 
 						</select>
-						<button class="btn btn-default" style="margin-top:10px;margin-left:20px">Submit</button>
+						<button id="getType" class="btn btn-default" style="margin-top:10px;margin-left:20px">Submit</button>
 						
 						
 						<form id="exportForm" action="api/pmd/export">
@@ -67,70 +62,38 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 							</span>
 							</center>
 						</form>
-						<table align="center" cellspacing="0" cellpadding="3"><tr>
-						<th>#</th><th>File</th><th>Line</th><th>Problem</th></tr>
-						<tr bgcolor="lightgrey"> 
-						<td align="center">1</td>
-						<td width="*%">E:\Documents\graduate\homework\StockEy\stockeyServlet\src\org\xeon\stockey\ui\stockui\StockListController.java</td>
-						<td align="center" width="5%">115</td>
-						<td width="*"><a href="https://pmd.github.io/pmd-5.5.0/pmd-java/rules/java/basic.html#ForLoopShouldBeWhileLoop">This for loop could be simplified to a while loop</a></td>
-						</tr>
-						<tr> 
-						<td align="center">2</td>
-						<td width="*%">E:\Documents\graduate\homework\StockEy\stockeyServlet\src\org\xeon\stockey\ui\stockui\StockMarketController.java</td>
-						<td align="center" width="5%">86</td>
-						<td width="*"><a href="https://pmd.github.io/pmd-5.5.0/pmd-java/rules/java/basic.html#ForLoopShouldBeWhileLoop">This for loop could be simplified to a while loop</a></td>
-						</tr>
-						<tr bgcolor="lightgrey"> 
-						<td align="center">3</td>
-						<td width="*%">E:\Documents\graduate\homework\StockEy\stockey\src\main\java\org\xeon\stockey\businessLogic\strategy\StrategyImpl.java</td>
-						<td align="center" width="5%">82</td>
-						<td width="*"><a href="https://pmd.github.io/pmd-5.5.0/pmd-java/rules/java/basic.html#ReturnFromFinallyBlock">Avoid returning from a finally block</a></td>
-						</tr>
-						<tr> 
-						<td align="center">4</td>
-						<td width="*%">E:\Documents\graduate\homework\StockEy\stockey\src\main\java\org\xeon\stockey\data\utility\NetworkHelper.java</td>
-						<td align="center" width="5%">208</td>
-						<td width="*"><a href="https://pmd.github.io/pmd-5.5.0/pmd-java/rules/java/basic.html#CollapsibleIfStatements">These nested if statements could be combined</a></td>
-						</tr>
-						<tr bgcolor="lightgrey"> 
-						<td align="center">5</td>
-						<td width="*%">E:\Documents\graduate\homework\StockEy\stockey\src\main\java\org\xeon\stockey\data\utility\NetworkHelper.java</td>
-						<td align="center" width="5%">210</td>
-						<td width="*"><a href="https://pmd.github.io/pmd-5.5.0/pmd-java/rules/java/basic.html#CollapsibleIfStatements">These nested if statements could be combined</a></td>
-						</tr>
-						<tr> 
-						<td align="center">6</td>
-						<td width="*%">E:\Documents\graduate\homework\StockEy\stockey\src\main\java\org\xeon\stockey\ui\stockui\selection\StockListController.java</td>
-						<td align="center" width="5%">126</td>
-						<td width="*"><a href="https://pmd.github.io/pmd-5.5.0/pmd-java/rules/java/basic.html#ForLoopShouldBeWhileLoop">This for loop could be simplified to a while loop</a></td>
-						</tr>
+						<table align="center" cellspacing="0" cellpadding="3" style="width:100%;" class="table-striped table-bordered">
+						<thead>
+							<tr>
+							<th>#</th><th>File</th><th>Line</th><th>Problem</th>
+							</tr>
+						</thead>
+						<tbody id="tbody_content">
+						</tbody>
 						</table>
 					</div>
 					
 					<!--第二个tab-->
 					<div class="tab-pane" id="panel-912874">
 					<div class="commonDiv" style="width:30%;height:500px;">
+					<center><b>Current Issues</b></center>
 					<table class="pmdtable" style="width:250px;margin-top:20px;margin-left:12%;">
 						
 						<tbody>
 							<tr>
-								<td colspan=4><b>Current Problems</b></td>
-							</tr>
-							<tr>
-								<td align="center"><div class="square" style="background:rgba(220,220,220,1)"></div></td>
+								<td height=40 align="center"><div class="square" style="background:rgba(220,220,220,1)"></div></td>
 								<td align="center">Coupling</td>
 								<td align="center"><div class="square" style="background:rgba(210,105,30,1"></div></td>
 								<td align="center">Basic</td>
 							</tr>
 							<tr>
-								<td align="center"><div class="square" style="background:rgba(151,187,205,1)"></div></td>
+								<td height=40 align="center"><div class="square" style="background:rgba(151,187,205,1)"></div></td>
 								<td align="center">Naming</td>
 								<td align="center"><div class="square" style="background:rgba(147,112,219,1)"></div></td>
 								<td align="center">Unusedcode</td>
 							</tr>
 							<tr>
-								<td align="center"><div class="square" style="background:rgba(218,165,32,1)"></div></td>
+								<td height=40 align="center"><div class="square" style="background:rgba(218,165,32,1)"></div></td>
 								<td align="center">Codesize</td>
 								<td align="center"><div class="square" style="background:#999966"></div></td>
 								<td align="center">Clone</td>
@@ -144,12 +107,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					</div>
 					
 					<div class="commonDiv" style="width:65%;height:500px;">
-					<table class="pmdtable" style="width:600px;margin-top:20px">
+					<center><b>Problem Statistics</b></center>
+					<table style="width:600px;margin-top:20px">
 					
 						<tbody>
-							<tr>
-								<td colspan=2><b>Problem statistics</b></td>
-							</tr>
 							<tr>
 								<td align="center"><div class="square" style="background:#dcdcdc"></div></td>
 								<td>Iterator Ⅰ</td>
@@ -169,29 +130,28 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				</div>
 	</div>
 	
-			<script  type="text/javascript">
-				var getParameterByName = function (name, url) {
-				    if (!url) url = window.location.href;
-				    name = name.replace(/[\[\]]/g, "\\$&");
-				    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
-				        results = regex.exec(url);
-				    if (!results) return null;
-				    if (!results[2]) return '';
-				    return decodeURIComponent(results[2].replace(/\+/g, " "));
-				}
+		<script  type="text/javascript">
+			var getParameterByName = function (name, url) {
+			    if (!url) url = window.location.href;
+			    name = name.replace(/[\[\]]/g, "\\$&");
+			    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+			        results = regex.exec(url);
+			    if (!results) return null;
+			    if (!results[2]) return '';
+			    return decodeURIComponent(results[2].replace(/\+/g, " "));
+			}
+		
 			
-				
-				var groupName = getParameterByName("groupName");
-				var iter = getParameterByName("iter");
-				for (var i=iter;i>0;i--)
-				{
-					var html='<option value='+i+'>'+'Iterator'+i+'</option>';
-				 	$("#iterSelect").append(html);
-				}
-				
-				var init=function(){
-				}
-			</script>
+			var groupName = getParameterByName("groupName");
+			var iter = getParameterByName("iter");
+			for (var i=iter;i>0;i--)
+			{
+				var html='<option value='+i+'>'+'Iterator'+i+'</option>';
+			 	$("#iterSelect").append(html);
+			}
+			
+			
+		</script>
 		<script type="text/javascript">
 		
 		function exportDetail(){
@@ -203,8 +163,81 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			 document.getElementById('exportForm').submit();
 		};
 		</script>
+		
+		<script type="text/javascript">
+			var init=function(iter,type,groupName){
+				var param=new Array(3);
+				param.push({name:"iter",value:iter});
+				param.push({name:"type",value:type});
+				param.push({name:"groupName",value:groupName});
+				$.getJSON("api/pmd/getOneGroup",param,function(data){
+					$("#tbody_content").empty();
+					 var code = data.code;
+					 if(code=="0"){
+						 var arr = data.data;
+						 var html;
+						 $.each(arr,function(index){
+							 var filePath=arr[index].filePath;
+							 var line=arr[index].line;
+							 var problem=arr[index].problem;
+							 var link=arr[index].link;
+							 html=html+'<tr>'+ 
+								'<td>'+(index+1)+'</font></td>'+
+								'<td width="*%"><font size="3">'+filePath+'</font></td>'+
+								'<td width="5%"><font size="3">'+line+'</font></td>'+
+								'<td width="*%"><font size="3">'+'<a href="'+link+'">'+problem+'</a></font></td>'+
+								'</tr>';
+						 });
+						 $("#tbody_content").append(html);
+					 }
+				});
+			}
+			
+			var getPie=function(){
+				var param=new Array(1);
+				param.push({name:"groupName",value:groupName});
+		 		$.getJSON("api/pmd/getCurrent",param,function(data){
+		 			var code = data.code;
+		 			var fillColorArr=new Array('rgba(210,105,30,1)','rgba(151,187,205,1','rgba(147,112,219,1)',
+		 					'rgba(218,165,32,1)','#999966','rgba(220,220,220,1)');
+		 			if(code=="0"){
+	 				var measure=data.data;
+	 				var pieArr=new Array(6);
+	 				var dataArr=new Array(6);
+	 				var labelArr=new Array("Basic","Naming","Unusedcode","Codesize","Clone","Coupling");
+	 				dataArr[0]=measure.basic;
+	 				dataArr[1]=measure.naming;
+	 				dataArr[2]=measure.unusedcode;
+	 				dataArr[3]=measure.codesize;
+	 				dataArr[4]=measure.clone;
+	 				dataArr[5]=measure.coupling;
+					for(var i=0;i<6;i++){
+						pieArr[i]={
+								label: labelArr[i],
+								value : dataArr[i],
+								color : fillColorArr[i]
+							};
+					}
+					var chartPie = null;
+					
+					var ctx = document.getElementById("pieChart").getContext("2d");
+					chartPie = new Chart(ctx).Pie(pieArr, {segmentShowStroke : false, showTooltips : 1});
+		 				}
+		 		});
+		 	}
+			
+			 $(function(){
+				 init(iter,"basic",groupName);
+				 getPie();
+			 });
+			 
+			 $("#getType").click(function(){
+				 var iterValue=$("#iterSelect").val();
+				 var issueType=$("#issueType").val();
+				 init(iterValue,issueType,groupName);
+			 });
+		</script>
 	
-	<script src="js/projectPie.js"></script>
 	<script src="js/projectBar.js"></script>
 </div>
 <script src="http://code.jquery.com/jquery-latest.js"></script>

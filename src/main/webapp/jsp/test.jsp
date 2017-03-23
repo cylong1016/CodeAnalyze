@@ -17,7 +17,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <body>
     This is my JSP page. <br>
    
-    <form action="api/pmd/export" method="get">
+    <form action="api/pmd/analyze" method="get">
     <input type="text" name="iter"> 
     <input type="text" name="type">
     <input type="text" name="groupName">

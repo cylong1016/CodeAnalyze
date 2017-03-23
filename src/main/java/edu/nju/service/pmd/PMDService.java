@@ -175,7 +175,7 @@ public class PMDService {
 
 		resultObj.put(Constants.RESPONSE_CODE_KEY, RESCODE.SUCCESS);
 		resultObj.put(Constants.RESPONSE_MSG_KEY,  RESCODE.SUCCESS.getMsg());
-		resultObj.put(Constants.RESPONSE_DATA_KEY, measure);
+		resultObj.put(Constants.RESPONSE_DATA_KEY, new JSONObject(measure));
 		return resultObj.toString();
 	}
 	
