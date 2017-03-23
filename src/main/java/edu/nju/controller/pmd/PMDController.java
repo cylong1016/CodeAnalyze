@@ -76,9 +76,9 @@ public class PMDController {
 	
 	@ResponseBody
 	@RequestMapping(value = "/getOneMeasure", method = RequestMethod.GET)
-	public String getOneMeasure(int iter,String groupName)
+	public String getOneMeasure(String groupName)
 	{
-		return 	service.getMeasure(iter,groupName);
+		return service.getMeasure(groupName);
 	}
 	
 	@ResponseBody

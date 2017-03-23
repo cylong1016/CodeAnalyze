@@ -7,6 +7,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
@@ -123,10 +124,15 @@ public class PMDService {
 	 * @param issueType
 	 * 获得某一组每个种类问题的数量
 	 */
-	public String getMeasure(int iter,String groupName){
+	public String getMeasure(String groupName){
 		resultObj = new JSONObject();
-		PMD_Measure measure=dao.getMeasure(iter,groupName);
-		if (measure == null) {
+		int iter=dao.getIter();
+		List<PMD_Measure> list=new ArrayList<PMD_Measure>();
+		for(int i=1;i<iter+1;i++){
+			PMD_Measure measure=dao.getMeasure(i,groupName);
+			list.add(measure);
+		}
+		if (list == null||list.size()==0) {
 			resultObj.put(Constants.RESPONSE_CODE_KEY, RESCODE.NOT_FOUND);
 			resultObj.put(Constants.RESPONSE_MSG_KEY,
 					RESCODE.NOT_FOUND.getMsg());
@@ -135,7 +141,7 @@ public class PMDService {
 
 		resultObj.put(Constants.RESPONSE_CODE_KEY, RESCODE.SUCCESS);
 		resultObj.put(Constants.RESPONSE_MSG_KEY,  RESCODE.SUCCESS.getMsg());
-		resultObj.put(Constants.RESPONSE_DATA_KEY, measure);
+		resultObj.put(Constants.RESPONSE_DATA_KEY, list);
 		return resultObj.toString();
 	}
 

@@ -111,13 +111,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					<table style="width:600px;margin-top:20px">
 					
 						<tbody>
-							<tr>
-								<td align="center"><div class="square" style="background:#dcdcdc"></div></td>
-								<td>Iterator Ⅰ</td>
-								<td align="center"><div class="square" style="background:#97bbcd"></div></td>
-								<td>Iterator Ⅱ</td>
-								<td align="center"><div class="square" style="background:#9370DB"></div></td>
-								<td>Iterator Ⅲ</td>
+							<tr id="squareTR">
 							</tr>
 						</tbody>
 					
@@ -144,11 +138,19 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			
 			var groupName = getParameterByName("groupName");
 			var iter = getParameterByName("iter");
+			var fillColorArr=new Array('rgba(220,220,220,1)','rgba(151,187,205,1)','rgba(147,112,219,1)');
 			for (var i=iter;i>0;i--)
 			{
 				var html='<option value='+i+'>'+'Iterator'+i+'</option>';
 			 	$("#iterSelect").append(html);
 			}
+			for(var i=0;i<iter;i++){
+			 	var tdhtml='<td align="center"><div class="square" style="background:'+fillColorArr[i]+'"></div></td>'+
+			 	'<td align="left">Iterator '+(i+1)+'</td>';
+			 	$("#squareTR").append(tdhtml);
+			}
+			
+			
 			
 			
 		</script>
@@ -226,9 +228,52 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		 		});
 		 	}
 			
+			var getBar=function(){
+				var param=new Array(1);
+				param.push({name:"groupName",value:groupName});
+				var labelArr=new Array("Basic","Clone","Codesize","Coupling","Naming","Unusedcode");
+		 		$.getJSON("api/pmd/getOneMeasure",param,function(data){
+		 			var code = data.code;
+		 			if(code=="0"){
+		 				var resultArr=data.data;
+		 				var barArr=new Array(resultArr.length);
+		 				var dataArr=new Array(resultArr.length);
+		 				 $.each(resultArr,function(index){
+		 						var groupName=resultArr[index].groupName;
+		 						var basic=resultArr[index].basic;
+		 						var naming=resultArr[index].naming;
+		 						var unusedcode=resultArr[index].unusedcode;
+		 						var codesize=resultArr[index].codesize;
+		 						var clone=resultArr[index].clone;
+		 						var coupling=resultArr[index].coupling;
+		 						dataArr[index]=new Array(basic,clone,codesize,coupling,naming,unusedcode);
+		 				 });
+		 				
+		 				
+						for(var i=0;i<dataArr.length;i++){
+							barArr[i]={
+									barItemName: labelArr[i],
+									fillColor : fillColorArr[i],
+									strokeColor : fillColorArr[i],
+									data : dataArr[i]
+								};
+						}
+						var barData = {
+								labels : labelArr,
+								datasets : barArr
+							};
+						var chartBar = null;
+						
+						var ctx = document.getElementById("barChart").getContext("2d");
+						chartBar = new Chart(ctx).Bar(barData);
+		 			}
+		 		});
+			}
+			
 			 $(function(){
 				 init(iter,"basic",groupName);
 				 getPie();
+				 getBar();
 			 });
 			 
 			 $("#getType").click(function(){
@@ -238,7 +283,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			 });
 		</script>
 	
-	<script src="js/projectBar.js"></script>
 </div>
 <script src="http://code.jquery.com/jquery-latest.js"></script>
 <script src="js/bootstrap.min.js"></script>

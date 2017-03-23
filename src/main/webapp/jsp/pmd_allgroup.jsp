@@ -91,7 +91,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
  				if(code=="0"){
  					var iter=data.data;
  					 $("#iterHidden").val(iter);
- 					 alert(iter);
  					for (var i=iter;i>0;i--)
  					{
  						var html='<option value='+i+'>'+'Iterator'+i+'</option>';
@@ -111,20 +110,21 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	 	var getBar=function(){
 	 		$.getJSON("api/pmd/getAve",function(data){
 	 			var code = data.code;
+	 			var labelArr=new Array("Basic","Clone","Codesize","Coupling","Naming","Unusedcode");
 	 			var fillColorArr=new Array('rgba(220,220,220,0.5)','rgba(151,187,205,0.5)','rgba(147,112,219,0.5)');
  				if(code=="0"){
  				var dataArr=data.data;
 	 			var barArr=new Array(dataArr.length);
 					for(var i=0;i<dataArr.length;i++){
 						barArr[i]={
-								barItemName: "name1",
+								barItemName:labelArr[i],
 								fillColor : fillColorArr[i],
 								strokeColor : fillColorArr[i],
 								data : dataArr[i]
 							};
 					}
 					var barData = {
-							labels : ["Basic","Clone","Codesize","Coupling","Naming","Unusedcode"],
+							labels :labelArr,
 							datasets : barArr
 						};
 					setBar(barData);
