@@ -24,7 +24,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <title>All Group</title>
 </head>
 <body>
-	<%@ include file="nav.jsp" %>
 	<div class="container">
 	<h2>Group Problems Summary</h2>
 	
@@ -151,7 +150,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
  						var coupling=arr[index].coupling;
  						html=html+'<tr>'+
 							  '<td>'+(index+1)+'</td>'+
-							  '<td><a href="jsp/pmd_onegroup.jsp?groupName='+groupName+'&iter='+$("#iterHidden").val()+'">'+groupName+'</a></td>'+
+							  '<td><a href="jsp/pmd/onegroup.jsp?groupName='+groupName+'&iter='+$("#iterHidden").val()+'">'+groupName+'</a></td>'+
 							  '<td>'+basic+'</td>'+
 							  '<td>'+naming+'</td>'+
 							  '<td>'+unusedcode+'</td>'+

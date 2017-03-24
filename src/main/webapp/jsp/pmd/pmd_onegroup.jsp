@@ -20,7 +20,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <title>One Group</title>
 </head>
 <body>
-	<%@ include file="nav.jsp" %>
 <div class="container">
 	<h2>Project Problems Summary</h2>
 	
