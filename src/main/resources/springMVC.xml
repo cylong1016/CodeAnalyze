@@ -13,20 +13,23 @@
 			expression="org.springframework.web.bind.annotation.ControllerAdvice" />
 	</context:component-scan>
 
-	<bean
+	<bean id="viewResolver"
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass" value="edu.nju.view.MyJstlView"></property>
 		<property name="prefix" value="/"></property>
 		<property name="suffix" value=".jsp"></property>
 	</bean>
-	
-	<mvc:annotation-driven >
+
+	<!-- 允许Url使用Matrix variable-->
+	<mvc:annotation-driven enable-matrix-variables="true">
     <!-- 消息转换器 -->
-    <mvc:message-converters register-defaults="true">
-      <bean class="org.springframework.http.converter.StringHttpMessageConverter">
-        <property name="supportedMediaTypes" value="text/html;charset=UTF-8"/>
-      </bean>
-    </mvc:message-converters>
-  </mvc:annotation-driven>
-  
-	<!-- <mvc:annotation-driven /> -->
+        <mvc:message-converters register-defaults="true">
+          <bean class="org.springframework.http.converter.StringHttpMessageConverter">
+            <property name="supportedMediaTypes" value="text/html;charset=UTF-8"/>
+          </bean>
+        </mvc:message-converters>
+
+    </mvc:annotation-driven>
+	<!-- 允许对静态资源的访问 -->
+	<!--<mvc:default-servlet-handler/s>-->
 </beans>

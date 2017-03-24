@@ -14,7 +14,7 @@
 		<li class=""><a href="#">Test2 </a></li>
 
       </ul>
-     
+
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>
