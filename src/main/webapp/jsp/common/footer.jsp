@@ -9,14 +9,22 @@
 <html>
 <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <style>
+        footer {
+            height: 30px;
+            position: absolute;
+            bottom: 0px;
+            left: 0px;
+        }
+    </style>
 </head>
 <body>
-    <div id="footer">
+<footer>
         <div class="clearfix">
             <p>
                 © Gitlab Monitor All Rights Reserved.
             </p>
         </div>
-    </div>
+</footer>
 </body>
 </html>

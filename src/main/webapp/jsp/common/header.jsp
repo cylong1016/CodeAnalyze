@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="../../css/bootstrap.css" type="text/css">
 </head>
 <body>
-<div id="header">
+<header>
     <nav class="navbar navbar-inverse">
         <div class="container-fluid">
             <div class="navbar-header">
@@ -24,11 +24,10 @@
                     <li class="active"><a href="#">Home <span class="sr-only">(current)</span></a></li>
                     <li class=""><a href="#">Test1 <span class="sr-only">(current)</span></a></li>
                     <li class=""><a href="#">Test2 <span class="sr-only">(current)</span></a></li>
-
                 </ul>
             </div>
         </div>
     </nav>
-</div>
+</header>
 </body>
 </html>
