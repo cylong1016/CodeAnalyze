@@ -29,9 +29,21 @@
     $(function () {
 
         var basePath = "<%=request.getContextPath()%>";
+        $.ajax({
+            url: "<%=request.getContextPath()%>/api/checkstyle/api/group",
+            method: "GET"
+        }).done(function (data) {
+            var querys = [];
+            try {
+                querys = JSON.parse(data);
+            } catch (err) {
+                console.log(err.message);
+            }
 
-        drawGroup();
-        function drawGroup() {
+//            drawGroup(querys);
+        })
+
+        function drawGroup(querys) {
             var count = 0;
             var count_row = 3;
             var row_num = 0;
