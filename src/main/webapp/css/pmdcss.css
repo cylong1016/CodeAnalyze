@@ -1,0 +1,21 @@
+.square{
+	width:25px;height:25px;opacity:0.5;
+}
+
+.pmdtable{ 
+    float:left;width:200px;margin-top:10%;
+  } 
+  
+.commonDiv{
+	text-align:center;margin-top:2%;float:left
+}
+
+.commonSelect{
+	float:left;margin-top:1%;margin-bottom:1%
+}
+
+.commonSpan{
+	font-size:16px;
+	text-decoration:underline;
+}
+
