@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/checkstyle/api")
 public class CheckStyleRESTController {
 
-    public String group() {
-        return "";
-    }
+//    public String group() {
+//        return "";
+//    }
 }

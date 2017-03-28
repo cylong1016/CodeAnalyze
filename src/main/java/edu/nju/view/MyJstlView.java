@@ -14,14 +14,16 @@ public class MyJstlView extends InternalResourceView {
     @Override
     protected void renderMergedOutputModel(Map<String, Object> model, HttpServletRequest request, HttpServletResponse response) throws Exception {
 
+        // 把model对象作为 request attribute 传入
+        exposeModelAsRequestAttributes(model, request);
+
         // Determine the path for the request dispatcher.
         String dispatcherPath = prepareForRendering(request, response);
 
-        // set original view being asked for as a request parameter
-
+        // 设置根路径
         request.setAttribute("partial", dispatcherPath);
 
-        // force everything to be template.jsp
+        // 每一个jsp都走template.jsp
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("/jsp/common/template.jsp");
         requestDispatcher.include(request, response);
 

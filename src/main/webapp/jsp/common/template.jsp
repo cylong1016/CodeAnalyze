@@ -11,9 +11,9 @@
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <html>
-
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/bootstrap.css" type="text/css">
     <title>CodeAnalyze</title>
 </head>
 <body>
