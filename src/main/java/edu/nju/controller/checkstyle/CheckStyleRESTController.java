@@ -31,7 +31,6 @@ public class CheckStyleRESTController {
     public String group() {
         List<GroupBriefInfo> groupsInfo = service.getAllBriefResult();
         String response = new Gson().toJson(groupsInfo);
-        System.out.println(response);
         return response;
     }
 
@@ -40,12 +39,5 @@ public class CheckStyleRESTController {
         GroupInfo groupInfo = service.getSingleGroupResult(Long.parseLong(groupId));
         String response = new Gson().toJson(groupInfo);
         return response;
-//        Map groupDetail = new HashMap();
-//        groupDetail.put("id", groupId);
-//        groupDetail.put("name", "蚊子的组");
-//        groupDetail.put("timeline", new String[]{"2017-03-27", "2017-04-27", "2017-05-27"});
-//        groupDetail.put("warnNum", new int[]{32, 48, 21});
-//        groupDetail.put("errorNum", new int[]{3, 18, 4});
-//        return new Gson().toJson(groupDetail);
     }
 }

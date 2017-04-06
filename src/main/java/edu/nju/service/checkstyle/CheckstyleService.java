@@ -33,15 +33,10 @@ public class CheckstyleService {
 
                 query.put("group_id", group.getId());
                 query.put("check_id", check.getId());
-                query.put("father_type", "WARN");
                 List<Result> results = dao.findResult(query);
-                singeCheckInfo.transWarnToPo(results);
+                singeCheckInfo.transToPo(results);
 
-                query.put("father_type", "ERROR");
-                results = dao.findResult(query);
-                singeCheckInfo.transErrorToPo(results);
-
-                singleGroupInfo.addSingleCheckInfo(check.getId(), singeCheckInfo);
+                singleGroupInfo.addSingleCheckInfo(singeCheckInfo);
             }
             returnList.add(singleGroupInfo);
         }
@@ -82,15 +77,11 @@ public class CheckstyleService {
         for (CheckLog check : allCheckLog){
             ResultList singleCheck = new ResultList(check.getCheckDate());
             querys.put("checkId", check.getId());
-            querys.put("fatherType", "WARN");
-            for(Result result: dao.findResult(querys)){
-                singleCheck.addWarn(new ResultItem(result.getFatherType(), result.getSubType(), result.getFile(), result.getRow(), result.getCol(), result.getDescription()));
+            List<Result> results = dao.findResult(querys);
+            for(Result result: results){
+                singleCheck.addResultItem(new ResultItem(result.getFatherType(), result.getSubType(), result.getFile(), result.getRow(), result.getCol(), result.getDescription()));
             }
-            querys.put("fatherType", "ERROR");
-            for(Result result: dao.findResult(querys)){
-                singleCheck.addWarn(new ResultItem(result.getFatherType(), result.getSubType(), result.getFile(), result.getRow(), result.getCol(), result.getDescription()));
-            }
-            groupInfo.addSingleCheckInfo(check.getId(), singleCheck);
+            groupInfo.addSingleCheckInfo(singleCheck);
         }
     return groupInfo;
     }
@@ -98,9 +89,7 @@ public class CheckstyleService {
     public List<GroupBriefInfo> getAllBriefResult() {
         List<GroupBriefInfo> briefInfos = new ArrayList<>();
         List<Group> allGroup = dao.getAllGroup();
-//        System.out.println(allGroup.get(0).toString());
         List<CheckLog> allCheck = dao.getAllCheck();
-//        System.out.println(allCheck.get(0).toString());
         // 根据check时间排序
         Collections.sort(allCheck, Comparator.comparing(CheckLog::getCheckDate));
         for(Group group : allGroup){

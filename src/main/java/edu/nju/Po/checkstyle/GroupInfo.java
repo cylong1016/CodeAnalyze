@@ -2,6 +2,7 @@ package edu.nju.Po.checkstyle;
 
 import com.sun.org.apache.regexp.internal.RE;
 
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -9,7 +10,7 @@ import java.util.*;
  */
 public class GroupInfo {
     private long id;
-    private Map<Long, ResultList> results;
+    private Map<String, ResultList> results;
 
     public GroupInfo(){}
     public GroupInfo(long groupId){
@@ -24,15 +25,16 @@ public class GroupInfo {
         this.id = id;
     }
 
-    public Map<Long, ResultList> getResults() {
+    public Map<String, ResultList> getResults() {
         return results;
     }
 
-    public void setResults(Map<Long, ResultList> results) {
+    public void setResults(Map<String, ResultList> results) {
         this.results = results;
     }
 
-    public void addSingleCheckInfo(long checkId, ResultList list){
-        this.results.put(checkId, list);
+    public void addSingleCheckInfo(ResultList list){
+        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
+        this.results.put(sdf.format(list.getCheckDate()), list);
     }
 }

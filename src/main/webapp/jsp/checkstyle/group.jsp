@@ -48,25 +48,27 @@
             var count_row = 3;
             var row_num = 0;
             var width = ($(window).width() - $('#tab').width()) / 3.5;
+            var height = ($(window).height() - $('header').height()) / 1.6;
             $("#content").append('<div id="row_' + row_num + '">');
             $.each(querys, function (index,value) {
                 if ( index % count_row == 0) {
                     row_num++;
                     $("#content").append('<div id="row_' + row_num + '">');
                 }
-                var html = '<div id="group_' + index + '" style="width:' + width + 'px;height:' + width + 'px;display: inline-block"></div>';
+                var html = '<div id="group_' + index + '" style="width:' + width + 'px;height:' + height + 'px;display: inline-block"></div>';
                 $("#row_" + row_num).append(html);
                 var group_chart = echarts.init(document.getElementById('group_' + index));
                 var legend_data = [];
                 var series_data = [];
                 var check_log = [];
-                var temp_index = 0;
+                var temp_index = 1;
                 $.each(value.briefInfo, function (key,value) {
                     check_log.push(key);
                     legend_data.push(temp_index+"_Warn");
                     legend_data.push(temp_index+"_Error");
                     series_data.push({value:value[0], name:temp_index+"_Warn"});
-                    series_data.push({value:value[1]+2900, name:temp_index+"_Error"});
+                    series_data.push({value:value[1]+300, name:temp_index+"_Error"});
+                    temp_index++;
                 });
                 console.log(series_data);
                 group_chart.setOption({
@@ -87,7 +89,7 @@
                         formatter: function (name) {
                             var attrs = name.split('_');
                             var check_index = parseInt(attrs[0]);
-                            return check_log[check_index] + "_第" + check_index + "次_" + attrs[1];
+                            return check_log[check_index-1] + "_第" + check_index + "次_" + attrs[1];
                         },
                     },
                     series: [
@@ -95,7 +97,7 @@
                             name: '访问来源',
                             type: 'pie',
                             radius: '55%',
-                            center: ['50%', '60%'],
+                            center: ['50%', '65%'],
                             data: series_data,
                             itemStyle: {
                                 emphasis: {
