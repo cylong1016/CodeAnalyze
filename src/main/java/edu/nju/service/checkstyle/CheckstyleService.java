@@ -1,13 +1,11 @@
 package edu.nju.service.checkstyle;
 
-import edu.nju.Po.checkstyle.GroupBriefInfo;
-import edu.nju.Po.checkstyle.GroupInfo;
-import edu.nju.Po.checkstyle.ResultItem;
-import edu.nju.Po.checkstyle.ResultList;
+import edu.nju.Po.checkstyle.*;
 import edu.nju.dao.checkstyle.CheckStyleDao;
 import edu.nju.entities.checkstyle.CheckLog;
 import edu.nju.entities.checkstyle.Group;
 import edu.nju.entities.checkstyle.Result;
+import edu.nju.utils.checkstyle.Constant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,20 +26,18 @@ public class CheckstyleService {
         for (Group group : allGroup) {
             GroupInfo singleGroupInfo = new GroupInfo(group.getId());
             for (CheckLog check : allCheck) {
+                if( !ifCheckdayPass(check.getCheckDate())){
+                    continue;
+                }
                 ResultList singeCheckInfo = new ResultList(check.getCheckDate());
                 Map<String, Object> query = new HashMap<>();
 
                 query.put("group_id", group.getId());
                 query.put("check_id", check.getId());
-                query.put("father_type", "WARN");
                 List<Result> results = dao.findResult(query);
-                singeCheckInfo.transWarnToPo(results);
+                singeCheckInfo.transToPo(results);
 
-                query.put("father_type", "ERROR");
-                results = dao.findResult(query);
-                singeCheckInfo.transErrorToPo(results);
-
-                singleGroupInfo.addSingleCheckInfo(check.getId(), singeCheckInfo);
+                singleGroupInfo.addSingleCheckInfo(singeCheckInfo);
             }
             returnList.add(singleGroupInfo);
         }
@@ -74,38 +70,18 @@ public class CheckstyleService {
 //        return new ArrayList<GroupInfo>(groupsInfo.values());
     }
 
-    public GroupInfo getSingleGroupResult(long id){
-        GroupInfo groupInfo = new GroupInfo(id);
-        Map<String, Object> querys = new HashMap<>();
-        querys.put("groupId", id);
-        List<CheckLog> allCheckLog = dao.getAllCheck();
-        for (CheckLog check : allCheckLog){
-            ResultList singleCheck = new ResultList(check.getCheckDate());
-            querys.put("checkId", check.getId());
-            querys.put("fatherType", "WARN");
-            for(Result result: dao.findResult(querys)){
-                singleCheck.addWarn(new ResultItem(result.getFatherType(), result.getSubType(), result.getFile(), result.getRow(), result.getCol(), result.getDescription()));
-            }
-            querys.put("fatherType", "ERROR");
-            for(Result result: dao.findResult(querys)){
-                singleCheck.addWarn(new ResultItem(result.getFatherType(), result.getSubType(), result.getFile(), result.getRow(), result.getCol(), result.getDescription()));
-            }
-            groupInfo.addSingleCheckInfo(check.getId(), singleCheck);
-        }
-    return groupInfo;
-    }
-
     public List<GroupBriefInfo> getAllBriefResult() {
         List<GroupBriefInfo> briefInfos = new ArrayList<>();
         List<Group> allGroup = dao.getAllGroup();
-//        System.out.println(allGroup.get(0).toString());
         List<CheckLog> allCheck = dao.getAllCheck();
-//        System.out.println(allCheck.get(0).toString());
         // 根据check时间排序
         Collections.sort(allCheck, Comparator.comparing(CheckLog::getCheckDate));
         for(Group group : allGroup){
             GroupBriefInfo singleGroupBriefInfo = new GroupBriefInfo(group.getId());
             for (CheckLog check : allCheck){
+                if( !ifCheckdayPass(check.getCheckDate())){
+                    continue;
+                }
                 int[] singleCheckBriefInfo = new int[2];
                 Map<String, Object> query = new HashMap<>();
                 query.put("groupId", group.getId());
@@ -122,5 +98,58 @@ public class CheckstyleService {
             briefInfos.add(singleGroupBriefInfo);
         }
         return briefInfos;
+    }
+
+    public GroupInfo getSingleGroupResult(long id){
+        GroupInfo groupInfo = new GroupInfo(id);
+        Map<String, Object> querys = new HashMap<>();
+        querys.put("groupId", id);
+        List<CheckLog> allCheckLog = dao.getAllCheck();
+        for (CheckLog check : allCheckLog){
+            if( !ifCheckdayPass(check.getCheckDate())){
+                continue;
+            }
+            ResultList singleCheck = new ResultList(check.getCheckDate());
+            querys.put("checkId", check.getId());
+            List<Result> results = dao.findResult(querys);
+            for(Result result: results){
+                singleCheck.addResultItem(new ResultItem(result.getFatherType(), result.getSubType(), result.getFile(), result.getRow(), result.getCol(), result.getDescription()));
+            }
+            groupInfo.addSingleCheckInfo(singleCheck);
+        }
+    return groupInfo;
+    }
+
+    public List<Check> getAllChecks(){
+        List<Check> results = new ArrayList<>();
+        List<CheckLog> allChecks = dao.getAllCheck();
+        Map<String, Object> querys = new HashMap<>();
+        for(CheckLog singleCheck : allChecks){
+            Check singleCheckPo = new Check(singleCheck);
+            String hql = "SELECT distinct R.groupId FROM Result R WHERE R.checkId=" + String.valueOf(singleCheck.getId());
+            for(Object groupId: dao.findByHql(hql)){
+                querys.put("groupId", (long)groupId);
+                querys.put("checkId", singleCheck.getId());
+                querys.put("fatherType", Constant.FATHER_TYPE_WARN);
+                int warn_count = dao.findResult(querys).size();
+                querys.put("fatherType", Constant.FATHER_TYPE_ERROR);
+                int error_count = dao.findResult(querys).size();
+                singleCheckPo.addGroupInfo( new GroupForCheck((long)groupId, dao.findGroupById((long)groupId).getName(), warn_count, error_count));
+            }
+            results.add(singleCheckPo);
+        }
+        return results;
+    }
+
+    public boolean addCheck(Date date, String description){
+        return dao.addCheck(date, description);
+    }
+
+    private boolean ifCheckdayPass(Date date){
+        if ( date.compareTo(new Date()) <= 0 ){
+            return true;
+        }else {
+            return false;
+        }
     }
 }

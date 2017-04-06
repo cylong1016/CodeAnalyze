@@ -5,6 +5,7 @@ import edu.nju.dao.checkstyle.CheckStyleDao;
 import edu.nju.entities.checkstyle.CheckLog;
 import edu.nju.entities.checkstyle.Group;
 import edu.nju.entities.checkstyle.Result;
+import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -25,6 +26,11 @@ public class CheckStyleDaoImpl implements CheckStyleDao{
     }
 
     @Override
+    public Result findResultById() {
+        return null;
+    }
+
+    @Override
     public List<CheckLog> getAllCheck() {
         return baseDao.getAllList(CheckLog.class);
     }
@@ -37,6 +43,12 @@ public class CheckStyleDaoImpl implements CheckStyleDao{
     @Override
     public List<Result> findResult(Map<String, Object> querys) {
         return baseDao.find(Result.class, querys);
+    }
+
+    @Override
+    public List findByHql(String hql) {
+        Query query = baseDao.getNewSession().createQuery(hql);
+        return query.getResultList();
     }
 
     public List<Result> getResultByTimeLine(Date date) {
@@ -79,16 +91,41 @@ public class CheckStyleDaoImpl implements CheckStyleDao{
     }
 
     @Override
-    public boolean addCheck(Date date, String desccription) {
+    public boolean addCheck(Date date, String description) {
         CheckLog check = new CheckLog();
         check.setCheckDate(date);
-        check.setDescription(desccription);
+        check.setDescription(description);
         try{
             baseDao.save(check);
         }catch (Exception exp){
+            System.out.println(exp.getMessage());
             return false;
         }
         return true;
+    }
+
+    @Override
+    public CheckLog findCheckById(long id) {
+        Map<String, Object> querys = new HashMap<>();
+        querys.put("id", id);
+        List<CheckLog> checkLogs = baseDao.find(CheckLog.class, querys);
+        if(checkLogs.size()==1){
+            return checkLogs.get(0);
+        }else {
+            return null;
+        }
+    }
+
+    @Override
+    public Group findGroupById(long id) {
+        Map<String, Object> querys = new HashMap<>();
+        querys.put("id", id);
+        List<Group> groups = baseDao.find(Group.class, querys);
+        if(groups.size()==1){
+            return groups.get(0);
+        }else {
+            return null;
+        }
     }
 
 }

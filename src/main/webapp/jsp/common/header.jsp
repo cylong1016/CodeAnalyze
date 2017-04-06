@@ -6,7 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <header>
-    <nav class="navbar navbar-inverse">
+    <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="container-fluid">
             <div class="navbar-header">
                 <a class="navbar-brand" href="#">Gitlab Monitor</a>

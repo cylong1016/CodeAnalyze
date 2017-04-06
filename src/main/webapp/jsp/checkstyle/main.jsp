@@ -14,7 +14,7 @@
     <ul class="nav nav-pills nav-stacked left-chart-nav col-md-2 col-sm-2" id="tab" role="tablist">
         <li role="presentation" class="active"><a href="<%=request.getContextPath()%>/api/checkstyle">Total</a></li>
         <li role="presentation"><a href="<%=request.getContextPath()%>/api/checkstyle/group">Group</a></li>
-        <li role="presentation"><a href="<%=request.getContextPath()%>/api/checkstyle/timeline">TimeLine</a>
+        <li role="presentation"><a href="<%=request.getContextPath()%>/api/checkstyle/check">Check</a>
         </li>
     </ul>
     <div class="col-md-offset-2 col-sm-offset-2" id="content">

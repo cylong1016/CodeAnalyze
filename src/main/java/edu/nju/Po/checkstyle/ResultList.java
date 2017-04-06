@@ -2,6 +2,7 @@ package edu.nju.Po.checkstyle;
 
 
 import edu.nju.entities.checkstyle.Result;
+import edu.nju.utils.checkstyle.Constant;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -46,20 +47,16 @@ public class ResultList {
     public void setError(List<ResultItem> error) {
         this.error = error;
     }
-    public void addWarn(ResultItem item){
-        this.warn.add(item);
-    }
-    public void addError(ResultItem item){
-        this.error.add(item);
-    }
-    public void transWarnToPo(List<Result> results){
-        for(Result result: results){
-            this.addWarn(new ResultItem(result.getFatherType(), result.getSubType(),result.getFile(), result.getRow(), result.getCol(),result.getDescription()));
+    public void addResultItem(ResultItem item){
+        if (item.getFather_type().equals(Constant.FATHER_TYPE_WARN) ){
+            this.warn.add(item);
+        } else if( item.getFather_type().equals(Constant.FATHER_TYPE_ERROR) ){
+            this.error.add(item);
         }
     }
-    public void transErrorToPo(List<Result> results){
+    public void transToPo(List<Result> results){
         for(Result result: results){
-            this.addError(new ResultItem(result.getFatherType(), result.getSubType(),result.getFile(), result.getRow(), result.getCol(),result.getDescription()));
+            this.addResultItem(new ResultItem(result.getFatherType(), result.getSubType(),result.getFile(), result.getRow(), result.getCol(),result.getDescription()));
         }
     }
 }

@@ -17,13 +17,21 @@ public interface CheckStyleDao {
 
     public List<Result> getAllResult();
 
+    public Result findResultById();
+
     public List<CheckLog> getAllCheck();
 
     public List<Group> getAllGroup();
 
     public List<Result> findResult(Map<String, Object> querys);
 
+    public List findByHql(String hql);
+
     public boolean check(long checkId, long groupId);
 
     public boolean addCheck(Date date, String desccription);
+
+    public CheckLog findCheckById(long id);
+
+    public Group findGroupById(long id);
 }

@@ -8,15 +8,10 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  * Created by Floyd on 2017/3/27.
@@ -31,7 +26,6 @@ public class CheckStyleRESTController {
     public String group() {
         List<GroupBriefInfo> groupsInfo = service.getAllBriefResult();
         String response = new Gson().toJson(groupsInfo);
-        System.out.println(response);
         return response;
     }
 
@@ -40,12 +34,22 @@ public class CheckStyleRESTController {
         GroupInfo groupInfo = service.getSingleGroupResult(Long.parseLong(groupId));
         String response = new Gson().toJson(groupInfo);
         return response;
-//        Map groupDetail = new HashMap();
-//        groupDetail.put("id", groupId);
-//        groupDetail.put("name", "蚊子的组");
-//        groupDetail.put("timeline", new String[]{"2017-03-27", "2017-04-27", "2017-05-27"});
-//        groupDetail.put("warnNum", new int[]{32, 48, 21});
-//        groupDetail.put("errorNum", new int[]{3, 18, 4});
-//        return new Gson().toJson(groupDetail);
+    }
+
+    @GetMapping("/check")
+    public String getChecks() {
+        return new Gson().toJson(service.getAllChecks());
+    }
+
+    @PostMapping("/check")
+    public String addCheck(
+            @RequestParam("year") int year, @RequestParam("month")int month, @RequestParam("day")int day,
+            @RequestParam(name="description", required = false)String description){
+        Date date = new Date(year-1900, month-1, day);
+        if(service.addCheck( date, description)){
+            SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
+            return sdf.format(date);
+        }
+        return null;
     }
 }

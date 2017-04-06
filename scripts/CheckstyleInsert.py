@@ -8,11 +8,11 @@ import sys
 import re
 import MySQLdb
 REGEX = r'\[([^\]]*)\](.*)\[([^\]]*)\]'
-OMIT = ['Indentation', 'CustomImportOrder', ]
+OMIT = ['Indentation',  'CustomImportOrder', 'FileTabCharacter', 'WhitespaceAround', 'AvoidStarImport', 'EmptyLineSeparator']
 
 class MysqlConnection:
     def __init__(self, ip, user, password, database_name):
-        self.db = MySQLdb.connect(ip, user, password, database_name)
+        self.db = MySQLdb.connect(ip, user, password, database_name, charset="utf8")
         self.cursor = self.db.cursor()
 
     def execute(self, sql):
@@ -41,8 +41,8 @@ if __name__ == '__main__':
     #     print 'Usage:\n\tpython %s __FILENAME__' % sys.argv[0]
     #     exit(1)
     # checkstyle_file = open(sys.argv[1], 'r')
-    checkstyle_file = open('checkstyle.result', 'r')
-    # mysql = MysqlConnection('localhost', 'root', '', 'code_analyze')
+    checkstyle_file = open('checkstyle.result.2', 'r')
+    mysql = MysqlConnection('localhost', 'root', '', 'code_analyze')
     for line in checkstyle_file.xreadlines():
         line = line.strip()
         macthObj = re.match(REGEX, line)
@@ -50,6 +50,8 @@ if __name__ == '__main__':
             continue
         father_type = macthObj.group(1)
         sub_type = macthObj.group(3)
+        if sub_type in OMIT:
+            continue
         # 消除 分区头F:\ 的影响
         check_info = (macthObj.group(2).split(':\\'))[1].split(':')
         file_name = '\/'.join(check_info[0].split('\\src\\')[1].split('\\'))
@@ -67,8 +69,8 @@ if __name__ == '__main__':
         sql_result = 'INSERT INTO checkstyle_result \
               (father_type, sub_type, file, row, col, check_id, description, group_id) \
               VALUES ("%s", "%s", "%s", "%d", "%d", "%d", "%s","%d") ' % \
-                     (father_type, sub_type, file_name, row, column, 1, description, 1)
-        print father_type, sub_type, file_name, row, column, description
+                     (father_type, sub_type, file_name, row, column, 3, description, 4)
+        # print description.decode('utf8').encode('utf8')
         mysql.execute(sql_result)
     mysql.commit()
     mysql.close()

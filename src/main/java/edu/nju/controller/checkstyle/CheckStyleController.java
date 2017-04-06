@@ -30,10 +30,18 @@ public class CheckStyleController {
         return "jsp/checkstyle/groupDetail";
     }
 
-    @GetMapping("/timeline")
+    @GetMapping("/check")
     public String timelineInfo(Model model) {
         String[] timeline = new String[]{"2017-03-27", "2017-04-27", "2017-05-27"};
         model.addAttribute("timeline", timeline);
-        return "jsp/checkstyle/timeline";
+
+        return "jsp/checkstyle/check";
+    }
+
+
+
+    @GetMapping("/config")
+    public String config(Model model){
+        return "";
     }
 }

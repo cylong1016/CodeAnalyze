@@ -15,6 +15,9 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <link rel="stylesheet" href="<%=request.getContextPath()%>/css/bootstrap.css" type="text/css">
     <title>CodeAnalyze</title>
+    <style>
+        body {padding-top: 60px;}
+    </style>
 </head>
 <body>
     <jsp:include page="header.jsp"></jsp:include>
