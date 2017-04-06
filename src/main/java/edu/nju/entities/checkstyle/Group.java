@@ -3,14 +3,14 @@ package edu.nju.entities.checkstyle;
 import javax.persistence.*;
 
 /**
- * Created by Floyd on 2017/3/28.
+ * Created by Administrator on 2017/4/4.
  */
-//@Entity
-//@Table(name = "checkstyle_father_type")
-public class FatherType {
+@Entity
+@Table(name = "checkstyle_group")
+public class Group
+{
     private long id;
     private String name;
-    private String description;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,13 +28,5 @@ public class FatherType {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 }

@@ -27,10 +27,6 @@ public class CheckStyleController {
     @GetMapping("/group/{groupId}")
     public String groupInfo(@PathVariable String groupId, Model model) {
         model.addAttribute("groupId", groupId);
-        model.addAttribute("groupName", "wenzi");
-        model.addAttribute("submit", new String[]{"2017-03-27", "2017-04-27", "2017-05-27"});
-        model.addAttribute("warn", new int[]{32, 48, 21});
-        model.addAttribute("error", new int[]{3, 18, 4});
         return "jsp/checkstyle/groupDetail";
     }
 

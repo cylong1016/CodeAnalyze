@@ -39,54 +39,77 @@
             } catch (err) {
                 console.log(err.message);
             }
+            console.log(querys);
 
-//            drawGroup(querys);
+            drawGroup(querys);
         })
 
         function drawGroup(querys) {
-            var count = 0;
             var count_row = 3;
             var row_num = 0;
-            var width = ($(document.body).width() - $('#tab').width()) / 3.5;
+            var width = ($(window).width() - $('#tab').width()) / 3.5;
             $("#content").append('<div id="row_' + row_num + '">');
-            for (var i = 0; i < 20; i++) {
-                if (count == count_row) {
+            $.each(querys, function (index,value) {
+                if ( index % count_row == 0) {
                     row_num++;
                     $("#content").append('<div id="row_' + row_num + '">');
-                    count = 0;
                 }
-                var html = '<div id="group_' + i + '" style="width:' + width + 'px;height:' + width + 'px;display: inline-block"></div>';
+                var html = '<div id="group_' + index + '" style="width:' + width + 'px;height:' + width + 'px;display: inline-block"></div>';
                 $("#row_" + row_num).append(html);
-                count++;
-                var group_chart = echarts.init(document.getElementById('group_' + i));
+                var group_chart = echarts.init(document.getElementById('group_' + index));
+                var legend_data = [];
+                var series_data = [];
+                var check_log = [];
+                var temp_index = 0;
+                $.each(value.briefInfo, function (key,value) {
+                    check_log.push(key);
+                    legend_data.push(temp_index+"_Warn");
+                    legend_data.push(temp_index+"_Error");
+                    series_data.push({value:value[0], name:temp_index+"_Warn"});
+                    series_data.push({value:value[1]+2900, name:temp_index+"_Error"});
+                });
+                console.log(series_data);
                 group_chart.setOption({
                     title: {
-                        text: "第" + i + "组",
-                        link: basePath + '/api/checkstyle/group/' + i,
-                        target: 'self'
+                        text: "第" + value.id + "组",
+                        link: basePath + '/api/checkstyle/group/' + value.id,
+                        target: 'self',
+                        x: 'left'
+                    },
+                    tooltip: {
+                        trigger: 'item',
+                        formatter: "{a} <br/>{b} : {c} ({d}%)"
+                    },
+                    legend: {
+                        orient: 'vertical',
+                        left: 'right',
+                        data: legend_data,
+                        formatter: function (name) {
+                            var attrs = name.split('_');
+                            var check_index = parseInt(attrs[0]);
+                            return check_log[check_index] + "_第" + check_index + "次_" + attrs[1];
+                        },
                     },
                     series: [
                         {
                             name: '访问来源',
                             type: 'pie',
                             radius: '55%',
-                            data: [
-                                {value: 235, name: '视频广告'},
-                                {value: 274, name: '联盟广告'},
-                                {value: 310, name: '邮件营销'},
-                                {value: 335, name: '直接访问'},
-                                {value: 400, name: '搜索引擎'}
-                            ],
-                            roseType: 'angle'
+                            center: ['50%', '60%'],
+                            data: series_data,
+                            itemStyle: {
+                                emphasis: {
+                                    shadowBlur: 10,
+                                    shadowOffsetX: 0,
+                                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+                                }
+                            }
+//                            roseType: 'angle'
                         }
                     ]
                 });
-            }
+            });
         }
-
-//    $.ajax({
-//        url: basePath + '/api/checkstyle/'
-//    })
     })
 </script>
 

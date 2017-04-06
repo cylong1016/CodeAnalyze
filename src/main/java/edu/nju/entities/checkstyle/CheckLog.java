@@ -7,7 +7,7 @@ import java.util.Date;
  * Created by Floyd on 2017/3/28.
  */
 @Entity
-@Table(name = "check_log")
+@Table(name = "checkstyle_check_log")
 public class CheckLog {
     private long id;
     private Date checkDate;

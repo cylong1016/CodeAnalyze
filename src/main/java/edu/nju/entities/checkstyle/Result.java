@@ -6,19 +6,25 @@ import javax.persistence.*;
  * Created by Floyd on 2017/3/28.
  */
 @Entity
+@Table(name = "checkstyle_result")
 public class Result {
+
     private long id;
+
     private long groupId;
+
     private long checkId;
-    private long fatherType;
-    private long subType;
+
+    private String fatherType;
+
+    private String subType;
     private String file;
     private int row;
     private int col;
     private String description;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public long getId() {
         return id;
     }
@@ -37,20 +43,20 @@ public class Result {
     }
 
     @Column(name = "father_type")
-    public long getFatherType() {
+    public String getFatherType() {
         return fatherType;
     }
 
-    public void setFatherType(long fatherType) {
+    public void setFatherType(String fatherType) {
         this.fatherType = fatherType;
     }
 
     @Column(name = "sub_type")
-    public long getSubType() {
+    public String getSubType() {
         return subType;
     }
 
-    public void setSubType(long subType) {
+    public void setSubType(String subType) {
         this.subType = subType;
     }
 
