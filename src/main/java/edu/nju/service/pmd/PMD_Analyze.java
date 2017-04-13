@@ -1,18 +1,11 @@
 package edu.nju.service.pmd;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.net.URL;
 import java.util.ArrayList;
-
-import javax.servlet.http.HttpServletResponse;
 
 import org.json.JSONObject;
 import org.jsoup.Jsoup;
@@ -37,14 +30,16 @@ public class PMD_Analyze {
 	/**
 	 * 下载项目到本地
 	 */
-	public void download(){
+	public boolean download(){
 		setIter();
+		return true;
 	}
 	
 	/**
 	 * 分析项目，以及将相关内容存在数据库
 	 */
-	public void analyze(){
+	public boolean analyze(){
+		try{
 		int iter=dao.getIter();
 		String names[] = getDir("E:/Documents/graduate/project/iter"+iter);
 		String []rules = {"basic","naming","unusedcode","codesize","clone","coupling"};
@@ -88,7 +83,10 @@ public class PMD_Analyze {
 				parseHTML(iter,names[i],rules[j]);
 			}
 		}
-		
+		}catch(Exception e){
+			return false;
+		}
+		return true;
 	}
 	
 	public boolean setIter(){
@@ -186,51 +184,4 @@ public class PMD_Analyze {
 		}  
 		return null;
 	}
-	
-
-	/**
-	 * @param iter
-	 * @param issueType
-	 * 导出详细问题
-	 */
-	public void exportDetail(int iter,String type,String groupName,HttpServletResponse resp){
-		String path = "E:\\Documents\\graduate\\report\\iter"+iter+"\\"+groupName+"\\"+type+".html";
-		commonDownload(path,resp);
-	}
-	
-	public void commonDownload(String path,HttpServletResponse response){
-	        try {
-	            // path是指欲下载的文件的路径。
-	            File file = new File(path);
-	            // 取得文件名。
-	            String filename = file.getName();
-	            // 取得文件的后缀名。
-//	            String ext = filename.substring(filename.lastIndexOf(".") + 1)
-//	                    .toUpperCase();
-
-	            // 以流的形式下载文件。
-	            InputStream fis = new BufferedInputStream(new FileInputStream(path));
-	            byte[] buffer = new byte[fis.available()];
-	            fis.read(buffer);
-	            fis.close();
-	            // 清空response
-	            response.reset();
-	            // 设置response的Header
-	            String filenameString = new String(filename.getBytes("gbk"),
-	                    "iso-8859-1");
-	            response.addHeader("Content-Disposition", "attachment;filename="
-	                    + filenameString);
-	            response.addHeader("Content-Length", "" + file.length());
-	            OutputStream toClient = new BufferedOutputStream(response
-	                    .getOutputStream());
-	            response.setContentType("application/octet-stream");
-	            toClient.write(buffer);
-	            toClient.flush();
-	            toClient.close();
-	        } catch (IOException ex) {
-	            ex.printStackTrace();
-	        }
-	}
-	
-	
 }
