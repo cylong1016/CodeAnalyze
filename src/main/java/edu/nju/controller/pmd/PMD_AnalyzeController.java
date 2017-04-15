@@ -1,5 +1,7 @@
 package edu.nju.controller.pmd;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,9 +29,9 @@ public class PMD_AnalyzeController {
 	
 	@ResponseBody
 	@RequestMapping(value = "/analyze", method = RequestMethod.GET)
-	public String analyze()
+	public String analyze(HttpServletRequest req)
 	{
-		analyze.analyze();;
+		analyze.analyze(req);;
 		return "{\"success\"}";
 	}
 	

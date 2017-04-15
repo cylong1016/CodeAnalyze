@@ -7,6 +7,8 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.ArrayList;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.json.JSONObject;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -16,6 +18,7 @@ import org.springframework.stereotype.Service;
 
 import edu.nju.dao.pmd.PMDDao;
 import edu.nju.entities.pmd.PMD_FileIssues;
+import edu.nju.entities.pmd.PMD_Measure;
 import edu.nju.utils.pmd.Constants;
 import edu.nju.utils.pmd.RESCODE;
 
@@ -38,46 +41,47 @@ public class PMD_Analyze {
 	/**
 	 * 分析项目，以及将相关内容存在数据库
 	 */
-	public boolean analyze(){
+	public boolean analyze(HttpServletRequest request){
 		try{
 		int iter=dao.getIter();
 		String names[] = getDir("E:/Documents/graduate/project/iter"+iter);
 		String []rules = {"basic","naming","unusedcode","codesize","clone","coupling"};
-//		try {
-//			for(int i=0;i<names.length;i++){
-//				String path = "E:\\Documents\\graduate\\project\\iter"+iter+"\\" + names[i];
-//				String resultFolder = "E:\\Documents\\graduate\\report\\iter"+iter+"\\"+names[i];
-//				createDir(resultFolder);
-//				for(int j=0;j<rules.length;j++){
-//					String rulePath = "rulesets/java/"+rules[j]+".xml";
-//					String resultPath = resultFolder+"\\"+rules[j]+".html";
-//					String command = "cmd /C pmd -d "+path+" -f html -r "+resultPath+" -R "+rulePath;
-//					Runtime.getRuntime().exec(command,null,new File("E://Documents//graduate//pmd-bin-5.5.0//pmd-bin-5.5.0//bin"));
-//					
-//				}
-//			}
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
-//		for(int i=0;i<names.length;i++){
-//			PMD_Measure measure= new PMD_Measure();
-//			measure.setGroupName(names[i]);
-//			measure.setIter(iter);
-//			String resultFolder = "E:\\Documents\\graduate\\report\\iter"+iter+"\\"+names[i];
-//			String resultPath = "file:///"+resultFolder+"\\basic.html";
-//			measure.setBasic(readHtml(resultPath));
-//			resultPath="file:///"+resultFolder+"\\naming.html";
-//			measure.setNaming(readHtml(resultPath));
-//			resultPath="file:///"+resultFolder+"\\unusedcode.html";
-//			measure.setUnusedcode(readHtml(resultPath));
-//			resultPath="file:///"+resultFolder+"\\codesize.html";
-//			measure.setCodesize(readHtml(resultPath));
-//			resultPath="file:///"+resultFolder+"\\clone.html";
-//			measure.setClone(readHtml(resultPath));
-//			resultPath="file:///"+resultFolder+"\\coupling.html";
-//			measure.setCoupling(readHtml(resultPath));
-//			dao.saveIssueNum(measure);
-//		}
+		String basePath = request.getServletContext().getRealPath("/")+"pmd-bin-5.5.0/bin";
+		try {
+			for(int i=0;i<names.length;i++){
+				String path = "E:\\Documents\\graduate\\project\\iter"+iter+"\\" + names[i];
+				String resultFolder = "E:\\Documents\\graduate\\report\\iter"+iter+"\\"+names[i];
+				createDir(resultFolder);
+				for(int j=0;j<rules.length;j++){
+					String rulePath = "rulesets/java/"+rules[j]+".xml";
+					String resultPath = resultFolder+"\\"+rules[j]+".html";
+					String command = "cmd /C pmd -d "+path+" -f html -r "+resultPath+" -R "+rulePath;
+					Runtime.getRuntime().exec(command,null,new File(basePath));
+					
+				}
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		for(int i=0;i<names.length;i++){
+			PMD_Measure measure= new PMD_Measure();
+			measure.setGroupName(names[i]);
+			measure.setIter(iter);
+			String resultFolder = "E:\\Documents\\graduate\\report\\iter"+iter+"\\"+names[i];
+			String resultPath = "file:///"+resultFolder+"\\basic.html";
+			measure.setBasic(readHtml(resultPath));
+			resultPath="file:///"+resultFolder+"\\naming.html";
+			measure.setNaming(readHtml(resultPath));
+			resultPath="file:///"+resultFolder+"\\unusedcode.html";
+			measure.setUnusedcode(readHtml(resultPath));
+			resultPath="file:///"+resultFolder+"\\codesize.html";
+			measure.setCodesize(readHtml(resultPath));
+			resultPath="file:///"+resultFolder+"\\clone.html";
+			measure.setClone(readHtml(resultPath));
+			resultPath="file:///"+resultFolder+"\\coupling.html";
+			measure.setCoupling(readHtml(resultPath));
+			dao.saveIssueNum(measure);
+		}
 		for(int i=0;i<names.length;i++){
 			for(int j=0;j<rules.length;j++){
 				parseHTML(iter,names[i],rules[j]);
