@@ -5,8 +5,8 @@ import javax.persistence.*;
 /**
  * Created by Administrator on 2017/4/4.
  */
-@Entity
-@Table(name = "checkstyle_group")
+//@Entity
+//@Table(name = "checkstyle_group")
 public class Group
 {
     private long id;

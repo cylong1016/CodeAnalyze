@@ -19,16 +19,14 @@
     .panel-no-boder {
         border: 0;
     }
-    .dataTables_scroll {
-        overflow:auto;
-    }
 </style>
 <div>
     <ul class="nav nav-pills nav-stacked left-chart-nav col-md-2 col-sm-2" id="tab" role="tablist">
-        <li role="presentation"><a href="<%=request.getContextPath()%>/api/checkstyle">Total</a></li>
-        <li role="presentation"><a href="<%=request.getContextPath()%>/api/checkstyle/group">Group</a></li>
         <li role="presentation" class="active"><a
-                href="<%=request.getContextPath()%>/api/checkstyle/check">Check</a></li>
+                href="<%=request.getContextPath()%>/api/checkstyle">Check</a></li>
+        <li role="presentation"><a href="<%=request.getContextPath()%>/api/checkstyle/group">Group</a></li>
+        <li role="presentation"><a href="<%=request.getContextPath()%>/api/checkstyle/config">Config</a></li>
+        <li role="presentation"><a href="<%=request.getContextPath()%>/api/checkstyle/stats">Statistics</a></li>
     </ul>
     <div class="col-md-offset-2 col-sm-offset-2" id="content">
         <div id="check_info" class="panel panel-default panel-no-boder col-md-4 col-sm-4">
@@ -57,9 +55,7 @@
                     </div>
                 </fieldset>
             </form><br />
-            <div id="line_charts">
-
-            </div>
+            <div id="line_charts"></div>
         </div>
         <div class="col-md-1 col-sm-1"></div>
         <div id="detail" class="panel panel-info panel-no-padding col-md-4 col-sm-4">
@@ -197,7 +193,7 @@
 
             var option = {
                 title: {
-                    text: 'CheckStyle 检查日志',
+                    text: 'CheckStyle 每次检查组数',
                     subtext: '供参考'
                 },
                 tooltip: {
@@ -264,7 +260,7 @@
                     return;
                 }
                 if (index===0){
-                    tab_html.push('<li role="presentation" class="active"><a href="#checklog_'+value.id+'" aria-controls="checklog_'+value.id+'" role="tab" data-toggle="tab">'+value.description+'</a></li>');
+                    tab_html.push('<li role="presentation" class="active"><a href="#checklog_'+value.id+'" ar            ia-controls="checklog_'+value.id+'" role="tab" data-toggle="tab">'+value.description+'</a></li>');
                     panel_html.push('<div role="tabpanel" class="tab-pane active" id="checklog_'+value.id+'"><br />');
                 } else {
                     tab_html.push('<li role="presentation"><a href="#checklog_'+value.id+'" aria-controls="checklog_'+value.id+'" role="tab" data-toggle="tab">'+value.description+'</a></li>');

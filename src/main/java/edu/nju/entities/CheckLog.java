@@ -1,13 +1,13 @@
-package edu.nju.entities.checkstyle;
+package edu.nju.entities;
 
 import javax.persistence.*;
 import java.util.Date;
 
 /**
- * Created by Floyd on 2017/3/28.
+ * Created by Administrator on 2017/4/17.
  */
-//@Entity
-//@Table(name = "checkstyle_check_log")
+@Entity
+@Table(name = "check_log")
 public class CheckLog {
     private long id;
     private Date checkDate;
@@ -40,3 +40,4 @@ public class CheckLog {
         this.checkDate = checkDate;
     }
 }
+

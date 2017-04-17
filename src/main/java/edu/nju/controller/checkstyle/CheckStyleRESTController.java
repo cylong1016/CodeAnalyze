@@ -1,15 +1,17 @@
 package edu.nju.controller.checkstyle;
 
 import com.google.gson.Gson;
-import edu.nju.Po.checkstyle.GroupBriefInfo;
-import edu.nju.Po.checkstyle.GroupInfo;
+import edu.nju.Vo.checkstyle.GroupBriefInfo;
+import edu.nju.Vo.checkstyle.GroupInfo;
 import edu.nju.service.checkstyle.CheckstyleService;
-import org.json.JSONArray;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -51,5 +53,62 @@ public class CheckStyleRESTController {
             return sdf.format(date);
         }
         return null;
+    }
+
+    @GetMapping("/config")
+    public String getChecksConfig(){
+        String response = new Gson().toJson(service.getCheckConfig());
+        return response;
+    }
+
+    @PostMapping("/config")
+    public String updateChecksConfig(@RequestParam("checkIds[]") String[] checkedId){
+        List<Long> checked = new ArrayList<>();
+        for(String item : checkedId){
+            Long id;
+            try{
+                id = Long.parseLong(item);
+            }catch (Exception e){
+                continue;
+            }
+            checked.add(id);
+        }
+        if (service.updateCheckConfig(checked)){
+            return "success";
+        }else{
+            return "fail";
+        }
+    }
+
+    @GetMapping("/stat/{internalType}")
+    public String getOneStatistics(@PathVariable String internalType){
+        return new Gson().toJson( service.getCorrelationStat(internalType) );
+    }
+    @RequestMapping(value = "/upload", method = RequestMethod.POST, produces = "application/json;charset=utf8")
+    @ResponseBody
+    public Map<String, Object> upload(@RequestParam("file") MultipartFile file, @RequestParam("check_id")String checkId){
+        Map<String, Object> json = new HashMap<>();
+        if(!file.isEmpty()){
+            try {
+                InputStream in = file.getInputStream();
+                BufferedReader reader = new BufferedReader( new InputStreamReader(in) );
+                String line;
+                while((line=reader.readLine())!=null){
+                    String[] attrs = line.split(",");
+                    boolean ifSave = service.addGrade(Long.parseLong(checkId), Long.parseLong(attrs[0]), Integer.parseInt(attrs[1]), attrs[2]);
+                    if(!ifSave){
+                        json.put("success","Insert Database Error");
+                        return json;
+                    }
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+                json.put("success","File Reader Error");
+                return json;
+            }
+        }
+        System.out.println(checkId);
+        json.put("success", "0");
+        return json;
     }
 }

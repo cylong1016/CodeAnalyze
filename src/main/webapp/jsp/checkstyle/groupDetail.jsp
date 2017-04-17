@@ -22,10 +22,10 @@
 </style>
 <div class="content">
     <ul class="nav nav-pills nav-stacked left-chart-nav col-md-2 col-sm-2" id="tab">
-        <li role="presentation"><a href="<%=request.getContextPath()%>/api/checkstyle">Total</a></li>
-        <li role="presentation" class="active"><a href="<%=request.getContextPath()%>/api/checkstyle/group">Group</a>
-        </li>
-        <li role="presentation"><a href="<%=request.getContextPath()%>/api/checkstyle/check">Check</a></li>
+        <li role="presentation"><a href="<%=request.getContextPath()%>/api/checkstyle">Check</a></li>
+        <li role="presentation" class="active"><a href="<%=request.getContextPath()%>/api/checkstyle/group">Group</a></li>
+        <li role="presentation"><a href="<%=request.getContextPath()%>/api/checkstyle/config">Config</a></li>
+        <li role="presentation"><a href="<%=request.getContextPath()%>/api/checkstyle/stats">Statistics</a></li>
     </ul>
     <div class="col-md-offset-2 col-sm-offset-2" id="content" data-groupId="${groupId}">
         <%--<div class="col-md-1 col-sm-1"></div>--%>
@@ -39,11 +39,11 @@
             </div>
             <div class="panel-body">
                 <ul class="nav nav-tabs" role="tablist" id="detail_tab">
-                    <li role="presentation" class="active"><a href="#warn" aria-controls="warn" role="tab" data-toggle="tab">Warn</a></li>
-                    <li role="presentation"><a href="#error" aria-controls="error" role="tab" data-toggle="tab">Error</a></li>
+                    <li role="presentation" id="li_warn"><a href="#warn" aria-controls="warn" role="tab" data-toggle="tab">Warn</a></li>
+                    <li role="presentation" id="li_error"><a href="#error" aria-controls="error" role="tab" data-toggle="tab">Error</a></li>
                 </ul>
                 <div class="tab-content" id="detail_content">
-                    <div role="tabpanel" class="tab-pane active" id="warn"><br /></div>
+                    <div role="tabpanel" class="tab-pane" id="warn"><br /></div>
                     <div role="tabpanel" class="tab-pane" id="error">
                     </div>
                 </div>
@@ -66,7 +66,9 @@
         var detail_timeline = [];
         var detail_warn = {};
         var detail_error = {};
-
+        var grades = [];
+        $('#'+'${type}').addClass('active');
+        $('#li_'+'${type}').addClass('active');
         $.ajax({
             url: basePath+"/api/checkstyle/api/group/"+groupId,
             method: "GET",
@@ -76,10 +78,12 @@
             } catch(err){
                 console.log(err.message);
             }
+            console.log(detail_info);
             $.each(detail_info.results, function (key, value) {
                 detail_timeline.push(key);
                 detail_warn[key] = {};
                 detail_error[key] = {};
+                grades.push(value.grade);
                 // 统计warn的subtype，以及每一个subtype的个数
                 $.each(value.warn, function (index, value2) {
                     // 如果sub_type不存在
@@ -88,7 +92,6 @@
                     }
                     detail_warn[key][value2.sub_type] += 1;
                 });
-
                 $.each(value.error, function (index, value2) {
                     // 如果sub_type不存在
                     if ( $.inArray(value2.sub_type, Object.keys(detail_error)) === -1){
@@ -97,6 +100,7 @@
                     detail_error[key][value2.sub_type] += 1;
                 });
             });
+            console.log(grades);
             $("#line_charts").attr("style", "width:" + panel_width + "px;height:" + panel_height + "px;");
             var line_chrts = echarts.init(document.getElementById("line_charts"));
             drawLineCharts(line_chrts);
@@ -125,6 +129,7 @@
         });
         function drawLineCharts(obj) {
             var warn_num = [], error_num = [];
+            var line_name = ['Warn', 'Error', 'Grade']
             $.each(detail_warn, function (key, value) {
                 var count = 0;
                 $.each(value, function (key2, val2) {
@@ -148,14 +153,14 @@
                     trigger: 'axis'
                 },
                 legend: {
-                    data:['WARN','ERROR']
+                    data: line_name
                 },
                 toolbox: {
                     show: true,
                     feature: {
-                        dataZoom: {
-                            yAxisIndex: 'none'
-                        },
+//                        dataZoom: {
+//                            yAxisIndex: 'none'
+//                        },
                         dataView: {readOnly: false},
                         magicType: {type: ['line', 'bar']},
                         restore: {},
@@ -167,15 +172,20 @@
                     boundaryGap: false,
                     data: detail_timeline
                 },
-                yAxis: {
+                yAxis:[ {
                     type: 'value',
                     axisLabel: {
                         formatter: '{value}'
                     }
-                },
+                },{
+                    type:'value',
+                    axisLabel: {
+                        formatter: '{value}'
+                    }
+                }],
                 series: [
                     {
-                        name: 'WARN',
+                        name: line_name[0],
                         type: 'line',
                         data: warn_num,
                         markPoint: {
@@ -191,7 +201,7 @@
                         }
                     },
                     {
-                        name: 'ERROR',
+                        name: line_name[1],
                         type: 'line',
                         data: error_num,
                         markPoint: {
@@ -205,7 +215,24 @@
                                 {type: 'average', name: '平均值'},
                             ]
                         }
-                    }
+                    },
+                    {
+                        name: line_name[2],
+                        type: 'line',
+                        data: grades,
+                        yAxisIndex: 1,
+                        markPoint: {
+                            data: [
+                                {type: 'max', name: '最大值'},
+                                {type: 'min', name: '最小值'}
+                            ]
+                        },
+                        markLine: {
+                            data: [
+                                {type: 'average', name: '平均值'},
+                            ]
+                        }
+                    },
                 ]
             };
             obj.setOption(option);
@@ -221,7 +248,8 @@
                 html_warn.push('<h4 class="panel-title"> <a role="button" data-toggle="collapse" data-parent="#warn_detail" href="#collapse_'+key+'" aria-expanded="true" aria-controls="collapse_'+key+'">');
                 html_warn.push(key+'  第'+ ($.inArray(key, detail_timeline)+1) + '次检查');
                 html_warn.push('</a></h4></div>');
-                if($.inArray(key, detail_timeline)===0){
+                // 判断 要展开哪次 检查详情
+                if($.inArray(key, detail_timeline)== ${check}){
                     html_warn.push('<div id="collapse_'+key+'" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="heading_'+key+'">');
                 }else{
                     html_warn.push('<div id="collapse_'+key+'" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading_'+key+'">');
@@ -258,6 +286,7 @@
                     'paging': false,
                 });
             });
+
         }
     })
 </script>

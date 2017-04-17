@@ -12,9 +12,10 @@
 
 <div>
     <ul class="nav nav-pills nav-stacked left-chart-nav col-md-2 col-sm-2" id="tab" role="tablist">
-        <li role="presentation"><a href="<%=request.getContextPath()%>/api/checkstyle">Total</a></li>
+        <li role="presentation"><a href="<%=request.getContextPath()%>/api/checkstyle">Check</a></li>
         <li role="presentation" class="active"><a href="<%=request.getContextPath()%>/api/checkstyle/group">Group</a></li>
-        <li role="presentation"><a href="<%=request.getContextPath()%>/api/checkstyle/check">Check</a></li>
+        <li role="presentation"><a href="<%=request.getContextPath()%>/api/checkstyle/config">Config</a></li>
+        <li role="presentation"><a href="<%=request.getContextPath()%>/api/checkstyle/stats">Statistics</a></li>
     </ul>
     <div class="col-md-offset-2 col-sm-offset-2" id="content">
 
@@ -39,7 +40,6 @@
                 console.log(err.message);
             }
             console.log(querys);
-
             drawGroup(querys);
 
         })
@@ -73,6 +73,7 @@
                 group_chart.setOption({
                     title: {
                         text: "第" + value.id + "组",
+                        subtext: '点击查看详情',
                         link: basePath + '/api/checkstyle/group/' + value.id,
                         target: 'self',
                         x: 'left',
@@ -113,8 +114,15 @@
                     ]
                 });
                 group_chart.on('click', function (params) {
-                    console.log(params.name);
-                })
+                    console.log(params);
+                    if(params.componentType === "series"){
+//                        console.log(group_chart.getOption());
+                        var group_id = group_chart.getOption().title[0].text.replace(/[^0-9]/ig, "");
+                        var check = params.name.split('_')[0];
+                        var type = params.name.split('_')[1];
+                        window.location.href='<%=request.getContextPath()%>/api/checkstyle/group/'+group_id+';check='+check+';type='+type;
+                    }
+                });
             });
         }
     })

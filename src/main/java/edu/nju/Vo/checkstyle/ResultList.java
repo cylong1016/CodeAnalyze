@@ -1,4 +1,4 @@
-package edu.nju.Po.checkstyle;
+package edu.nju.Vo.checkstyle;
 
 
 import edu.nju.entities.checkstyle.Result;
@@ -13,13 +13,15 @@ import java.util.List;
  */
 public class ResultList {
     private Date checkDate;
+    private int grade;
     private List<ResultItem> warn;
     private List<ResultItem> error;
 
     public ResultList(){}
 
-    public ResultList(Date date){
+    public ResultList(Date date, int grade){
         this.checkDate = date;
+        this.grade = grade;
         this.warn = new ArrayList<>();
         this.error = new ArrayList<>();
     }
@@ -58,5 +60,13 @@ public class ResultList {
         for(Result result: results){
             this.addResultItem(new ResultItem(result.getFatherType(), result.getSubType(),result.getFile(), result.getRow(), result.getCol(),result.getDescription()));
         }
+    }
+
+    public int getGrade() {
+        return grade;
+    }
+
+    public void setGrade(int grade) {
+        this.grade = grade;
     }
 }

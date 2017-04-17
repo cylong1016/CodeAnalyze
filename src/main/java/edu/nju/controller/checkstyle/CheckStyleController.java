@@ -3,8 +3,11 @@ package edu.nju.controller.checkstyle;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by floyd on 2017/3/21.
@@ -15,7 +18,7 @@ public class CheckStyleController {
 
     @RequestMapping(method = RequestMethod.GET)
     public String totalInfo(Model model) {
-        return "jsp/checkstyle/main";
+        return "jsp/checkstyle/check";
     }
 
     @GetMapping("/group")
@@ -25,23 +28,27 @@ public class CheckStyleController {
     }
 
     @GetMapping("/group/{groupId}")
-    public String groupInfo(@PathVariable String groupId, Model model) {
+    public String groupInfo(@PathVariable String groupId,
+                            @MatrixVariable(required = false, defaultValue = "1")int check,
+                            @MatrixVariable(required = false, defaultValue = "warn")String type,
+                            Model model) {
+        model.addAttribute("check",check-1);
+        model.addAttribute("type", type.toLowerCase());
         model.addAttribute("groupId", groupId);
         return "jsp/checkstyle/groupDetail";
     }
 
-    @GetMapping("/check")
-    public String timelineInfo(Model model) {
-        String[] timeline = new String[]{"2017-03-27", "2017-04-27", "2017-05-27"};
-        model.addAttribute("timeline", timeline);
-
-        return "jsp/checkstyle/check";
-    }
-
-
-
     @GetMapping("/config")
     public String config(Model model){
-        return "";
+        return "jsp/checkstyle/config";
     }
+
+    @GetMapping("/stats")
+    public String stats(Model model){
+        return "jsp/checkstyle/stats";
+    }
+
+//    @PostMapping("/upload")
+
+
 }
