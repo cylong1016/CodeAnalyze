@@ -43,23 +43,23 @@ public class PMD_Analyze {
 	 */
 	public boolean analyze(HttpServletRequest request){
 		try{
-		int iter=dao.getIter();
-		String names[] = getDir("E:/Documents/graduate/project/iter"+iter);
-		String []rules = {"basic","naming","unusedcode","codesize","clone","coupling"};
-		String basePath = request.getServletContext().getRealPath("/")+"pmd-bin-5.5.0/bin";
-		try {
-			for(int i=0;i<names.length;i++){
-				String path = "E:\\Documents\\graduate\\project\\iter"+iter+"\\" + names[i];
-				String resultFolder = "E:\\Documents\\graduate\\report\\iter"+iter+"\\"+names[i];
-				createDir(resultFolder);
-				for(int j=0;j<rules.length;j++){
-					String rulePath = "rulesets/java/"+rules[j]+".xml";
-					String resultPath = resultFolder+"\\"+rules[j]+".html";
-					String command = "cmd /C pmd -d "+path+" -f html -r "+resultPath+" -R "+rulePath;
-					Runtime.getRuntime().exec(command,null,new File(basePath));
-					
+			int iter=dao.getIter();
+			String names[] = getDir("E:/Documents/graduate/project/iter"+iter);
+			String []rules = {"basic","naming","unusedcode","codesize","clone","coupling"};
+			String basePath = request.getServletContext().getRealPath("/")+"pmd-bin-5.5.0/bin";
+			try {
+				for(int i=0;i<names.length;i++){
+					String path = "E:\\Documents\\graduate\\project\\iter"+iter+"\\" + names[i];
+					String resultFolder = "E:\\Documents\\graduate\\report\\iter"+iter+"\\"+names[i];
+					createDir(resultFolder);
+					for(int j=0;j<rules.length;j++){
+						String rulePath = "rulesets/java/"+rules[j]+".xml";
+						String resultPath = resultFolder+"\\"+rules[j]+".html";
+						String command = "cmd /C pmd -d "+path+" -f html -r "+resultPath+" -R "+rulePath;
+						Runtime.getRuntime().exec(command,null,new File(basePath));
+						
+					}
 				}
-			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -106,7 +106,6 @@ public class PMD_Analyze {
 	}
 	
 	public void parseHTML(int iter,String name,String type){
-		//E:\\Documents\\graduate\\report\\iter1\\StockEy\\coupling.html
 		String path = "E:\\Documents\\graduate\\report\\iter"+iter+"\\"+name+"\\"+type+".html";
 		 File input = new File(path); 
 		 try {
