@@ -1,18 +1,13 @@
 package edu.nju.service.pmd;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.net.URL;
 import java.util.ArrayList;
 
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpServletRequest;
 
 import org.json.JSONObject;
 import org.jsoup.Jsoup;
@@ -22,7 +17,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import edu.nju.dao.pmd.PMDDao;
-import edu.nju.entities.PMD.PMD_FileIssues;
+import edu.nju.entities.pmd.PMD_FileIssues;
+import edu.nju.entities.pmd.PMD_Measure;
 import edu.nju.utils.pmd.Constants;
 import edu.nju.utils.pmd.RESCODE;
 
@@ -37,58 +33,64 @@ public class PMD_Analyze {
 	/**
 	 * 下载项目到本地
 	 */
-	public void download(){
+	public boolean download(){
 		setIter();
+		return true;
 	}
 	
 	/**
 	 * 分析项目，以及将相关内容存在数据库
 	 */
-	public void analyze(){
-		int iter=dao.getIter();
-		String names[] = getDir("E:/Documents/graduate/project/iter"+iter);
-		String []rules = {"basic","naming","unusedcode","codesize","clone","coupling"};
-//		try {
-//			for(int i=0;i<names.length;i++){
-//				String path = "E:\\Documents\\graduate\\project\\iter"+iter+"\\" + names[i];
-//				String resultFolder = "E:\\Documents\\graduate\\report\\iter"+iter+"\\"+names[i];
-//				createDir(resultFolder);
-//				for(int j=0;j<rules.length;j++){
-//					String rulePath = "rulesets/java/"+rules[j]+".xml";
-//					String resultPath = resultFolder+"\\"+rules[j]+".html";
-//					String command = "cmd /C pmd -d "+path+" -f html -r "+resultPath+" -R "+rulePath;
-//					Runtime.getRuntime().exec(command,null,new File("E://Documents//graduate//pmd-bin-5.5.0//pmd-bin-5.5.0//bin"));
-//					
-//				}
-//			}
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
-//		for(int i=0;i<names.length;i++){
-//			PMD_Measure measure= new PMD_Measure();
-//			measure.setGroupName(names[i]);
-//			measure.setIter(iter);
-//			String resultFolder = "E:\\Documents\\graduate\\report\\iter"+iter+"\\"+names[i];
-//			String resultPath = "file:///"+resultFolder+"\\basic.html";
-//			measure.setBasic(readHtml(resultPath));
-//			resultPath="file:///"+resultFolder+"\\naming.html";
-//			measure.setNaming(readHtml(resultPath));
-//			resultPath="file:///"+resultFolder+"\\unusedcode.html";
-//			measure.setUnusedcode(readHtml(resultPath));
-//			resultPath="file:///"+resultFolder+"\\codesize.html";
-//			measure.setCodesize(readHtml(resultPath));
-//			resultPath="file:///"+resultFolder+"\\clone.html";
-//			measure.setClone(readHtml(resultPath));
-//			resultPath="file:///"+resultFolder+"\\coupling.html";
-//			measure.setCoupling(readHtml(resultPath));
-//			dao.saveIssueNum(measure);
-//		}
+	public boolean analyze(HttpServletRequest request){
+		try{
+			int iter=dao.getIter();
+			String names[] = getDir("E:/Documents/graduate/project/iter"+iter);
+			String []rules = {"basic","naming","unusedcode","codesize","clone","coupling"};
+			String basePath = request.getServletContext().getRealPath("/")+"pmd-bin-5.5.0/bin";
+			try {
+				for(int i=0;i<names.length;i++){
+					String path = "E:\\Documents\\graduate\\project\\iter"+iter+"\\" + names[i];
+					String resultFolder = "E:\\Documents\\graduate\\report\\iter"+iter+"\\"+names[i];
+					createDir(resultFolder);
+					for(int j=0;j<rules.length;j++){
+						String rulePath = "rulesets/java/"+rules[j]+".xml";
+						String resultPath = resultFolder+"\\"+rules[j]+".html";
+						String command = "cmd /C pmd -d "+path+" -f html -r "+resultPath+" -R "+rulePath;
+						Runtime.getRuntime().exec(command,null,new File(basePath));
+						
+					}
+				}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		for(int i=0;i<names.length;i++){
+			PMD_Measure measure= new PMD_Measure();
+			measure.setGroupName(names[i]);
+			measure.setIter(iter);
+			String resultFolder = "E:\\Documents\\graduate\\report\\iter"+iter+"\\"+names[i];
+			String resultPath = "file:///"+resultFolder+"\\basic.html";
+			measure.setBasic(readHtml(resultPath));
+			resultPath="file:///"+resultFolder+"\\naming.html";
+			measure.setNaming(readHtml(resultPath));
+			resultPath="file:///"+resultFolder+"\\unusedcode.html";
+			measure.setUnusedcode(readHtml(resultPath));
+			resultPath="file:///"+resultFolder+"\\codesize.html";
+			measure.setCodesize(readHtml(resultPath));
+			resultPath="file:///"+resultFolder+"\\clone.html";
+			measure.setClone(readHtml(resultPath));
+			resultPath="file:///"+resultFolder+"\\coupling.html";
+			measure.setCoupling(readHtml(resultPath));
+			dao.saveIssueNum(measure);
+		}
 		for(int i=0;i<names.length;i++){
 			for(int j=0;j<rules.length;j++){
 				parseHTML(iter,names[i],rules[j]);
 			}
 		}
-		
+		}catch(Exception e){
+			return false;
+		}
+		return true;
 	}
 	
 	public boolean setIter(){
@@ -104,7 +106,6 @@ public class PMD_Analyze {
 	}
 	
 	public void parseHTML(int iter,String name,String type){
-		//E:\\Documents\\graduate\\report\\iter1\\StockEy\\coupling.html
 		String path = "E:\\Documents\\graduate\\report\\iter"+iter+"\\"+name+"\\"+type+".html";
 		 File input = new File(path); 
 		 try {
@@ -186,51 +187,4 @@ public class PMD_Analyze {
 		}  
 		return null;
 	}
-	
-
-	/**
-	 * @param iter
-	 * @param issueType
-	 * 导出详细问题
-	 */
-	public void exportDetail(int iter,String type,String groupName,HttpServletResponse resp){
-		String path = "E:\\Documents\\graduate\\report\\iter"+iter+"\\"+groupName+"\\"+type+".html";
-		commonDownload(path,resp);
-	}
-	
-	public void commonDownload(String path,HttpServletResponse response){
-	        try {
-	            // path是指欲下载的文件的路径。
-	            File file = new File(path);
-	            // 取得文件名。
-	            String filename = file.getName();
-	            // 取得文件的后缀名。
-//	            String ext = filename.substring(filename.lastIndexOf(".") + 1)
-//	                    .toUpperCase();
-
-	            // 以流的形式下载文件。
-	            InputStream fis = new BufferedInputStream(new FileInputStream(path));
-	            byte[] buffer = new byte[fis.available()];
-	            fis.read(buffer);
-	            fis.close();
-	            // 清空response
-	            response.reset();
-	            // 设置response的Header
-	            String filenameString = new String(filename.getBytes("gbk"),
-	                    "iso-8859-1");
-	            response.addHeader("Content-Disposition", "attachment;filename="
-	                    + filenameString);
-	            response.addHeader("Content-Length", "" + file.length());
-	            OutputStream toClient = new BufferedOutputStream(response
-	                    .getOutputStream());
-	            response.setContentType("application/octet-stream");
-	            toClient.write(buffer);
-	            toClient.flush();
-	            toClient.close();
-	        } catch (IOException ex) {
-	            ex.printStackTrace();
-	        }
-	}
-	
-	
 }

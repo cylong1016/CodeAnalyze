@@ -61,7 +61,6 @@ function tableSort(jqTableObj) {
             }
         }
 
-        //过滤中文字符和$
         function filterStr(data){
             if (!data) {
                 return 0;

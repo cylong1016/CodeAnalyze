@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import edu.nju.service.pmd.PMDService;
-import edu.nju.service.pmd.PMD_Analyze;
 
 @Controller
 @RequestMapping("/pmd")
@@ -18,33 +17,7 @@ public class PMDController {
 
 	@Autowired
 	private PMDService service;
-	
-	@Autowired
-	private PMD_Analyze analyze;
-	
-	
-	@ResponseBody
-	@RequestMapping(value = "/download", method = RequestMethod.GET)
-	public String download()
-	{
-		analyze.download();;
-		return "{\"success\"}";
-	}
-	
-	@ResponseBody
-	@RequestMapping(value = "/analyze", method = RequestMethod.GET)
-	public String analyze()
-	{
-		analyze.analyze();;
-		return "{\"success\"}";
-	}
-	
-	@ResponseBody
-	@RequestMapping(value = "/getIter", method = RequestMethod.GET)
-	public String getIter()
-	{
-		return analyze.getIter();
-	}
+
 	
 	@ResponseBody
 	@RequestMapping(value = "/getAll", method = RequestMethod.GET)

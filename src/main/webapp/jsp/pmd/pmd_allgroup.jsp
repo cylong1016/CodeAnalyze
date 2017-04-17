@@ -84,7 +84,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 	<script type="text/javascript">
 	 	var getIter=function(){
-	 		$.getJSON("api/pmd/getIter",function(data){
+	 		$.getJSON("api/pmdAna/getIter",function(data){
 	 			var colorArr=new Array('#dcdcdc','#97bbcd','#9370DB');
 	 			var code = data.code;
  				if(code=="0"){
