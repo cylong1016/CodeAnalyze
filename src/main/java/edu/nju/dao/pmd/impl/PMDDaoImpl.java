@@ -9,9 +9,9 @@ import org.springframework.stereotype.Repository;
 
 import edu.nju.dao.BaseDao;
 import edu.nju.dao.pmd.PMDDao;
-import edu.nju.entities.PMD.PMD_FileIssues;
-import edu.nju.entities.PMD.PMD_Iter;
-import edu.nju.entities.PMD.PMD_Measure;
+import edu.nju.entities.pmd.PMD_FileIssues;
+import edu.nju.entities.pmd.PMD_Iter;
+import edu.nju.entities.pmd.PMD_Measure;
 
 @Repository
 public class PMDDaoImpl implements PMDDao{

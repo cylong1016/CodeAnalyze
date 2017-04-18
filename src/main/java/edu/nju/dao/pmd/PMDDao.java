@@ -3,8 +3,8 @@ package edu.nju.dao.pmd;
 import java.util.ArrayList;
 import java.util.List;
 
-import edu.nju.entities.PMD.PMD_FileIssues;
-import edu.nju.entities.PMD.PMD_Measure;
+import edu.nju.entities.pmd.PMD_FileIssues;
+import edu.nju.entities.pmd.PMD_Measure;
 
 public interface PMDDao {
 	public boolean saveIssueNum(PMD_Measure measure);
