@@ -3,10 +3,9 @@ package edu.nju.controller.checkstyle;
 import com.google.gson.Gson;
 import edu.nju.Vo.checkstyle.GroupBriefInfo;
 import edu.nju.Vo.checkstyle.GroupInfo;
-import edu.nju.Vo.common.GroupAllScore;
 import edu.nju.Vo.common.SingleCheck;
 import edu.nju.service.checkstyle.CheckstyleService;
-import edu.nju.service.common.CheckResultService;
+import edu.nju.service.common.ResultService;
 import edu.nju.service.common.ScoreService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -30,7 +29,7 @@ public class CheckStyleRESTController {
     @Autowired
     private ScoreService scoreService;
     @Autowired
-    private CheckResultService resultService;
+    private ResultService resultService;
 
     @GetMapping("/group")
     public String group() {
@@ -46,34 +45,10 @@ public class CheckStyleRESTController {
         return response;
     }
 
-    @GetMapping("/grade/{groupId}")
-    public String getGroupGrade(@PathVariable String groupId){
-        GroupAllScore groupScore = scoreService.getGroupAllScore(Long.parseLong(groupId));
-        String response = new Gson().toJson(groupScore);
-        return response;
-    }
-
     @GetMapping("/checkstyle/result/{groupId}")
     public String getCheckstyleResult(@PathVariable String groupId){
         List<SingleCheck> checkstyleResult = resultService.getGroupAllCheckstyleChecks(Long.parseLong(groupId));
         return new Gson().toJson(checkstyleResult);
-    }
-
-    @GetMapping("/check")
-    public String getChecks() {
-        return new Gson().toJson(service.getAllChecks());
-    }
-
-    @PostMapping("/check")
-    public String addCheck(
-            @RequestParam("year") int year, @RequestParam("month")int month, @RequestParam("day")int day,
-            @RequestParam(name="description", required = false)String description){
-        Date date = new Date(year-1900, month-1, day);
-        if(service.addCheck( date, description)){
-            SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
-            return sdf.format(date);
-        }
-        return null;
     }
 
     @GetMapping("/config")

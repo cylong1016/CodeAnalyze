@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * Created by Administrator on 2017/4/18.
  */
-public interface CheckResultService {
+public interface ResultService {
 
     public List<SingleCheck> getGroupAllCheckstyleChecks(long groupId);
 

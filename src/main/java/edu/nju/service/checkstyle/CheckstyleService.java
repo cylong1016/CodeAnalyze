@@ -1,7 +1,7 @@
 package edu.nju.service.checkstyle;
 
 import edu.nju.Vo.checkstyle.*;
-import edu.nju.Vo.checkstyle.SubType;
+import edu.nju.Vo.common.Check;
 import edu.nju.dao.CheckDao;
 import edu.nju.dao.GroupDao;
 import edu.nju.dao.TeacherScoreDao;

@@ -1,5 +1,6 @@
-package edu.nju.Vo.checkstyle;
+package edu.nju.Vo.common;
 
+import edu.nju.Vo.checkstyle.GroupForCheck;
 import edu.nju.entities.checkstyle.CheckLog;
 
 import java.util.*;
@@ -12,14 +13,14 @@ public class Check {
     private Date date;
     private String description;
 //  参与这次检查的小组 [ {id, name} , ... ]
-    private List<GroupForCheck> groups;
+//    private List<GroupForCheck> groups;
 
     public Check(){}
     public Check(CheckLog vo){
         this.id = vo.getId();
         this.date = vo.getCheckDate();
         this.description = vo.getDescription();
-        this.groups = new ArrayList<>();
+//        this.groups = new ArrayList<>();
     }
     public long getId() {
         return id;
@@ -45,16 +46,16 @@ public class Check {
         this.description = description;
     }
 
-    public List<GroupForCheck> getGroups() {
-        return groups;
-    }
-
-    public void setGroups(List<GroupForCheck> groups) {
-        this.groups = groups;
-    }
-    public void addGroupInfo(GroupForCheck group){
-        this.groups.add(group);
-    }
+//    public List<GroupForCheck> getGroups() {
+//        return groups;
+//    }
+//
+//    public void setGroups(List<GroupForCheck> groups) {
+//        this.groups = groups;
+//    }
+//    public void addGroupInfo(GroupForCheck group){
+//        this.groups.add(group);
+//    }
 }
 
 
