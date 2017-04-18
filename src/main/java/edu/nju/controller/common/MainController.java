@@ -19,7 +19,7 @@ public class MainController {
     @GetMapping("/group/{groupId}")
     public String groupDetail(@PathVariable String groupId, Model model){
         model.addAttribute("groupId", groupId);
-        return "jsp";
+        return "jsp/main/groupDetail";
     }
 
     @GetMapping("/config")

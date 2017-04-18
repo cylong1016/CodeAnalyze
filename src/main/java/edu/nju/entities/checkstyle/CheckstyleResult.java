@@ -7,7 +7,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "checkstyle_result")
-public class Result {
+public class CheckstyleResult {
 
     private long id;
 

@@ -7,7 +7,7 @@ import edu.nju.dao.GroupDao;
 import edu.nju.dao.TeacherScoreDao;
 import edu.nju.dao.checkstyle.CheckStyleDao;
 import edu.nju.entities.*;
-import edu.nju.entities.checkstyle.Result;
+import edu.nju.entities.checkstyle.CheckstyleResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -50,8 +50,8 @@ public class CheckstyleService {
 
                 query.put("group_id", group.getId());
                 query.put("check_id", check.getId());
-                List<Result> results = dao.findResult(query);
-                singeCheckInfo.transToPo(results);
+                List<CheckstyleResult> checkstyleResults = dao.findResult(query);
+                singeCheckInfo.transToPo(checkstyleResults);
 
                 singleGroupInfo.addSingleCheckInfo(singeCheckInfo);
             }
@@ -80,10 +80,10 @@ public class CheckstyleService {
 //                query.put("checkId", check.getId());
 //
 //                query.put("fatherType", Constant.FATHER_TYPE_WARN);
-//                List<Result> warnList = dao.findResult(query);
-//                Iterator<Result> warnListItr = warnList.iterator();
+//                List<CheckstyleResult> warnList = dao.findResult(query);
+//                Iterator<CheckstyleResult> warnListItr = warnList.iterator();
 //                while(warnListItr.hasNext()){
-//                    Result result = warnListItr.next();
+//                    CheckstyleResult result = warnListItr.next();
 //                    if(activeTypes.indexOf(result.getSubType())==-1){
 //                        warnListItr.remove();
 //                    }
@@ -91,10 +91,10 @@ public class CheckstyleService {
 //                singleCheckBriefInfo[0] = warnList.size();
 //
 //                query.put("fatherType", Constant.FATHER_TYPE_ERROR);
-//                List<Result> errorList = dao.findResult(query);
-//                Iterator<Result> errorListItr = errorList.iterator();
+//                List<CheckstyleResult> errorList = dao.findResult(query);
+//                Iterator<CheckstyleResult> errorListItr = errorList.iterator();
 //                while(errorListItr.hasNext()){
-//                    Result result = errorListItr.next();
+//                    CheckstyleResult result = errorListItr.next();
 //                    if(activeTypes.indexOf(result.getSubType())==-1){
 //                        errorListItr.remove();
 //                    }
@@ -129,15 +129,15 @@ public class CheckstyleService {
 //            }
 //            ResultList singleCheck = new ResultList(check.getCheckDate(), grade);
 //            querys.put("checkId", check.getId());
-//            List<Result> results = dao.findResult(querys);
-//            Iterator<Result> resultsItr = results.iterator();
+//            List<CheckstyleResult> results = dao.findResult(querys);
+//            Iterator<CheckstyleResult> resultsItr = results.iterator();
 //            while(resultsItr.hasNext()){
-//                Result result = resultsItr.next();
+//                CheckstyleResult result = resultsItr.next();
 //                if(activeTypes.indexOf(result.getSubType())!=-1){
 //                    singleCheck.addResultItem(new ResultItem(result.getFatherType(), result.getSubType(), result.getFile(), result.getRow(), result.getCol(), result.getDescription()));
 //                }
 //            }
-////            for(Result result: results){
+////            for(CheckstyleResult result: results){
 ////                singleCheck.addResultItem(new ResultItem(result.getFatherType(), result.getSubType(), result.getFile(), result.getRow(), result.getCol(), result.getDescription()));
 ////            }
 //            groupInfo.addSingleCheckInfo(singleCheck);
@@ -153,16 +153,16 @@ public class CheckstyleService {
 //        List<String> activeTypes = getActiveTypes();
 //        for(CheckLog singleCheck : allChecks){
 //            Check singleCheckPo = new Check(singleCheck);
-//            String hql = "SELECT distinct R.groupId FROM Result R WHERE R.checkId=" + String.valueOf(singleCheck.getId());
+//            String hql = "SELECT distinct R.groupId FROM CheckstyleResult R WHERE R.checkId=" + String.valueOf(singleCheck.getId());
 //            for(Object groupId: dao.findByHql(hql)){
 //                querys.put("groupId", (long)groupId);
 //                querys.put("checkId", singleCheck.getId());
 //
 //                querys.put("fatherType", Constant.FATHER_TYPE_WARN);
-//                List<Result> warnList = dao.findResult(querys);
-//                Iterator<Result> warnListItr = warnList.iterator();
+//                List<CheckstyleResult> warnList = dao.findResult(querys);
+//                Iterator<CheckstyleResult> warnListItr = warnList.iterator();
 //                while(warnListItr.hasNext()){
-//                    Result result = warnListItr.next();
+//                    CheckstyleResult result = warnListItr.next();
 //                    if(activeTypes.indexOf(result.getSubType())==-1){
 //                        warnListItr.remove();
 //                    }
@@ -170,10 +170,10 @@ public class CheckstyleService {
 //                int warn_count = warnList.size();
 //
 //                querys.put("fatherType", Constant.FATHER_TYPE_ERROR);
-//                List<Result> errorList = dao.findResult(querys);
-//                Iterator<Result> errorListItr = errorList.iterator();
+//                List<CheckstyleResult> errorList = dao.findResult(querys);
+//                Iterator<CheckstyleResult> errorListItr = errorList.iterator();
 //                while(errorListItr.hasNext()){
-//                    Result result = errorListItr.next();
+//                    CheckstyleResult result = errorListItr.next();
 //                    if(activeTypes.indexOf(result.getSubType())==-1){
 //                        errorListItr.remove();
 //                    }
@@ -235,7 +235,7 @@ public class CheckstyleService {
 //            for(Grade grade : dao.getGradeByQuery(findCoordinateQuerys)){
 //                findCoordinateQuerys.put("internalType", item.getInternalType());
 //                findCoordinateQuerys.put("groupId", grade.getGroupId());
-//                List<StatResult> stats = dao.getStatList(findCoordinateQuerys);
+//                List<InternalStat> stats = dao.getStatList(findCoordinateQuerys);
 //                SampleCoordinate coordinate = new SampleCoordinate(stats.get(0).getCount(), grade.getGrade());
 //                singleCheckStat.addCoordinate(coordinate);
 //            }

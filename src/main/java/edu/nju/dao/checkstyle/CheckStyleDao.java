@@ -2,7 +2,6 @@ package edu.nju.dao.checkstyle;
 
 import edu.nju.entities.checkstyle.*;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -11,17 +10,17 @@ import java.util.Map;
  */
 public interface CheckStyleDao {
 
-    public List<Result> getAllResult();
+    public List<CheckstyleResult> getAllResult();
 
-    public Result findResultById();
+    public CheckstyleResult findResultById();
 
-    public List<Result> findResult(Map<String, Object> querys);
+    public List<CheckstyleResult> findResult(Map<String, Object> querys);
 
     public List findByHql(String hql);
 
     public boolean check(long checkId, long groupId);
 
-    public List<StatResult> getStatList(Map<String, Object> querys);
+    public List<InternalStat> getStatList(Map<String, Object> querys);
 
     public List<CheckstyleRegression> getRegressionByInternalType(String internalType);
 

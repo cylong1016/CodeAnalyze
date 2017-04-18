@@ -7,7 +7,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "checkstyle_stat_result")
-public class StatResult {
+public class InternalStat {
     private long id;
     private long checkId;
     private long groupId;

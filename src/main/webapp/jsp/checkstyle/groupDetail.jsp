@@ -44,8 +44,7 @@
                 </ul>
                 <div class="tab-content" id="detail_content">
                     <div role="tabpanel" class="tab-pane" id="warn"><br /></div>
-                    <div role="tabpanel" class="tab-pane" id="error">
-                    </div>
+                    <div role="tabpanel" class="tab-pane" id="error"></div>
                 </div>
             </div>
         </div>
@@ -79,7 +78,7 @@
                 console.log(err.message);
             }
             console.log(detail_info);
-            $.each(detail_info.results, function (key, value) {
+            $.each(detail_info.checkstyleResults, function (key, value) {
                 detail_timeline.push(key);
                 detail_warn[key] = {};
                 detail_error[key] = {};
