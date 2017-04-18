@@ -13,13 +13,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<link href="css/bootstrap.css" rel="stylesheet">
 	<link href="css/bootstrap-responsive.css" rel="stylesheet">
 	<link href="css/bootstrap-datetimepicker.min.css" rel="stylesheet" media="screen">
-	<script src="js/jquery-1.8.3.min.js"></script>
+	<script src="js/jquery-3.2.0.min.js"></script>
 	<script src="js/table.js"></script>
 	<script src="js/Chart-1.0.1-beta.4.js"></script>
+	<script>
+	document.getElementById('drop').className="dropdown active";
+	</script>
 	
 <title>One Group</title>
 </head>
-<body>
+<body style="margin-top:50px">
 <div class="container">
 	<h2>Project Problems Summary</h2>
 	

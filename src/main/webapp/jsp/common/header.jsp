@@ -9,15 +9,28 @@
     <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="container-fluid">
             <div class="navbar-header">
-                <a class="navbar-brand" href="#">Gitlab Monitor</a>
+                <span class="navbar-brand">Gitlab Monitor</span>
             </div>
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav">
-                    <li class="active"><a href="#">Home <span class="sr-only">(current)</span></a></li>
-                    <li class=""><a href="#">Test1 <span class="sr-only">(current)</span></a></li>
-                    <li class=""><a href="#">Test2 <span class="sr-only">(current)</span></a></li>
-                </ul>
-            </div>
+	            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+	                <ul class="nav navbar-nav">
+	                    <li id="home" class=""><a href="jsp/pmd/main.jsp" onclick="homeActive">Home</a></li>
+	                    <li id="drop" class="dropdown">
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown">Tools<strong class="caret"></strong></a>
+								<ul class="dropdown-menu active">
+									<li>
+										 <a href="<%=request.getContextPath()%>/api/checkstyle">CheckStyle</a>
+									</li>
+									<li>
+										 <a href="<%=request.getContextPath()%>/api/pmd">PMD</a>
+									</li>
+									<li>
+										 <a href="#">Findbugs</a>
+									</li>
+								</ul>
+							</li>
+	                    <li id="sta" class=""><a href="jsp/pmd/sta.jsp" onclick="staActive()">Statistics</a></li>
+	                </ul>
+	            </div>
         </div>
     </nav>
 </header>
