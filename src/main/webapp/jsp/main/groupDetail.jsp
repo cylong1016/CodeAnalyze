@@ -33,13 +33,21 @@
 
         </div>
         <div class="col-md-1 col-sm-1"></div>
-        <div id="detail" class="panel panel-success panel-no-padding col-md-6 col-sm-6">
+        <div id="detail" class="panel panel-success panel-no-padding col-md-5 col-sm-5">
             <div class="panel-heading">
                 <h4> 开源工具 检查详细结果</h4>
             </div>
             <div class="panel-body">
-                <ul class="nav nav-tabs" role="tablist" id="detail_tab"></ul>
-                <div class="tab-content" id="detail_content"></div>
+                <ul class="nav nav-tabs" role="tablist" id="detail_tab">
+                    <li role="presentation" id="li_checkstyle"><a href="#checkstyle" aria-controls="checkstyle" role="tab" data-toggle="tab">CheckStyle</a></li>
+                    <li role="presentation" id="li_pmd"><a href="#pmd" aria-controls="pmd" role="tab" data-toggle="tab">PMD</a></li>
+                    <li role="presentation" id="li_sq"><a href="#sq" aria-controls="sq" role="tab" data-toggle="tab">SonarQube</a></li>
+                </ul>
+                <div class="tab-content" id="detail_content">
+                    <div role="tabpanel" class="tab-pane" id="checkstyle"><br /></div>
+                    <div role="tabpanel" class="tab-pane" id="pmd"><br /></div>
+                    <div role="tabpanel" class="tab-pane" id="sq"><br /></div>
+                </div>
             </div>
         </div>
     </div>
@@ -53,87 +61,103 @@
     $(function () {
         var basePath = '<%=request.getContextPath()%>';
         var groupId = $("#content").attr("data-groupId");
-        var panel_width = ($(window).width() - $("#tab").width()) * 15/32;
-        var panel_height = ($(window).height() - parseInt($('body').css('padding-top')) - $("header").height() );
+        var panel_width = $(window).width() * 13/32;
+        var panel_height = ($(window).height() - parseInt($('body').css('padding-top')) - $("header").height());
 
         $.ajax({
-            url: basePath+"/api/checkstyle/api/group/"+groupId,
+            url: basePath+"/api/score/api/"+groupId,
             method: "GET",
-        }).done(function (data) {
+        }).done(
+            function (data) {
+            var grades = []
             try {
-                detail_info = JSON.parse(data);
+                grades = JSON.parse(data);
             } catch(err){
                 console.log(err.message);
             }
-            console.log(detail_info);
-            $.each(detail_info.results, function (key, value) {
-                detail_timeline.push(key);
-                detail_warn[key] = {};
-                detail_error[key] = {};
-                grades.push(value.grade);
-                // 统计warn的subtype，以及每一个subtype的个数
-                $.each(value.warn, function (index, value2) {
-                    // 如果sub_type不存在
-                    if ( $.inArray(value2.sub_type, Object.keys(detail_warn[key])) === -1){
-                        detail_warn[key][value2.sub_type] = 0;
-                    }
-                    detail_warn[key][value2.sub_type] += 1;
-                });
-                $.each(value.error, function (index, value2) {
-                    // 如果sub_type不存在
-                    if ( $.inArray(value2.sub_type, Object.keys(detail_error)) === -1){
-                        detail_error[key][value2.sub_type] = 0;
-                    }
-                    detail_error[key][value2.sub_type] += 1;
-                });
-            });
             console.log(grades);
-            $("#line_charts").attr("style", "width:" + panel_width + "px;height:" + panel_height + "px;");
-            var line_chrts = echarts.init(document.getElementById("line_charts"));
-            drawLineCharts(line_chrts);
-            $("#detail").attr("style", "width:" + panel_width + "px;height:" + panel_height + "px;");
-            drawDetailPanel($("#detail_content"));
+            var test = [3,14,1]
+            var min = Math.min.apply(Math, test)
+            var max = Math.max.apply(Math,test)
+            console.log(min,max)
 
-            line_chrts.on('click', function (params) {
-                if (params.componentType === 'markPoint' || params.componentType === 'series') {
-                    console.log(params);
-                    // 点击到了 markPoint 上
-                    var date = params.name;
-                    var type = params.seriesName;
-                    if(type==='WARN'){
-                        $('#detail_tab a[href="#warn"]').tab('show');
-                        $('#collapse_'+date).collapse('show');
-                    }else if(type==='ERROR'){
-                        $('#detail_tab a[href="#error"]').tab('show');
-                    }
-                }
-            });
+            $("#line_charts").attr("style", "width:" + panel_width + "px;height:" + panel_height + "px;");
+            var line_charts = echarts.init(document.getElementById("line_charts"));
+            drawLineCharts(line_charts, grades);
+//            line_chrts.on('click', function (params) {
+//                if (params.componentType === 'markPoint' || params.componentType === 'series') {
+//                    console.log(params);
+//                    // 点击到了 markPoint 上
+//                    var date = params.name;
+//                    var type = params.seriesName;
+//                    if(type==='WARN'){
+//                        $('#detail_tab a[href="#warn"]').tab('show');
+//                        $('#collapse_'+date).collapse('show');
+//                    }else if(type==='ERROR'){
+//                        $('#detail_tab a[href="#error"]').tab('show');
+//                    }
+//                }
+//            });
         });
+
+        $.ajax({
+            url: basePath+"/api/checkstyle/api/checkstyleResult"+groupId,
+            method: "GET",
+        }).done(
+            function (data) {
+                try{
+                    data = JSON.parse(data);
+                    drawDetailPanel('checkstyle', $("#checkstyle"), data);
+                }catch (err){
+                    console.log(err.message);
+                }
+            }
+        );
+
+        $.ajax({
+            url: basePath+"/api/pmd/api/checkstyleResult"+groupId,
+            method: "GET",
+        }).done(
+            function (data) {
+                try{
+                    data = JSON.parse(data);
+                    drawDetailPanel('pmd', $("#pmd"), data);
+                }catch (err){
+                    console.log(err.message);
+                }
+            }
+        );
+
+        $.ajax({
+            url: basePath+"/api/snoarqube/api/checkstyleResult"+groupId,
+            method: "GET",
+        }).done(
+            function (data) {
+                try{
+                    data = JSON.parse(data);
+                    drawDetailPanel('snoarqube', $("#sq"), data);
+                }catch (err){
+                    console.log(err.message);
+                }
+            }
+        );
 
         $('#detail_tab a').click(function (e) {
             e.preventDefault()
             $(this).tab('show')
         });
-        function drawLineCharts(obj) {
-            var warn_num = [], error_num = [];
-            var line_name = ['Warn', 'Error', 'Grade']
-            $.each(detail_warn, function (key, value) {
-                var count = 0;
-                $.each(value, function (key2, val2) {
-                    count += val2;
-                });
-                warn_num.push(count);
-            });
-            $.each(detail_error, function (key, value) {
-                var count = Math.random()*120;
-                $.each(value, function (key2, val2) {
-                    count += val2;
-                });
-                error_num.push(count);
-            });
+
+        function drawLineCharts(obj, data) {
+            var line_name = ['Teacher', 'CheckStyle', '\n', 'PMD', 'SonarQube'];
+            var minScores = [];
+            minScores.push(Math.min.apply(Math, data.teacherScore));
+            minScores.push(Math.min.apply(Math, data.checkstyleScore));
+            minScores.push(Math.min.apply(Math, data.pmdScore));
+            minScores.push(Math.min.apply(Math, data.sqScore));
+            var minScore = Math.min.apply(Math, minScores);
             var option = {
                 title: {
-                    text: '第'+detail_info.id+'小组',
+                    text: '第'+data.groupId+'小组分数变化图',
                     subtext: '供参考'
                 },
                 tooltip: {
@@ -145,9 +169,6 @@
                 toolbox: {
                     show: true,
                     feature: {
-//                        dataZoom: {
-//                            yAxisIndex: 'none'
-//                        },
                         dataView: {readOnly: false},
                         magicType: {type: ['line', 'bar']},
                         restore: {},
@@ -157,24 +178,30 @@
                 xAxis:  {
                     type: 'category',
                     boundaryGap: false,
-                    data: detail_timeline
+                    data: data.checkDate,
+                    axisLine:{
+                        lineStyle: {
+                            width: 2
+                        }
+                    }
                 },
                 yAxis:[ {
                     type: 'value',
                     axisLabel: {
                         formatter: '{value}'
+                    },
+                    min: minScore,
+                    axisLine:{
+                        lineStyle: {
+                            width: 2
+                        }
                     }
-                },{
-                    type:'value',
-                    axisLabel: {
-                        formatter: '{value}'
-                    }
-                }],
+                } ],
                 series: [
                     {
                         name: line_name[0],
                         type: 'line',
-                        data: warn_num,
+                        data: data.teacherScore,
                         markPoint: {
                             data: [
                                 {type: 'max', name: '最大值'},
@@ -190,11 +217,11 @@
                     {
                         name: line_name[1],
                         type: 'line',
-                        data: error_num,
+                        data: data.checkstyleScore,
                         markPoint: {
                             data: [
-                                {type: 'max', name: '最大值'},
-                                {type: 'min', name: '最小值'}
+//                                {type: 'max', name: '最大值'},
+//                                {type: 'min', name: '最小值'}
                             ]
                         },
                         markLine: {
@@ -204,14 +231,13 @@
                         }
                     },
                     {
-                        name: line_name[2],
+                        name: line_name[3],
                         type: 'line',
-                        data: grades,
-                        yAxisIndex: 1,
+                        data: data.pmdScore,
                         markPoint: {
                             data: [
-                                {type: 'max', name: '最大值'},
-                                {type: 'min', name: '最小值'}
+//                                {type: 'max', name: '最大值'},
+//                                {type: 'min', name: '最小值'}
                             ]
                         },
                         markLine: {
@@ -219,16 +245,31 @@
                                 {type: 'average', name: '平均值'},
                             ]
                         }
-                    },
+                    },{
+                        name: line_name[4],
+                        type: 'line',
+                        data: data.sqScore,
+//                        yAxisIndex: 1,
+                        markPoint: {
+                            data: [
+//                                {type: 'max', name: '最大值'},
+//                                {type: 'min', name: '最小值'}
+                            ]
+                        },
+                        markLine: {
+                            data: [
+                                {type: 'average', name: '平均值'},
+                            ]
+                        }
+                    }
                 ]
             };
             obj.setOption(option);
         }
 
-        function drawDetailPanel(obj) {
-            var html_warn = [], html_error = [];
-
-            html_warn.push('<div class="panel-group" id="warn_detail" role="tablist" aria-multiselectable="true">');
+        function drawDetailPanel(panel_id, father_obj, data) {
+            var html = [];
+            html.push('<div class="panel-group" id="warn_detail" role="tablist" aria-multiselectable="true">');
             $.each(detail_warn, function (key, value) {
                 html_warn.push('<div class="panel panel-default">');
                 html_warn.push('<div class="panel-heading" role="tab" id="heading_'+key+'">');
@@ -236,11 +277,11 @@
                 html_warn.push(key+'  第'+ ($.inArray(key, detail_timeline)+1) + '次检查');
                 html_warn.push('</a></h4></div>');
                 // 判断 要展开哪次 检查详情
-                if($.inArray(key, detail_timeline)== ${check}){
-                    html_warn.push('<div id="collapse_'+key+'" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="heading_'+key+'">');
-                }else{
-                    html_warn.push('<div id="collapse_'+key+'" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading_'+key+'">');
-                }
+                <%--if($.inArray(key, detail_timeline)== ${check}){--%>
+                    <%--html_warn.push('<div id="collapse_'+key+'" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="heading_'+key+'">');--%>
+                <%--}else{--%>
+                    <%--html_warn.push('<div id="collapse_'+key+'" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading_'+key+'">');--%>
+                <%--}--%>
                 html_warn.push('<div class="panel-body">');
                 html_warn.push('<table id="'+key+'" class="table table-striped table-bordered datatable">');
                 html_warn.push('<thead><tr><td>Warn类型</td><td>数量</td></tr></thead>');

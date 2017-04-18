@@ -1,7 +1,7 @@
 package edu.nju.Vo.checkstyle;
 
 
-import edu.nju.entities.checkstyle.Result;
+import edu.nju.entities.checkstyle.CheckstyleResult;
 import edu.nju.utils.checkstyle.Constant;
 
 import java.util.ArrayList;
@@ -56,9 +56,9 @@ public class ResultList {
             this.error.add(item);
         }
     }
-    public void transToPo(List<Result> results){
-        for(Result result: results){
-            this.addResultItem(new ResultItem(result.getFatherType(), result.getSubType(),result.getFile(), result.getRow(), result.getCol(),result.getDescription()));
+    public void transToPo(List<CheckstyleResult> checkstyleResults){
+        for(CheckstyleResult checkstyleResult : checkstyleResults){
+            this.addResultItem(new ResultItem(checkstyleResult.getFatherType(), checkstyleResult.getSubType(), checkstyleResult.getFile(), checkstyleResult.getRow(), checkstyleResult.getCol(), checkstyleResult.getDescription()));
         }
     }
 

@@ -157,7 +157,7 @@ if __name__ == '__main__':
     # checkstyle_file = open(sys.argv[1], 'r')
     group_id = 1
     check_id = 4
-    checkstyle_file = open('checkstyle.result.4', 'r')
+    checkstyle_file = open('checkstyle.checkstyleResult.4', 'r')
     db = MySQLdb.connect('localhost', 'root', '', 'code_analyze', charset="utf8")
     cursor = db.cursor()
 
