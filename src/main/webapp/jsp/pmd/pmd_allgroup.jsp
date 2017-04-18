@@ -13,17 +13,19 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<link href="css/bootstrap.css" rel="stylesheet">
 	<link href="css/bootstrap-responsive.css" rel="stylesheet">
 	<link href="css/bootstrap-datetimepicker.min.css" rel="stylesheet" media="screen">
-	<script src="js/jquery-1.8.3.min.js"></script>
+	<script src="js/jquery-3.2.0.min.js"></script>
 	<script src="js/table.js"></script>
 	<script src="js/Chart-1.0.1-beta.4.js"></script>
 	<script>
 		$(function(){
 			tableSort($('#dataTable'));
 		})
+		
+		document.getElementById('drop').className="dropdown active";
 	</script>
 <title>All Group</title>
 </head>
-<body>
+<body style="margin-top:50px">
 	<div class="container">
 	<h2>Group Problems Summary</h2>
 	
@@ -150,7 +152,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
  						var coupling=arr[index].coupling;
  						html=html+'<tr>'+
 							  '<td>'+(index+1)+'</td>'+
-							  '<td><a href="jsp/pmd/onegroup.jsp?groupName='+groupName+'&iter='+$("#iterHidden").val()+'">'+groupName+'</a></td>'+
+							  '<td><a href="api/pmd/onegroup?groupName='+groupName+'&iter='+$("#iterHidden").val()+'">'+groupName+'</a></td>'+
 							  '<td>'+basic+'</td>'+
 							  '<td>'+naming+'</td>'+
 							  '<td>'+unusedcode+'</td>'+
