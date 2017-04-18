@@ -2,8 +2,12 @@ package edu.nju.service.checkstyle;
 
 import edu.nju.Vo.checkstyle.*;
 import edu.nju.Vo.checkstyle.SubType;
+import edu.nju.dao.CheckDao;
+import edu.nju.dao.GroupDao;
+import edu.nju.dao.TeacherScoreDao;
 import edu.nju.dao.checkstyle.CheckStyleDao;
-import edu.nju.entities.checkstyle.*;
+import edu.nju.entities.*;
+import edu.nju.entities.checkstyle.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,66 +20,44 @@ import java.util.*;
 public class CheckstyleService {
     @Autowired
     private CheckStyleDao dao;
-//    private List<String> activeTypes;
+    @Autowired
+    private GroupDao groupDao;
+    @Autowired
+    private CheckDao checkDao;
+    @Autowired
+    private TeacherScoreDao teacherScoreDao;
 
     public List<GroupInfo> getAllResult() {
-//        List<GroupInfo> returnList = new ArrayList<>();
-//        List<Group> allGroup = dao.getAllGroup();
-//        List<CheckLog> allCheck = dao.getAllCheck();
-//        for (Group group : allGroup) {
-//            GroupInfo singleGroupInfo = new GroupInfo(group.getId());
-//            for (CheckLog check : allCheck) {
-//                if( !ifCheckdayPass(check.getCheckDate())){
-//                    continue;
-//                }
-//                Map<String, Object> gradeQuery = new HashMap<>();
-//                gradeQuery.put("checkId", check.getId());
-//                gradeQuery.put("groupId", group.getId());
-//                int grade = 0;
-//                List<Grade> groupGrade = dao.getGradeByQuery(gradeQuery);
-//                if( groupGrade.size()==1 ){
-//                    grade = groupGrade.get(0).getGrade();
-//                }
-//                ResultList singeCheckInfo = new ResultList(check.getCheckDate(), grade);
-//                Map<String, Object> query = new HashMap<>();
-//
-//                query.put("group_id", group.getId());
-//                query.put("check_id", check.getId());
-//                List<Result> results = dao.findResult(query);
-//                singeCheckInfo.transToPo(results);
-//
-//                singleGroupInfo.addSingleCheckInfo(singeCheckInfo);
-//            }
-//            returnList.add(singleGroupInfo);
-//        }
-//        return returnList;
-        //        for(Result item : allResults){
-//            GroupInfo singleGroup;
-//            if (groupsInfo.keySet().contains(item.getGroupId())){
-//                singleGroup = groupsInfo.get(item.getGroupId());
-//            } else {
-//                singleGroup = new GroupInfo(item.getGroupId());
-//                groupsInfo.put(item.getGroupId(), singleGroup);
-//            }
-//            ResultList singleCheckResult;
-//            if (singleGroup.getResults().keySet().contains(item.getCheckId())){
-//                singleCheckResult = singleGroup.getResults().get(item.getCheckId());
-//            } else {
-//                Map<String, Object> checkDateFindQuery = new HashMap<>();
-//                checkDateFindQuery.put("id", item.getCheckId());
-//                Date checkDate = baseDao.find(CheckLog.class, checkDateFindQuery).get(0).getCheckDate();
-//                singleCheckResult = new ResultList(checkDate);
-//                singleGroup.addResult(item.getCheckId(), singleCheckResult);
-//            }
-//            ResultItem resultItem = new ResultItem(item.getFatherType(), item.getSubType(), item.getFile(), item.getRow(), item.getCol(), item.getDescription());
-//            if (item.getFatherType()=="warn"){
-//                singleCheckResult.addWarn(resultItem);
-//            }else if (item.getFatherType()=="error"){
-//                singleCheckResult.addError(resultItem);
-//            }
-//        }
-//        return new ArrayList<GroupInfo>(groupsInfo.values());
-        return null;
+        List<GroupInfo> returnList = new ArrayList<>();
+        List<StudentGroup> allGroup = groupDao.getAllGroup();
+        List<CheckLog> allCheck = checkDao.getAllCheck();
+        for (StudentGroup group : allGroup) {
+            GroupInfo singleGroupInfo = new GroupInfo(group.getId());
+            for (CheckLog check : allCheck) {
+                if( !ifCheckdayPass(check.getCheckDate())){
+                    continue;
+                }
+                Map<String, Object> gradeQuery = new HashMap<>();
+                gradeQuery.put("checkId", check.getId());
+                gradeQuery.put("groupId", group.getId());
+                int grade = 0;
+                List<TeacherScore> groupGrade = teacherScoreDao.getTeacherScoreByQuery(gradeQuery);
+                if( groupGrade.size()==1 ){
+                    grade = groupGrade.get(0).getScore();
+                }
+                ResultList singeCheckInfo = new ResultList(check.getCheckDate(), grade);
+                Map<String, Object> query = new HashMap<>();
+
+                query.put("group_id", group.getId());
+                query.put("check_id", check.getId());
+                List<Result> results = dao.findResult(query);
+                singeCheckInfo.transToPo(results);
+
+                singleGroupInfo.addSingleCheckInfo(singeCheckInfo);
+            }
+            returnList.add(singleGroupInfo);
+        }
+        return returnList;
     }
 
     public List<GroupBriefInfo> getAllBriefResult() {
@@ -160,7 +142,7 @@ public class CheckstyleService {
 ////            }
 //            groupInfo.addSingleCheckInfo(singleCheck);
 //        }
-//    return groupInfo;
+//        return groupInfo;
         return null;
     }
 
@@ -211,34 +193,35 @@ public class CheckstyleService {
     }
 
     public List<InternalType> getCheckConfig(){
-       List<InternalType> resultList = new ArrayList<>();
-       String hql = "SELECT distinct C.internalType FROM CheckType C";
-       for(Object internalTypeName : dao.findByHql(hql)){
-           InternalType internalType = new InternalType( (String) internalTypeName);
-           Map<String, Object> querys = new HashMap<>();
-           querys.put("internalType", internalTypeName);
-           for(CheckType subType : dao.findTypeByQuery(querys)){
-               boolean status = ( subType.getStatus()==1 ) ? true : false;
-               internalType.addSubType( new SubType(subType.getId(),subType.getSubType(), status));
-           }
-           resultList.add(internalType);
-       }
-       return resultList;
+//       List<InternalType> resultList = new ArrayList<>();
+//       String hql = "SELECT distinct C.internalType FROM CheckType C";
+//       for(Object internalTypeName : dao.findByHql(hql)){
+//           InternalType internalType = new InternalType( (String) internalTypeName);
+//           Map<String, Object> querys = new HashMap<>();
+//           querys.put("internalType", internalTypeName);
+//           for(CheckType subType : dao.findTypeByQuery(querys)){
+//               boolean status = ( subType.getStatus()==1 ) ? true : false;
+//               internalType.addSubType( new SubType(subType.getId(),subType.getSubType(), status));
+//           }
+//           resultList.add(internalType);
+//       }
+//       return resultList;
+        return null;
     }
 
     public boolean updateCheckConfig(List<Long> checkedIds){
-//        String hql = "SELECT C.id FROM CheckType C";
-        for(CheckType typeItem : dao.getAllCheckType()){
-            if( checkedIds.indexOf(typeItem.getId())==-1 ){
-                typeItem.setStatus(0);
-            }else {
-                typeItem.setStatus(1);
-            }
-            boolean ifSave = dao.updateCheckType(typeItem);
-            if(!ifSave){
-                return false;
-            }
-        }
+////        String hql = "SELECT C.id FROM CheckType C";
+//        for(CheckType typeItem : dao.getAllCheckType()){
+//            if( checkedIds.indexOf(typeItem.getId())==-1 ){
+//                typeItem.setStatus(0);
+//            }else {
+//                typeItem.setStatus(1);
+//            }
+//            boolean ifSave = dao.updateCheckType(typeItem);
+//            if(!ifSave){
+//                return false;
+//            }
+//        }
         return true;
     }
 
@@ -263,7 +246,7 @@ public class CheckstyleService {
     }
 
     public boolean addGrade(long checkId, long groupId, int grade, String comment){
-        Grade gradeEntity = new Grade(checkId, groupId, grade, comment);
+//        Grade gradeEntity = new Grade(checkId, groupId, grade, comment);
 //        return dao.addGrade(gradeEntity);
         return false;
     }
@@ -295,12 +278,12 @@ public class CheckstyleService {
 //        }
 //    }
 
-    private List<String> getActiveTypes(){
-        List<String> activeTypes = new ArrayList<>();
-        List<CheckType> activeTypesEntity = dao.getActiveType();
-        for(CheckType type: activeTypesEntity){
-            activeTypes.add(type.getSubType());
-        }
-        return activeTypes;
-    }
+//    private List<String> getActiveTypes(){
+//        List<String> activeTypes = new ArrayList<>();
+//        List<CheckType> activeTypesEntity = dao.getActiveType();
+//        for(CheckType type: activeTypesEntity){
+//            activeTypes.add(type.getSubType());
+//        }
+//        return activeTypes;
+//    }
 }

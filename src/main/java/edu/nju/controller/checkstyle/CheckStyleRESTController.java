@@ -3,7 +3,11 @@ package edu.nju.controller.checkstyle;
 import com.google.gson.Gson;
 import edu.nju.Vo.checkstyle.GroupBriefInfo;
 import edu.nju.Vo.checkstyle.GroupInfo;
+import edu.nju.Vo.common.GroupAllScore;
+import edu.nju.Vo.common.SingleCheck;
 import edu.nju.service.checkstyle.CheckstyleService;
+import edu.nju.service.common.CheckResultService;
+import edu.nju.service.common.ScoreService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -23,6 +27,10 @@ import java.util.*;
 public class CheckStyleRESTController {
     @Autowired
     private CheckstyleService service;
+    @Autowired
+    private ScoreService scoreService;
+    @Autowired
+    private CheckResultService resultService;
 
     @GetMapping("/group")
     public String group() {
@@ -36,6 +44,19 @@ public class CheckStyleRESTController {
         GroupInfo groupInfo = service.getSingleGroupResult(Long.parseLong(groupId));
         String response = new Gson().toJson(groupInfo);
         return response;
+    }
+
+    @GetMapping("/grade/{groupId}")
+    public String getGroupGrade(@PathVariable String groupId){
+        GroupAllScore groupScore = scoreService.getGroupAllScore(Long.parseLong(groupId));
+        String response = new Gson().toJson(groupScore);
+        return response;
+    }
+
+    @GetMapping("/checkstyle/result/{groupId}")
+    public String getCheckstyleResult(@PathVariable String groupId){
+        List<SingleCheck> checkstyleResult = resultService.getGroupAllCheckstyleChecks(Long.parseLong(groupId));
+        return new Gson().toJson(checkstyleResult);
     }
 
     @GetMapping("/check")
