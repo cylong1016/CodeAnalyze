@@ -9,6 +9,8 @@ import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
 
+import edu.nju.entities.PMD.PMD_FileIssues;
+import edu.nju.entities.PMD.PMD_Measure;
 import org.json.JSONObject;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -17,8 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import edu.nju.dao.pmd.PMDDao;
-import edu.nju.entities.pmd.PMD_FileIssues;
-import edu.nju.entities.pmd.PMD_Measure;
+
 import edu.nju.utils.pmd.Constants;
 import edu.nju.utils.pmd.RESCODE;
 

@@ -12,13 +12,14 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
+import edu.nju.entities.PMD.PMD_FileIssues;
+import edu.nju.entities.PMD.PMD_Measure;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import edu.nju.dao.pmd.PMDDao;
-import edu.nju.entities.pmd.PMD_FileIssues;
-import edu.nju.entities.pmd.PMD_Measure;
+
 import edu.nju.utils.pmd.Constants;
 import edu.nju.utils.pmd.RESCODE;
 
@@ -72,8 +73,6 @@ public class PMDService {
 	}
 	
 	/**
-	 * @param iter
-	 * @param issueType
 	 * 导出详细问题
 	 */
 	public String exportDetail(int iter,String type,String groupName,HttpServletResponse response){
@@ -120,8 +119,6 @@ public class PMDService {
 	
 	
 	/**
-	 * @param iter
-	 * @param issueType
 	 * 获得某一组每个种类问题的数量
 	 */
 	public String getMeasure(String groupName){

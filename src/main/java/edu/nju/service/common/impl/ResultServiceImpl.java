@@ -1,10 +1,12 @@
 package edu.nju.service.common.impl;
 
 import edu.nju.Vo.common.SingleCheck;
+import edu.nju.Vo.common.SingleResult;
 import edu.nju.dao.CheckDao;
 import edu.nju.dao.checkstyle.CheckStyleDao;
 import edu.nju.entities.CheckLog;
 import edu.nju.entities.checkstyle.CheckstyleResult;
+import edu.nju.entities.checkstyle.SubTypeStat;
 import edu.nju.service.common.ResultService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,11 +31,16 @@ public class ResultServiceImpl implements ResultService {
                 Map<String, Object> querys = new HashMap<>();
                 querys.put("checkId", check.getId());
                 querys.put("groupId", groupId);
-                Map<String, Integer> errorCount = new HashMap<>();
-                for(CheckstyleResult checkstyleResult : checkStyleDao.findResult(querys));
+                for(SubTypeStat subTypeStat : checkStyleDao.getSubTypeStat(querys)){
+                    if(subTypeStat.getCount()!=0){
+                        SingleResult singleResult = new SingleResult(subTypeStat.getSubType(), subTypeStat.getCount());
+                        singleCheck.addSingleResult(singleResult);
+                    }
+                }
+                groupChecks.add(singleCheck);
             }
         }
-        return null;
+        return groupChecks;
     }
 
     @Override

@@ -39,14 +39,20 @@
             </div>
             <div class="panel-body">
                 <ul class="nav nav-tabs" role="tablist" id="detail_tab">
-                    <li role="presentation" id="li_checkstyle"><a href="#checkstyle" aria-controls="checkstyle" role="tab" data-toggle="tab">CheckStyle</a></li>
+                    <li role="presentation" id="li_checkstyle" class="active"><a href="#checkstyle" aria-controls="checkstyle" role="tab" data-toggle="tab">CheckStyle</a></li>
                     <li role="presentation" id="li_pmd"><a href="#pmd" aria-controls="pmd" role="tab" data-toggle="tab">PMD</a></li>
                     <li role="presentation" id="li_sq"><a href="#sq" aria-controls="sq" role="tab" data-toggle="tab">SonarQube</a></li>
                 </ul>
                 <div class="tab-content" id="detail_content">
-                    <div role="tabpanel" class="tab-pane" id="checkstyle"><br /></div>
-                    <div role="tabpanel" class="tab-pane" id="pmd"><br /></div>
-                    <div role="tabpanel" class="tab-pane" id="sq"><br /></div>
+                    <div role="tabpanel" class="tab-pane active"><br />
+                        <div class="panel-group" id="checkstyle" role="tablist" aria-multiselectable="true"></div>
+                    </div>
+                    <div role="tabpanel" class="tab-pane"><br />
+                        <div class="panel-group" id="pmd" role="tablist" aria-multiselectable="true"></div>
+                    </div>
+                    <div role="tabpanel" class="tab-pane"><br />
+                        <div class="panel-group" id="sq" role="tablist" aria-multiselectable="true"></div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -76,10 +82,6 @@
                 console.log(err.message);
             }
             console.log(grades);
-            var test = [3,14,1]
-            var min = Math.min.apply(Math, test)
-            var max = Math.max.apply(Math,test)
-            console.log(min,max)
 
             $("#line_charts").attr("style", "width:" + panel_width + "px;height:" + panel_height + "px;");
             var line_charts = echarts.init(document.getElementById("line_charts"));
@@ -101,12 +103,20 @@
         });
 
         $.ajax({
-            url: basePath+"/api/checkstyle/api/checkstyleResult"+groupId,
+            url: basePath+"/api/checkstyle/api/result/"+groupId,
             method: "GET",
         }).done(
             function (data) {
                 try{
                     data = JSON.parse(data);
+                    data.sort(function (a, b) {
+                        var keyA = new Date(a.checkDate),
+                            keyB = new Date(b.checkDate);
+                        if( keyA < keyB ) return -1;
+                        if( keyA > keyB ) return 1;
+                        return 0
+                    });
+                    console.log(data);
                     drawDetailPanel('checkstyle', $("#checkstyle"), data);
                 }catch (err){
                     console.log(err.message);
@@ -114,33 +124,33 @@
             }
         );
 
-        $.ajax({
-            url: basePath+"/api/pmd/api/checkstyleResult"+groupId,
-            method: "GET",
-        }).done(
-            function (data) {
-                try{
-                    data = JSON.parse(data);
-                    drawDetailPanel('pmd', $("#pmd"), data);
-                }catch (err){
-                    console.log(err.message);
-                }
-            }
-        );
-
-        $.ajax({
-            url: basePath+"/api/snoarqube/api/checkstyleResult"+groupId,
-            method: "GET",
-        }).done(
-            function (data) {
-                try{
-                    data = JSON.parse(data);
-                    drawDetailPanel('snoarqube', $("#sq"), data);
-                }catch (err){
-                    console.log(err.message);
-                }
-            }
-        );
+//        $.ajax({
+//            url: basePath+"/api/pmd/api/result"+groupId,
+//            method: "GET",
+//        }).done(
+//            function (data) {
+//                try{
+//                    data = JSON.parse(data);
+//                    drawDetailPanel('pmd', $("#pmd"), data);
+//                }catch (err){
+//                    console.log(err.message);
+//                }
+//            }
+//        );
+//
+//        $.ajax({
+//            url: basePath+"/api/snoarqube/api/result"+groupId,
+//            method: "GET",
+//        }).done(
+//            function (data) {
+//                try{
+//                    data = JSON.parse(data);
+//                    drawDetailPanel('snoarqube', $("#sq"), data);
+//                }catch (err){
+//                    console.log(err.message);
+//                }
+//            }
+//        );
 
         $('#detail_tab a').click(function (e) {
             e.preventDefault()
@@ -268,43 +278,42 @@
         }
 
         function drawDetailPanel(panel_id, father_obj, data) {
+            panel_id = panel_id + '_list';
             var html = [];
-            html.push('<div class="panel-group" id="warn_detail" role="tablist" aria-multiselectable="true">');
-            $.each(detail_warn, function (key, value) {
-                html_warn.push('<div class="panel panel-default">');
-                html_warn.push('<div class="panel-heading" role="tab" id="heading_'+key+'">');
-                html_warn.push('<h4 class="panel-title"> <a role="button" data-toggle="collapse" data-parent="#warn_detail" href="#collapse_'+key+'" aria-expanded="true" aria-controls="collapse_'+key+'">');
-                html_warn.push(key+'  第'+ ($.inArray(key, detail_timeline)+1) + '次检查');
-                html_warn.push('</a></h4></div>');
+            $.each(data, function (index, value) {
+                html.push('<div class="panel panel-default">');
+                html.push('<div class="panel-heading" role="tab" id="heading_'+index+'">');
+                html.push('<h4 class="panel-title"> <a role="button" data-toggle="collapse" data-parent="#'+panel_id+'" href="#collapse_'+index+'" aria-expanded="true" aria-controls="collapse_'+index+'">');
+                html.push( value.checkDate +'  第'+ (index+1) + '次检查');
+                html.push('</a></h4></div>');
                 // 判断 要展开哪次 检查详情
-                <%--if($.inArray(key, detail_timeline)== ${check}){--%>
-                    <%--html_warn.push('<div id="collapse_'+key+'" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="heading_'+key+'">');--%>
-                <%--}else{--%>
-                    <%--html_warn.push('<div id="collapse_'+key+'" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading_'+key+'">');--%>
-                <%--}--%>
-                html_warn.push('<div class="panel-body">');
-                html_warn.push('<table id="'+key+'" class="table table-striped table-bordered datatable">');
-                html_warn.push('<thead><tr><td>Warn类型</td><td>数量</td></tr></thead>');
-                html_warn.push('<tbody>');
-                $.each(value, function (key2, val2) {
-                    html_warn.push('<tr>');
-                    html_warn.push('<td>' + key2 + '</td>');
-                    html_warn.push('<td>' + val2 + '</td>');
-                    html_warn.push('</tr>')
+                if(index == 0 ){
+                    html.push('<div id="collapse_'+index+'" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="heading_'+index+'">');
+                }else{
+                    html.push('<div id="collapse_'+index+'" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading_'+index+'">');
+                }
+                html.push('<div class="panel-body">');
+                html.push('<table id="'+index+'" class="table table-striped table-bordered datatable">');
+                html.push('<thead><tr><td>Error类型</td><td>数量</td></tr></thead>');
+                html.push('<tbody>');
+                $.each(value.results, function (index2, value2) {
+                    html.push('<tr>');
+                    html.push('<td>' + value2.name + '</td>');
+                    html.push('<td>' + value2.count + '</td>');
+                    html.push('</tr>')
                 });
-                html_warn.push('</tbody>');
-                html_warn.push('</table>');
-                html_warn.push('</div>');
-                html_warn.push('</div>');
-                html_warn.push('</div>');
+                html.push('</tbody>');
+                html.push('</table>');
+                html.push('</div>');
+                html.push('</div>');
+                html.push('</div>');
             });
-            html_warn.push('</div>');
-            $('#warn').append(html_warn.join(''));
+            father_obj.append(html.join(''));
             // 设置一次只显示一个
-            $('#warn_detail').on('show.bs.collapse','.collapse', function() {
-                $('#warn_detail').find('.collapse.in').collapse('hide');
+            father_obj.on('show.bs.collapse','.collapse', function() {
+                father_obj.find('.collapse.in').collapse('hide');
             });
-            $.each($('.datatable'), function (index,obj) {
+            $.each($('.datatable'), function (index, obj) {
                 $(obj).DataTable({
                     'searching': false,
                     'info': false,

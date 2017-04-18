@@ -45,7 +45,7 @@ public class CheckStyleRESTController {
         return response;
     }
 
-    @GetMapping("/checkstyle/result/{groupId}")
+    @GetMapping("/result/{groupId}")
     public String getCheckstyleResult(@PathVariable String groupId){
         List<SingleCheck> checkstyleResult = resultService.getGroupAllCheckstyleChecks(Long.parseLong(groupId));
         return new Gson().toJson(checkstyleResult);

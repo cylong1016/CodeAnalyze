@@ -7,6 +7,7 @@
 import json
 import re
 import MySQLdb
+import random
 
 REGEX = r'\[([^\]]*)\](.*)\[([^\]]*)\]'
 OMIT = ['Indentation', 'CustomImportOrder', 'FileTabCharacter', 'WhitespaceAround', 'AvoidStarImport',
@@ -155,55 +156,60 @@ if __name__ == '__main__':
     #     print 'Usage:\n\tpython %s __FILENAME__ check_id group_id' % sys.argv[0]
     #     exit(1)
     # checkstyle_file = open(sys.argv[1], 'r')
-    group_id = 1
-    check_id = 4
-    checkstyle_file = open('checkstyle.checkstyleResult.4', 'r')
+    group_id = 2
+    check_id = 1
+    # checkstyle_file = open('checkstyle.checkstyleResult.4', 'r')
     db = MySQLdb.connect('localhost', 'root', '', 'code_analyze', charset="utf8")
     cursor = db.cursor()
-
-    check_type_stat = {"All": 0}
-    for k in TREE.keys():
-        check_type_stat[k] = 0
-
-    for line in checkstyle_file.xreadlines():
-        line = line.strip()
-        macthObj = re.match(REGEX, line)
-        if macthObj is None:
-            continue
-        father_type = macthObj.group(1)
-        sub_type = macthObj.group(3)
-
-        # if sub_type in OMIT:
-        #     continue
-
-        # 消除 分区头F:\ 的影响
-        check_info = (macthObj.group(2).split(':\\'))[1].split(':')
-        file_name = '\/'.join(check_info[0].split('\\src\\')[1].split('\\'))
-        row, column, description = 0, 0, None
-        try:
-            row = int(check_info[1])
-        except ValueError:
-            description = check_info[1].strip()
-        try:
-            column = int(check_info[2])
-        except ValueError:
-            description = check_info[2].strip()
-        if description is None:
-            description = ''.join(check_info[3:]).strip()
-        sql_result = 'INSERT INTO checkstyle_result \
-              (father_type, sub_type, file, row, col, check_id, description, group_id) \
-              VALUES ("%s", "%s", "%s", "%d", "%d", "%d", "%s","%d") ' % \
-                     (father_type, sub_type, file_name, row, column, check_id, description, group_id)
-        cursor.execute(sql_result)
-
-        internal_key = REVERSE_TREE[sub_type]
-        check_type_stat[internal_key] += 1
-        check_type_stat['All'] += 1
-
-    print check_type_stat
-    for k, v in check_type_stat.iteritems():
-        sql_type_count = 'INSERT INTO checkstyle_stat_result (check_id, group_id, internal_type , count) VALUES ("%d", "%d", "%s", "%d")' % (check_id, group_id, k, v)
+    for k,v in TREE.iteritems():
+        sql_type_count = 'INSERT INTO checkstyle_stat_result (check_id, group_id, internal_type , count) VALUES ("%d", "%d", "%s", "%d")' % (check_id, group_id, k, random.randint(10, 50))
         cursor.execute(sql_type_count)
+        for subtype in v:
+            sql_subtype_count = 'INSERT INTO checkstyle_subtype_stat (check_id, group_id, sub_type , count) VALUES ("%d", "%d", "%s", "%d")' % (check_id, group_id, k, random.randint(0, 10))
+            cursor.execute(sql_subtype_count)
+    # check_type_stat = {"All": 0}
+    # for k in TREE.keys():
+    #     check_type_stat[k] = 0
+    #
+    # for line in checkstyle_file.xreadlines():
+    #     line = line.strip()
+    #     macthObj = re.match(REGEX, line)
+    #     if macthObj is None:
+    #         continue
+    #     father_type = macthObj.group(1)
+    #     sub_type = macthObj.group(3)
+    #
+    #     # if sub_type in OMIT:
+    #     #     continue
+    #
+    #     # 消除 分区头F:\ 的影响
+    #     check_info = (macthObj.group(2).split(':\\'))[1].split(':')
+    #     file_name = '\/'.join(check_info[0].split('\\src\\')[1].split('\\'))
+    #     row, column, description = 0, 0, None
+    #     try:
+    #         row = int(check_info[1])
+    #     except ValueError:
+    #         description = check_info[1].strip()
+    #     try:
+    #         column = int(check_info[2])
+    #     except ValueError:
+    #         description = check_info[2].strip()
+    #     if description is None:
+    #         description = ''.join(check_info[3:]).strip()
+    #     sql_result = 'INSERT INTO checkstyle_result \
+    #           (father_type, sub_type, file, row, col, check_id, description, group_id) \
+    #           VALUES ("%s", "%s", "%s", "%d", "%d", "%d", "%s","%d") ' % \
+    #                  (father_type, sub_type, file_name, row, column, check_id, description, group_id)
+    #     cursor.execute(sql_result)
+    #
+    #     internal_key = REVERSE_TREE[sub_type]
+    #     check_type_stat[internal_key] += 1
+    #     check_type_stat['All'] += 1
+    #
+    # print check_type_stat
+    # for k, v in check_type_stat.iteritems():
+    #     sql_type_count = 'INSERT INTO checkstyle_stat_result (check_id, group_id, internal_type , count) VALUES ("%d", "%d", "%s", "%d")' % (check_id, group_id, k, v)
+    #     cursor.execute(sql_type_count)
 
     db.commit()
     db.close()
