@@ -15,11 +15,12 @@ public interface PMDDao {
 
 	public List<PMD_FileIssues> getOneGroup(int iter, String issueType,String groupName);
 
-	public PMD_Measure getMeasure(int iter, String groupName);
+	public PMD_Measure getMeasure(int iter,String groupName);
 
 	public int getIter();
 
 	public boolean setIter();
 
 	public ArrayList<Double[]> getAve();
+
 }

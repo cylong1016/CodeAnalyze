@@ -31,7 +31,7 @@ public class PMD_AnalyzeController {
 	@RequestMapping(value = "/analyze", method = RequestMethod.GET)
 	public String analyze(HttpServletRequest req)
 	{
-		analyze.analyze(req);;
+		analyze.analyze(req);
 		return "{\"success\"}";
 	}
 	

@@ -12,6 +12,7 @@ import org.hibernate.annotations.GenericGenerator;
 @Table(name = "pmd_measure")
 public class PMD_Measure {
 	private String id;
+	private long groupId;
 	private String groupName;
 	private int basic;
 	private int naming;
@@ -30,6 +31,12 @@ public class PMD_Measure {
 	}
 	public void setId(String id) {
 		this.id = id;
+	}
+	public long getGroupId() {
+		return groupId;
+	}
+	public void setGroupId(long groupId) {
+		this.groupId = groupId;
 	}
 	public String getGroupName() {
 		return groupName;
@@ -81,7 +88,7 @@ public class PMD_Measure {
 	}
 	@Override
 	public String toString() {
-		return "PMD_Measure [id=" + id + ", groupName=" + groupName + ", basic=" + basic + ", naming=" + naming
+		return "PMD_Measure [id=" + id + ", basic=" + basic + ", naming=" + naming
 				+ ", unusedcode=" + unusedcode + ", codesize=" + codesize + ", clone=" + clone + ", coupling="
 				+ coupling + ", iter=" + iter + "]";
 	}

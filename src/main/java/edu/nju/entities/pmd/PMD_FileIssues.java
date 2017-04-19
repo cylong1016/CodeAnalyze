@@ -18,6 +18,7 @@ public class PMD_FileIssues {
 	private int line;
 	private String problem;
 	private String link;
+	private long groupId;
 	private String groupName;
 	
 	@Id
@@ -29,6 +30,12 @@ public class PMD_FileIssues {
 	}
 	public void setId(String id) {
 		this.id = id;
+	}
+	public long getGroupId() {
+		return groupId;
+	}
+	public void setGroupId(long groupId) {
+		this.groupId = groupId;
 	}
 	public String getGroupName() {
 		return groupName;
