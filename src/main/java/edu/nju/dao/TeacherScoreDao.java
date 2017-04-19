@@ -13,4 +13,8 @@ public interface TeacherScoreDao {
     public List<TeacherScore> getTeacherScoreByQuery(Map<String, Object> querys);
 
     public List getTeacherScoreByHql(String hql);
+
+    public boolean addTeacherScore(TeacherScore score);
+
+    public boolean deleteTeacherScore(TeacherScore score);
 }

@@ -30,6 +30,9 @@
 							</li>
 	                    <li id="sta" class=""><a href="jsp/pmd/sta.jsp" onclick="staActive()">Statistics</a></li>
 	                </ul>
+					<ul class="nav navbar-nav navbar-right">
+						<li><a href="<%=request.getContextPath()%>/api/config"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Config</a></li>
+					</ul>
 	            </div>
         </div>
     </nav>

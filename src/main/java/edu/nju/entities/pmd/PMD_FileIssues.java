@@ -1,4 +1,4 @@
-package edu.nju.entities.pmd;
+package edu.nju.entities.PMD;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

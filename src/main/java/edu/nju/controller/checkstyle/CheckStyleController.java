@@ -13,22 +13,20 @@ public class CheckStyleController {
 
     @RequestMapping(method = RequestMethod.GET)
     public String totalInfo(Model model) {
-        return "jsp/checkstyle/check";
-    }
-
-    @GetMapping("/group")
-    public String groupTotal() {
-//        ArrayList<>
         return "jsp/checkstyle/group";
     }
+
+//    @GetMapping("/group")
+//    public String groupTotal() {
+////        ArrayList<>
+//        return "jsp/checkstyle/group";
+//    }
 
     @GetMapping("/group/{groupId}")
     public String groupInfo(@PathVariable String groupId,
                             @MatrixVariable(required = false, defaultValue = "1")int check,
-                            @MatrixVariable(required = false, defaultValue = "warn")String type,
                             Model model) {
-        model.addAttribute("check",check-1);
-        model.addAttribute("type", type.toLowerCase());
+        model.addAttribute("check",check);
         model.addAttribute("groupId", groupId);
         return "jsp/checkstyle/groupDetail";
     }

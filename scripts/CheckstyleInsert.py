@@ -156,16 +156,16 @@ if __name__ == '__main__':
     #     print 'Usage:\n\tpython %s __FILENAME__ check_id group_id' % sys.argv[0]
     #     exit(1)
     # checkstyle_file = open(sys.argv[1], 'r')
-    group_id = 2
-    check_id = 1
+    group_id = 3
+    check_id = 2
     # checkstyle_file = open('checkstyle.checkstyleResult.4', 'r')
     db = MySQLdb.connect('localhost', 'root', '', 'code_analyze', charset="utf8")
     cursor = db.cursor()
-    for k,v in TREE.iteritems():
-        sql_type_count = 'INSERT INTO checkstyle_stat_result (check_id, group_id, internal_type , count) VALUES ("%d", "%d", "%s", "%d")' % (check_id, group_id, k, random.randint(10, 50))
-        cursor.execute(sql_type_count)
+    for k, v in TREE.iteritems():
+        # sql_type_count = 'INSERT INTO checkstyle_stat_result (check_id, group_id, internal_type , count) VALUES ("%d", "%d", "%s", "%d")' % (check_id, group_id, k, random.randint(10, 50))
+        # cursor.execute(sql_type_count)
         for subtype in v:
-            sql_subtype_count = 'INSERT INTO checkstyle_subtype_stat (check_id, group_id, sub_type , count) VALUES ("%d", "%d", "%s", "%d")' % (check_id, group_id, k, random.randint(0, 10))
+            sql_subtype_count = 'INSERT INTO checkstyle_subtype_stat (check_id, group_id, sub_type , count) VALUES ("%d", "%d", "%s", "%d")' % (check_id, group_id, subtype, random.randint(0, 10))
             cursor.execute(sql_subtype_count)
     # check_type_stat = {"All": 0}
     # for k in TREE.keys():

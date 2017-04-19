@@ -5,6 +5,7 @@ import edu.nju.Vo.common.SingleResult;
 import edu.nju.dao.CheckDao;
 import edu.nju.dao.checkstyle.CheckStyleDao;
 import edu.nju.entities.CheckLog;
+import edu.nju.entities.checkstyle.CheckType;
 import edu.nju.entities.checkstyle.CheckstyleResult;
 import edu.nju.entities.checkstyle.SubTypeStat;
 import edu.nju.service.common.ResultService;
@@ -25,6 +26,7 @@ public class ResultServiceImpl implements ResultService {
     @Override
     public List<SingleCheck> getGroupAllCheckstyleChecks(long groupId) {
         List<SingleCheck> groupChecks = new ArrayList<>();
+        List<String> activeTypes = getActiveTypes();
         for(CheckLog check : checkDao.getAllCheck()){
             if(ifCheckdayPass(check.getCheckDate())){
                 SingleCheck singleCheck = new SingleCheck(check.getCheckDate());
@@ -32,7 +34,7 @@ public class ResultServiceImpl implements ResultService {
                 querys.put("checkId", check.getId());
                 querys.put("groupId", groupId);
                 for(SubTypeStat subTypeStat : checkStyleDao.getSubTypeStat(querys)){
-                    if(subTypeStat.getCount()!=0){
+                    if(activeTypes.indexOf(subTypeStat.getSubType())!=-1){
                         SingleResult singleResult = new SingleResult(subTypeStat.getSubType(), subTypeStat.getCount());
                         singleCheck.addSingleResult(singleResult);
                     }
@@ -64,5 +66,14 @@ public class ResultServiceImpl implements ResultService {
         }else {
             return false;
         }
+    }
+
+    private List<String> getActiveTypes(){
+        List<String> activeTypes = new ArrayList<>();
+        List<CheckType> activeTypesEntity = checkStyleDao.getActiveType();
+        for(CheckType type: activeTypesEntity){
+            activeTypes.add(type.getSubType());
+        }
+        return activeTypes;
     }
 }

@@ -27,31 +27,34 @@
         <%--<li role="presentation"><a href="<%=request.getContextPath()%>/api/checkstyle/config">Config</a></li>--%>
         <%--<li role="presentation"><a href="<%=request.getContextPath()%>/api/checkstyle/stats">Statistics</a></li>--%>
     <%--</ul>--%>
+    <div class="col-md-1 col-sm-1">
+        <button class="btn btn-default" onclick="history.go(-1);">返回</button>
+    </div>
     <div class="col-md-offset-1 col-sm-offset-1" id="content" data-groupId="${groupId}">
         <%--<div class="col-md-1 col-sm-1"></div>--%>
         <div id="line_charts" class="panel panel-default panel-no-boder col-md-4 col-sm-4" style="display: inline-block" >
 
         </div>
         <div class="col-md-1 col-sm-1"></div>
-        <div id="detail" class="panel panel-success panel-no-padding col-md-5 col-sm-5">
+        <div id="detail" class="panel panel-default panel-no-padding col-md-5 col-sm-5">
             <div class="panel-heading">
                 <h4> 开源工具 检查详细结果</h4>
             </div>
             <div class="panel-body">
                 <ul class="nav nav-tabs" role="tablist" id="detail_tab">
-                    <li role="presentation" id="li_checkstyle" class="active"><a href="#checkstyle" aria-controls="checkstyle" role="tab" data-toggle="tab">CheckStyle</a></li>
-                    <li role="presentation" id="li_pmd"><a href="#pmd" aria-controls="pmd" role="tab" data-toggle="tab">PMD</a></li>
-                    <li role="presentation" id="li_sq"><a href="#sq" aria-controls="sq" role="tab" data-toggle="tab">SonarQube</a></li>
+                    <li role="presentation" id="li_checkstyle" class="active"><a href="#checkstyle_panel" aria-controls="checkstyle_panel" role="tab" data-toggle="tab">CheckStyle</a></li>
+                    <li role="presentation" id="li_pmd"><a href="#pmd_panel" aria-controls="pmd_panel" aria-controls="pmd_panel" role="tab" data-toggle="tab">PMD</a></li>
+                    <li role="presentation" id="li_sq"><a href="#sq_panel" aria-controls="sq_panel" aria-controls="sq_panel" role="tab" data-toggle="tab">SonarQube</a></li>
                 </ul>
                 <div class="tab-content" id="detail_content">
-                    <div role="tabpanel" class="tab-pane active"><br />
-                        <div class="panel-group" id="checkstyle" role="tablist" aria-multiselectable="true"></div>
+                    <div role="tabpanel" class="tab-pane active" id="checkstyle_panel"><br />
+                        <div class="panel-group" id="checkstyle" role="tablist" ></div>
                     </div>
-                    <div role="tabpanel" class="tab-pane"><br />
-                        <div class="panel-group" id="pmd" role="tablist" aria-multiselectable="true"></div>
+                    <div role="tabpanel" class="tab-pane" id="pmd_panel"><br />
+                        <div class="panel-group" id="pmd" role="tablist"></div>
                     </div>
-                    <div role="tabpanel" class="tab-pane"><br />
-                        <div class="panel-group" id="sq" role="tablist" aria-multiselectable="true"></div>
+                    <div role="tabpanel" class="tab-pane" id="sq_panel"><br />
+                        <div class="panel-group" id="sq" role="tablist"></div>
                     </div>
                 </div>
             </div>
@@ -75,7 +78,7 @@
             method: "GET",
         }).done(
             function (data) {
-            var grades = []
+            var grades = [];
             try {
                 grades = JSON.parse(data);
             } catch(err){
@@ -188,7 +191,7 @@
                 xAxis:  {
                     type: 'category',
                     boundaryGap: false,
-                    data: data.checkDate,
+                    data: data.checkDate.reverse(),
                     axisLine:{
                         lineStyle: {
                             width: 2
@@ -211,7 +214,7 @@
                     {
                         name: line_name[0],
                         type: 'line',
-                        data: data.teacherScore,
+                        data: data.teacherScore.reverse(),
                         markPoint: {
                             data: [
                                 {type: 'max', name: '最大值'},
@@ -227,7 +230,7 @@
                     {
                         name: line_name[1],
                         type: 'line',
-                        data: data.checkstyleScore,
+                        data: data.checkstyleScore.reverse(),
                         markPoint: {
                             data: [
 //                                {type: 'max', name: '最大值'},
@@ -243,7 +246,7 @@
                     {
                         name: line_name[3],
                         type: 'line',
-                        data: data.pmdScore,
+                        data: data.pmdScore.reverse(),
                         markPoint: {
                             data: [
 //                                {type: 'max', name: '最大值'},
@@ -258,7 +261,7 @@
                     },{
                         name: line_name[4],
                         type: 'line',
-                        data: data.sqScore,
+                        data: data.sqScore.reverse(),
 //                        yAxisIndex: 1,
                         markPoint: {
                             data: [
@@ -278,7 +281,7 @@
         }
 
         function drawDetailPanel(panel_id, father_obj, data) {
-            panel_id = panel_id + '_list';
+//            panel_id = panel_id + '_list';
             var html = [];
             $.each(data, function (index, value) {
                 html.push('<div class="panel panel-default">');

@@ -28,4 +28,24 @@ public class TeacherScoreDaoImpl implements TeacherScoreDao{
         Query query = baseDao.getNewSession().createQuery(hql);
         return query.getResultList();
     }
+
+    @Override
+    public boolean addTeacherScore(TeacherScore score) {
+        try{
+            baseDao.save(score);
+            return true;
+        }catch (Exception e){
+            return false;
+        }
+    }
+
+    @Override
+    public boolean deleteTeacherScore(TeacherScore score) {
+        try{
+            baseDao.delete(score);
+            return true;
+        }catch (Exception e){
+            return false;
+        }
+    }
 }

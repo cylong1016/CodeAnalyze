@@ -11,20 +11,13 @@ import java.util.Map;
  */
 public class GroupBriefInfo {
     private long id;
-    private Map<String, int[]> briefInfo;
+    private Map<String, Integer> briefInfo;
 
     public GroupBriefInfo(long id) {
         this.id = id;
         briefInfo = new HashMap<>();
     }
 
-    public Map<String, int[]> getBriefInfo() {
-        return briefInfo;
-    }
-
-    public void setBriefInfo(Map<String, int[]> briefInfo) {
-        this.briefInfo = briefInfo;
-    }
 
     public long getId() {
         return id;
@@ -33,8 +26,16 @@ public class GroupBriefInfo {
     public void setId(long id) {
         this.id = id;
     }
-    public void addSingleCheckBriefInfo(Date checkDate, int[] singleCheckBriefInfo){
+
+    public Map<String, Integer> getBriefInfo() {
+        return briefInfo;
+    }
+
+    public void setBriefInfo(Map<String, Integer> briefInfo) {
+        this.briefInfo = briefInfo;
+    }
+    public void addSingleCheckBriefInfo(Date checkDate, int count){
         SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
-        this.briefInfo.put(sdf.format(checkDate), singleCheckBriefInfo);
+        this.briefInfo.put(sdf.format(checkDate), count);
     }
 }

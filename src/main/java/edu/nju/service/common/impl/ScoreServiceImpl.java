@@ -11,9 +11,7 @@ import edu.nju.service.common.ScoreService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by Administrator on 2017/4/18.
@@ -34,19 +32,27 @@ public class ScoreServiceImpl implements ScoreService {
         Map<String, Object> querys = new HashMap<>();
         querys.put("groupId", groupId);
         List<CheckLog> checks = checkDao.getAllCheck();
+//        Collections.sort(checks, Comparator.comparing(CheckLog::getCheckDate));
         for(CheckLog item : checks){
-            groupScores.addCheckDate(item.getCheckDate());
-        }
-        List<TeacherScore> tscores = teacherScoreDao.getTeacherScoreByQuery(querys);
-        List<StudentScore> sscores = studentScoreDao.getStudentScoreByQuery(querys);
-        for(TeacherScore item : tscores){
-            groupScores.addTeacherScore(item.getScore());
-        }
-        for(StudentScore item : sscores){
-            groupScores.addCheckstyleScore(item.getCheckstyleScore());
-            groupScores.addPmdScore(item.getPmdScore());
-            groupScores.addSqScore(item.getSqScore());
+            if(ifCheckdayPass(item.getCheckDate())){
+                groupScores.addCheckDate(item.getCheckDate());
+                querys.put("checkId", item.getId());
+                TeacherScore tscore = teacherScoreDao.getTeacherScoreByQuery(querys).get(0);
+                groupScores.addTeacherScore(tscore.getScore());
+                StudentScore sscores = studentScoreDao.getStudentScoreByQuery(querys).get(0);
+                groupScores.addCheckstyleScore(sscores.getCheckstyleScore());
+                groupScores.addPmdScore(sscores.getPmdScore());
+                groupScores.addSqScore(sscores.getSqScore());
+            }
         }
         return groupScores;
+    }
+
+    private boolean ifCheckdayPass(Date date){
+        if ( date.compareTo(new Date()) <= 0 ){
+            return true;
+        }else {
+            return false;
+        }
     }
 }

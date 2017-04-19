@@ -3,6 +3,7 @@ package edu.nju.Vo.common;
 import edu.nju.Vo.checkstyle.GroupForCheck;
 import edu.nju.entities.checkstyle.CheckLog;
 
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -10,16 +11,18 @@ import java.util.*;
  */
 public class Check {
     private long id;
-    private Date date;
+    private String date;
     private String description;
+    private int checkCount;
 //  参与这次检查的小组 [ {id, name} , ... ]
 //    private List<GroupForCheck> groups;
 
     public Check(){}
-    public Check(CheckLog vo){
-        this.id = vo.getId();
-        this.date = vo.getCheckDate();
-        this.description = vo.getDescription();
+    public Check(long id, Date date, String description){
+        this.id = id;
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        this.date = sdf.format(date);
+        this.description = description;
 //        this.groups = new ArrayList<>();
     }
     public long getId() {
@@ -30,11 +33,11 @@ public class Check {
         this.id = id;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 
@@ -44,6 +47,14 @@ public class Check {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public int getCheckCount() {
+        return checkCount;
+    }
+
+    public void setCheckCount(int checkCount) {
+        this.checkCount = checkCount;
     }
 
 //    public List<GroupForCheck> getGroups() {
