@@ -142,4 +142,15 @@ public class PMDDaoImpl implements PMDDao{
 		}
 	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	public PMD_Measure getById(int iter, long groupId) {
+		String hql = "from PMD_Measure where iter = :iter and groupId=:groupId";
+		List<PMD_Measure> list=baseDao.getNewSession().createQuery(hql).setParameter("iter", iter).setParameter("groupId", groupId).getResultList();
+		if(list.size()>0){
+			return list.get(0);
+		}
+		return null;
+	}
+
 }
