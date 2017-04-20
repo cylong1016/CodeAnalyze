@@ -11,9 +11,8 @@ public class StudentScore {
     private long id;
     private long groupId;
     private long checkId;
-    private int checkstyleScore;
-    private int pmdScore;
-    private int sqScore;
+    private String toolName;
+    private int score;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -43,30 +42,20 @@ public class StudentScore {
         this.checkId = checkId;
     }
 
-    @Column(name = "checkstyle_score")
-    public int getCheckstyleScore() {
-        return checkstyleScore;
-    }
+	public String getToolName() {
+		return toolName;
+	}
 
-    public void setCheckstyleScore(int checkstyleScore) {
-        this.checkstyleScore = checkstyleScore;
-    }
+	public void setToolName(String toolName) {
+		this.toolName = toolName;
+	}
 
-    @Column(name = "pmd_score")
-    public int getPmdScore() {
-        return pmdScore;
-    }
+	public int getScore() {
+		return score;
+	}
 
-    public void setPmdScore(int pmdScore) {
-        this.pmdScore = pmdScore;
-    }
+	public void setScore(int score) {
+		this.score = score;
+	}
 
-    @Column(name = "sq_score")
-    public int getSqScore() {
-        return sqScore;
-    }
-
-    public void setSqScore(int sqScore) {
-        this.sqScore = sqScore;
-    }
 }
