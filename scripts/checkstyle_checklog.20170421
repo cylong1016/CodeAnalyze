@@ -1,0 +1,394 @@
+D:\Python27\python.exe E:/wenzi/CodeAnalyze/scripts/CheckAllProjects.py
+***************** group 42 **********************
+	
+	java -jar E:\wenzi\checkstyle-7.6.1-all.jar -c E:\wenzi\google_checks.xml H:\GITLAB\141250182_cseiii_GitMining_GitMining\Project\GitMining\src 
+H:\GITLAB\141250182_cseiii_GitMining_GitMining\Project\GitMining\src\main\java\data\DataServer.java:209:1: expecting RCURLY, found '<<'
+H:\GITLAB\141250182_cseiii_GitMining_GitMining\Project\GitMining\src\main\java\data\DataServer.java:210:10: unexpected token: void
+com.puppycrawl.tools.checkstyle.api.CheckstyleException: Exception was thrown while processing H:\GITLAB\141250182_cseiii_GitMining_GitMining\Project\GitMining\src\main\java\data\DataServer.java
+	at com.puppycrawl.tools.checkstyle.Checker.processFiles(Checker.java:293)
+	at com.puppycrawl.tools.checkstyle.Checker.process(Checker.java:211)
+	at com.puppycrawl.tools.checkstyle.Main.runCheckstyle(Main.java:425)
+	at com.puppycrawl.tools.checkstyle.Main.runCli(Main.java:359)
+	at com.puppycrawl.tools.checkstyle.Main.main(Main.java:174)
+Caused by: com.puppycrawl.tools.checkstyle.api.CheckstyleException: MismatchedTokenException occurred during the analysis of file H:\GITLAB\141250182_cseiii_GitMining_GitMining\Project\GitMining\src\main\java\data\DataServer.java.
+	at com.puppycrawl.tools.checkstyle.TreeWalker.processFiltered(TreeWalker.java:192)
+	at com.puppycrawl.tools.checkstyle.api.AbstractFileSetCheck.process(AbstractFileSetCheck.java:78)
+	at com.puppycrawl.tools.checkstyle.Checker.processFile(Checker.java:314)
+	at com.puppycrawl.tools.checkstyle.Checker.processFiles(Checker.java:284)
+	... 4 more
+Caused by: H:\GITLAB\141250182_cseiii_GitMining_GitMining\Project\GitMining\src\main\java\data\DataServer.java:212:3: expecting EOF, found 'try'
+	at antlr.Parser.match(Parser.java:211)
+	at com.puppycrawl.tools.checkstyle.grammars.GeneratedJavaRecognizer.compilationUnit(GeneratedJavaRecognizer.java:211)
+	at com.puppycrawl.tools.checkstyle.TreeWalker.parse(TreeWalker.java:439)
+	at com.puppycrawl.tools.checkstyle.TreeWalker.processFiltered(TreeWalker.java:174)
+	... 7 more
+	
+	java -jar E:\wenzi\checkstyle-7.6.1-all.jar -c E:\wenzi\google_checks.xml H:\GITLAB\141250182_cseiii_GitMining_GitMining\Project\GitMining_2\src 
+	
+	java -jar E:\wenzi\checkstyle-7.6.1-all.jar -c E:\wenzi\google_checks.xml H:\GITLAB\141250182_cseiii_GitMining_GitMining_web\GitMining_web\src 
+***************** group 48 **********************
+	
+	java -jar E:\wenzi\checkstyle-7.6.1-all.jar -c E:\wenzi\google_checks.xml H:\GITLAB\141250211_cseiii_AnyQuant_AnyQuant\src 
+***************** group 43 **********************
+	
+	java -jar E:\wenzi\checkstyle-7.6.1-all.jar -c E:\wenzi\google_checks.xml H:\GITLAB\141250183_cseiii_AnyQuant_AnyQuent\IterationThree\Project\DASA-Maven\src 
+com.puppycrawl.tools.checkstyle.api.CheckstyleException: Exception was thrown while processing H:\GITLAB\141250183_cseiii_AnyQuant_AnyQuent\IterationThree\Project\DASA-Maven\src\main\java\bussiness\service\impl\JudgeDate.java
+	at com.puppycrawl.tools.checkstyle.Checker.processFiles(Checker.java:293)
+	at com.puppycrawl.tools.checkstyle.Checker.process(Checker.java:211)
+	at com.puppycrawl.tools.checkstyle.Main.runCheckstyle(Main.java:425)
+	at com.puppycrawl.tools.checkstyle.Main.runCli(Main.java:359)
+	at com.puppycrawl.tools.checkstyle.Main.main(Main.java:174)
+Caused by: com.puppycrawl.tools.checkstyle.api.CheckstyleException: TokenStreamRecognitionException occurred during the analysis of file H:\GITLAB\141250183_cseiii_AnyQuant_AnyQuent\IterationThree\Project\DASA-Maven\src\main\java\bussiness\service\impl\JudgeDate.java.
+	at com.puppycrawl.tools.checkstyle.TreeWalker.processFiltered(TreeWalker.java:187)
+	at com.puppycrawl.tools.checkstyle.api.AbstractFileSetCheck.process(AbstractFileSetCheck.java:78)
+	at com.puppycrawl.tools.checkstyle.Checker.processFile(Checker.java:314)
+	at com.puppycrawl.tools.checkstyle.Checker.processFiles(Checker.java:284)
+	... 4 more
+Caused by: H:\GITLAB\141250183_cseiii_AnyQuant_AnyQuent\IterationThree\Project\DASA-Maven\src\main\java\bussiness\service\impl\JudgeDate.java:1:1: Unexpected character 0xfeff in identifier
+	at com.puppycrawl.tools.checkstyle.grammars.GeneratedJavaLexer.nextToken(GeneratedJavaLexer.java:405)
+	at antlr.TokenStreamHiddenTokenFilter.consume(TokenStreamHiddenTokenFilter.java:38)
+	at antlr.TokenStreamHiddenTokenFilter.consumeFirst(TokenStreamHiddenTokenFilter.java:42)
+	at antlr.TokenStreamHiddenTokenFilter.nextToken(TokenStreamHiddenTokenFilter.java:122)
+	at antlr.TokenBuffer.fill(TokenBuffer.java:69)
+	at antlr.TokenBuffer.LA(TokenBuffer.java:80)
+	at antlr.LLkParser.LA(LLkParser.java:52)
+	at com.puppycrawl.tools.checkstyle.grammars.GeneratedJavaRecognizer.compilationUnit(GeneratedJavaRecognizer.java:158)
+	at com.puppycrawl.tools.checkstyle.TreeWalker.parse(TreeWalker.java:439)
+	at com.puppycrawl.tools.checkstyle.TreeWalker.processFiltered(TreeWalker.java:174)
+	... 7 more
+	
+	java -jar E:\wenzi\checkstyle-7.6.1-all.jar -c E:\wenzi\google_checks.xml H:\GITLAB\141250183_cseiii_AnyQuant_AnyQuent\IterationTwo\Project\DASA2.0\src 
+com.puppycrawl.tools.checkstyle.api.CheckstyleException: Exception was thrown while processing H:\GITLAB\141250183_cseiii_AnyQuant_AnyQuent\IterationTwo\Project\DASA2.0\src\bussiness\impl\JudgeDate.java
+	at com.puppycrawl.tools.checkstyle.Checker.processFiles(Checker.java:293)
+	at com.puppycrawl.tools.checkstyle.Checker.process(Checker.java:211)
+	at com.puppycrawl.tools.checkstyle.Main.runCheckstyle(Main.java:425)
+	at com.puppycrawl.tools.checkstyle.Main.runCli(Main.java:359)
+	at com.puppycrawl.tools.checkstyle.Main.main(Main.java:174)
+Caused by: com.puppycrawl.tools.checkstyle.api.CheckstyleException: TokenStreamRecognitionException occurred during the analysis of file H:\GITLAB\141250183_cseiii_AnyQuant_AnyQuent\IterationTwo\Project\DASA2.0\src\bussiness\impl\JudgeDate.java.
+	at com.puppycrawl.tools.checkstyle.TreeWalker.processFiltered(TreeWalker.java:187)
+	at com.puppycrawl.tools.checkstyle.api.AbstractFileSetCheck.process(AbstractFileSetCheck.java:78)
+	at com.puppycrawl.tools.checkstyle.Checker.processFile(Checker.java:314)
+	at com.puppycrawl.tools.checkstyle.Checker.processFiles(Checker.java:284)
+	... 4 more
+Caused by: H:\GITLAB\141250183_cseiii_AnyQuant_AnyQuent\IterationTwo\Project\DASA2.0\src\bussiness\impl\JudgeDate.java:1:1: Unexpected character 0xfeff in identifier
+	at com.puppycrawl.tools.checkstyle.grammars.GeneratedJavaLexer.nextToken(GeneratedJavaLexer.java:405)
+	at antlr.TokenStreamHiddenTokenFilter.consume(TokenStreamHiddenTokenFilter.java:38)
+	at antlr.TokenStreamHiddenTokenFilter.consumeFirst(TokenStreamHiddenTokenFilter.java:42)
+	at antlr.TokenStreamHiddenTokenFilter.nextToken(TokenStreamHiddenTokenFilter.java:122)
+	at antlr.TokenBuffer.fill(TokenBuffer.java:69)
+	at antlr.TokenBuffer.LA(TokenBuffer.java:80)
+	at antlr.LLkParser.LA(LLkParser.java:52)
+	at com.puppycrawl.tools.checkstyle.grammars.GeneratedJavaRecognizer.compilationUnit(GeneratedJavaRecognizer.java:158)
+	at com.puppycrawl.tools.checkstyle.TreeWalker.parse(TreeWalker.java:439)
+	at com.puppycrawl.tools.checkstyle.TreeWalker.processFiltered(TreeWalker.java:174)
+	... 7 more
+	
+	java -jar E:\wenzi\checkstyle-7.6.1-all.jar -c E:\wenzi\google_checks.xml H:\GITLAB\141250183_cseiii_AnyQuant_AnyQuent\IterationThree\Project\DASA3.0\src 
+***************** group 49 **********************
+	
+	java -jar E:\wenzi\checkstyle-7.6.1-all.jar -c E:\wenzi\google_checks.xml H:\GITLAB\141250214_cseiii_AnyQuant_StockWizard\code\src 
+***************** group 24 **********************
+	
+	java -jar E:\wenzi\checkstyle-7.6.1-all.jar -c E:\wenzi\google_checks.xml H:\GITLAB\141250103_cseiii_GitMining_wanglei_GitMining\src 
+	
+	java -jar E:\wenzi\checkstyle-7.6.1-all.jar -c E:\wenzi\google_checks.xml H:\GITLAB\141250103_cseiii_GitMining_GitMining\GitMining\src 
+***************** group 25 **********************
+	
+	java -jar E:\wenzi\checkstyle-7.6.1-all.jar -c E:\wenzi\google_checks.xml H:\GITLAB\141250111_cseiii_AnyQuant_AnyQuant\src 
+***************** group 26 **********************
+	
+	java -jar E:\wenzi\checkstyle-7.6.1-all.jar -c E:\wenzi\google_checks.xml H:\GITLAB\141250115_cseiii_AnyQuant_cseiii_AnyQuant\AnyQuant 
+	
+	java -jar E:\wenzi\checkstyle-7.6.1-all.jar -c E:\wenzi\google_checks.xml H:\GITLAB\141250115_cseiii_AnyQuant_cseiii_AnyQuant\AnyQuant2 
+	
+	java -jar E:\wenzi\checkstyle-7.6.1-all.jar -c E:\wenzi\google_checks.xml H:\GITLAB\141250115_cseiii_AnyQuant_cseiii_AnyQuant\AnyQuant3 
+***************** group 27 **********************
+	
+	java -jar E:\wenzi\checkstyle-7.6.1-all.jar -c E:\wenzi\google_checks.xml H:\GITLAB\141250117_cseiii_AnyQuant_StockTalent\project\迭代一\stock\src 
+	
+	java -jar E:\wenzi\checkstyle-7.6.1-all.jar -c E:\wenzi\google_checks.xml H:\GITLAB\141250117_cseiii_AnyQuant_StockTalent\迭代三产物\迭代三服务器端\Server\src 
+	
+	java -jar E:\wenzi\checkstyle-7.6.1-all.jar -c E:\wenzi\google_checks.xml H:\GITLAB\141250117_cseiii_AnyQuant_StockTalent\迭代三产物\stock\src 
+***************** group 20 **********************
+	
+	java -jar E:\wenzi\checkstyle-7.6.1-all.jar -c E:\wenzi\google_checks.xml H:\GITLAB\141250095_cseiii_AnyQuant_StockEy\webStockey 
+	
+	java -jar E:\wenzi\checkstyle-7.6.1-all.jar -c E:\wenzi\google_checks.xml H:\GITLAB\141250095_cseiii_AnyQuant_StockEy\stockeyServlet 
+	
+	java -jar E:\wenzi\checkstyle-7.6.1-all.jar -c E:\wenzi\google_checks.xml H:\GITLAB\141250095_cseiii_AnyQuant_StockEy\stockey\src 
+***************** group 21 **********************
+	
+	java -jar E:\wenzi\checkstyle-7.6.1-all.jar -c E:\wenzi\google_checks.xml H:\GITLAB\141250096_cseiii_AnyQuant\project\tempCode 
+	
+	java -jar E:\wenzi\checkstyle-7.6.1-all.jar -c E:\wenzi\google_checks.xml H:\GITLAB\141250096_cseiii_AnyQuant\project\AnyQuantServer\src 
+	
+	java -jar E:\wenzi\checkstyle-7.6.1-all.jar -c E:\wenzi\google_checks.xml H:\GITLAB\141250096_cseiii_AnyQuant\project\AnyQuant\src 
+***************** group 22 **********************
+	
+	java -jar E:\wenzi\checkstyle-7.6.1-all.jar -c E:\wenzi\google_checks.xml H:\GITLAB\141250101_cseiii_AnyQuant_AnyQuant\AnyQuant\src 
+	
+	java -jar E:\wenzi\checkstyle-7.6.1-all.jar -c E:\wenzi\google_checks.xml H:\GITLAB\141250095_cseiii_AnyQuant_StockEy\stockeyServlet 
+***************** group 23 **********************
+	
+	java -jar E:\wenzi\checkstyle-7.6.1-all.jar -c E:\wenzi\google_checks.xml H:\GITLAB\141250101_cseiii_AnyQuant_AnyQuant\AnyQuant\src 
+***************** group 46 **********************
+	
+	java -jar E:\wenzi\checkstyle-7.6.1-all.jar -c E:\wenzi\google_checks.xml H:\GITLAB\141250202_cseiii_AnyQuant_czzZ_AnyQuant\Code\AQAS\AQAS_Value\src 
+	
+	java -jar E:\wenzi\checkstyle-7.6.1-all.jar -c E:\wenzi\google_checks.xml H:\GITLAB\141250202_cseiii_AnyQuant_czzZ_AnyQuant\Code\AQAS\AQAS_Client\src 
+	
+	java -jar E:\wenzi\checkstyle-7.6.1-all.jar -c E:\wenzi\google_checks.xml H:\GITLAB\141250202_cseiii_AnyQuant_czzZ_AnyQuant\Code\AQAS_Web\src 
+***************** group 47 **********************
+	
+	java -jar E:\wenzi\checkstyle-7.6.1-all.jar -c E:\wenzi\google_checks.xml H:\GITLAB\141250209_cseiii_AnyQuant_AnyQuant\OldQuant\Quant\src 
+	
+	java -jar E:\wenzi\checkstyle-7.6.1-all.jar -c E:\wenzi\google_checks.xml H:\GITLAB\141250209_cseiii_AnyQuant_AnyQuant\AnyQuant\src 
+	
+	java -jar E:\wenzi\checkstyle-7.6.1-all.jar -c E:\wenzi\google_checks.xml H:\GITLAB\141250209_cseiii_AnyQuant_AnyQuant\Server\src 
+***************** group 44 **********************
+	
+	java -jar E:\wenzi\checkstyle-7.6.1-all.jar -c E:\wenzi\google_checks.xml H:\GITLAB\141250193_cseiii_AnyQuant_AnyQuant\Code\Anyquant\src 
+***************** group 45 **********************
+	
+	java -jar E:\wenzi\checkstyle-7.6.1-all.jar -c E:\wenzi\google_checks.xml H:\GITLAB\141250197_cseiii_GitMining_GitMining\GitMining\src 
+***************** group 28 **********************
+	
+	java -jar E:\wenzi\checkstyle-7.6.1-all.jar -c E:\wenzi\google_checks.xml H:\GITLAB\141250123_cseiii_AnyQuant\迭代一二代码\code\src 
+	
+	java -jar E:\wenzi\checkstyle-7.6.1-all.jar -c E:\wenzi\google_checks.xml H:\GITLAB\141250123_cseiii_AnyQuant\AnyQuant3\src 
+***************** group 29 **********************
+	
+	java -jar E:\wenzi\checkstyle-7.6.1-all.jar -c E:\wenzi\google_checks.xml H:\GITLAB\141250124_cseiii_cseiii_project\SA 
+	
+	java -jar E:\wenzi\checkstyle-7.6.1-all.jar -c E:\wenzi\google_checks.xml H:\GITLAB\141250124_cseiii_cseiii_project\AnyquantWeb 
+***************** group 40 **********************
+	
+	java -jar E:\wenzi\checkstyle-7.6.1-all.jar -c E:\wenzi\google_checks.xml H:\GITLAB\141250176_cseiii_StockAnalysisSoftware\StocksAnalysisSystem\src 
+***************** group 41 **********************
+	
+	java -jar E:\wenzi\checkstyle-7.6.1-all.jar -c E:\wenzi\google_checks.xml H:\GITLAB\141250178_cseiii_AnyQuantExcited\AnyQuantExcited\src 
+	
+	java -jar E:\wenzi\checkstyle-7.6.1-all.jar -c E:\wenzi\google_checks.xml H:\GITLAB\141250178_cseiii_AnyQuantExcited\AQEWeb\src 
+***************** group 1 **********************
+	
+	java -jar E:\wenzi\checkstyle-7.6.1-all.jar -c E:\wenzi\google_checks.xml H:\GITLAB\131130137_cseiii_Gitmining_GitMining\Source_Code\Gitmine\src 
+	
+	java -jar E:\wenzi\checkstyle-7.6.1-all.jar -c E:\wenzi\google_checks.xml H:\GITLAB\131130137_cseiii_Gitmining_GitMining\Source_Code\Gitmining 
+***************** group 3 **********************
+	
+	java -jar E:\wenzi\checkstyle-7.6.1-all.jar -c E:\wenzi\google_checks.xml H:\GITLAB\141250007_cseiii_GitMining_GitMining\GMApp\src 
+***************** group 2 **********************
+	
+	java -jar E:\wenzi\checkstyle-7.6.1-all.jar -c E:\wenzi\google_checks.xml H:\GITLAB\141250002_cseiii_GitMining_GitMining\cseiii_GitMining\src 
+***************** group 5 **********************
+	
+	java -jar E:\wenzi\checkstyle-7.6.1-all.jar -c E:\wenzi\google_checks.xml H:\GITLAB\141250017_cseiii_Duck_plus\AnyQuant_SSH 
+***************** group 4 **********************
+	
+	java -jar E:\wenzi\checkstyle-7.6.1-all.jar -c E:\wenzi\google_checks.xml H:\GITLAB\141250016_cseiii_GitMining_InSighter\Gitmining 
+***************** group 7 **********************
+	
+	java -jar E:\wenzi\checkstyle-7.6.1-all.jar -c E:\wenzi\google_checks.xml H:\GITLAB\141250029_cseiii_GitMining_blog\git_online 
+	
+	java -jar E:\wenzi\checkstyle-7.6.1-all.jar -c E:\wenzi\google_checks.xml H:\GITLAB\141250029_cseiii_GitMining_blog\gitmining-web\src 
+	
+	java -jar E:\wenzi\checkstyle-7.6.1-all.jar -c E:\wenzi\google_checks.xml H:\GITLAB\141250029_cseiii_GitMining_blog\web_maven\src 
+***************** group 6 **********************
+	
+	java -jar E:\wenzi\checkstyle-7.6.1-all.jar -c E:\wenzi\google_checks.xml H:\GITLAB\141250018_cseiii_AnyQuant_Project\project\AnyQuantProject\src 
+***************** group 9 **********************
+	
+	java -jar E:\wenzi\checkstyle-7.6.1-all.jar -c E:\wenzi\google_checks.xml H:\GITLAB\141250038_cseiii_AnyQuant_00001_cseiii_AnyQuant\blog\ASAA\src 
+	
+	java -jar E:\wenzi\checkstyle-7.6.1-all.jar -c E:\wenzi\google_checks.xml H:\GITLAB\141250038_cseiii_AnyQuant_00001_cseiii_AnyQuant\blog\newASAA\src 
+com.puppycrawl.tools.checkstyle.api.CheckstyleException: Exception was thrown while processing H:\GITLAB\141250038_cseiii_AnyQuant_00001_cseiii_AnyQuant\blog\newASAA\src\main\java\businesslogic\StocksBL\StockIndexAnalyze.java
+	at com.puppycrawl.tools.checkstyle.Checker.processFiles(Checker.java:293)
+	at com.puppycrawl.tools.checkstyle.Checker.process(Checker.java:211)
+	at com.puppycrawl.tools.checkstyle.Main.runCheckstyle(Main.java:425)
+	at com.puppycrawl.tools.checkstyle.Main.runCli(Main.java:359)
+	at com.puppycrawl.tools.checkstyle.Main.main(Main.java:174)
+Caused by: com.puppycrawl.tools.checkstyle.api.CheckstyleException: TokenStreamRecognitionException occurred during the analysis of file H:\GITLAB\141250038_cseiii_AnyQuant_00001_cseiii_AnyQuant\blog\newASAA\src\main\java\businesslogic\StocksBL\StockIndexAnalyze.java.
+	at com.puppycrawl.tools.checkstyle.TreeWalker.processFiltered(TreeWalker.java:187)
+	at com.puppycrawl.tools.checkstyle.api.AbstractFileSetCheck.process(AbstractFileSetCheck.java:78)
+	at com.puppycrawl.tools.checkstyle.Checker.processFile(Checker.java:314)
+	at com.puppycrawl.tools.checkstyle.Checker.processFiles(Checker.java:284)
+	... 4 more
+Caused by: H:\GITLAB\141250038_cseiii_AnyQuant_00001_cseiii_AnyQuant\blog\newASAA\src\main\java\businesslogic\StocksBL\StockIndexAnalyze.java:1:1: Unexpected character 0xfeff in identifier
+	at com.puppycrawl.tools.checkstyle.grammars.GeneratedJavaLexer.nextToken(GeneratedJavaLexer.java:405)
+	at antlr.TokenStreamHiddenTokenFilter.consume(TokenStreamHiddenTokenFilter.java:38)
+	at antlr.TokenStreamHiddenTokenFilter.consumeFirst(TokenStreamHiddenTokenFilter.java:42)
+	at antlr.TokenStreamHiddenTokenFilter.nextToken(TokenStreamHiddenTokenFilter.java:122)
+	at antlr.TokenBuffer.fill(TokenBuffer.java:69)
+	at antlr.TokenBuffer.LA(TokenBuffer.java:80)
+	at antlr.LLkParser.LA(LLkParser.java:52)
+	at com.puppycrawl.tools.checkstyle.grammars.GeneratedJavaRecognizer.compilationUnit(GeneratedJavaRecognizer.java:158)
+	at com.puppycrawl.tools.checkstyle.TreeWalker.parse(TreeWalker.java:439)
+	at com.puppycrawl.tools.checkstyle.TreeWalker.processFiltered(TreeWalker.java:174)
+	... 7 more
+***************** group 8 **********************
+	
+	java -jar E:\wenzi\checkstyle-7.6.1-all.jar -c E:\wenzi\google_checks.xml H:\GITLAB\141250030_cseiii_awesomeGitMining\AwesomeGitMining 
+***************** group 51 **********************
+	
+	java -jar E:\wenzi\checkstyle-7.6.1-all.jar -c E:\wenzi\google_checks.xml H:\GITLAB\Hunters_for_fishing_141250107_cseiii_GitMining\src 
+	
+	java -jar E:\wenzi\checkstyle-7.6.1-all.jar -c E:\wenzi\google_checks.xml H:\GITLAB\Hunters_for_fishing_141250107_cseiii_GitMining\GitminingClient\src 
+	
+	java -jar E:\wenzi\checkstyle-7.6.1-all.jar -c E:\wenzi\google_checks.xml H:\GITLAB\Hunters_for_fishing_141250107_cseiii_GitMining\GitminingCommon\src 
+***************** group 39 **********************
+	
+	java -jar E:\wenzi\checkstyle-7.6.1-all.jar -c E:\wenzi\google_checks.xml H:\GITLAB\141250175_cseiii_AnyQuant_AnyQuant\AnyQuant_web\src 
+***************** group 38 **********************
+	
+	java -jar E:\wenzi\checkstyle-7.6.1-all.jar -c E:\wenzi\google_checks.xml H:\GITLAB\141250174_cseiii_AnyQuant_StocksAnalysisSystem\src 
+***************** group 11 **********************
+	
+	java -jar E:\wenzi\checkstyle-7.6.1-all.jar -c E:\wenzi\google_checks.xml H:\GITLAB\141250047_cseiii_AnyQuant_SmartQuant\Iteration1\code 
+	
+	java -jar E:\wenzi\checkstyle-7.6.1-all.jar -c E:\wenzi\google_checks.xml H:\GITLAB\141250047_cseiii_AnyQuant_SmartQuant\Iteration2\SmartQuant 
+	
+	java -jar E:\wenzi\checkstyle-7.6.1-all.jar -c E:\wenzi\google_checks.xml H:\GITLAB\141250047_cseiii_AnyQuant_SmartQuant\Iteration3\SmartQuant 
+***************** group 10 **********************
+	
+	java -jar E:\wenzi\checkstyle-7.6.1-all.jar -c E:\wenzi\google_checks.xml H:\GITLAB\141250044_cseiii_AnyQuant_AnyQuant\SAS\src 
+***************** group 13 **********************
+	
+	java -jar E:\wenzi\checkstyle-7.6.1-all.jar -c E:\wenzi\google_checks.xml H:\GITLAB\141250061_cseiii_GitMining_GitMining\GitMiningCient\src 
+	
+	java -jar E:\wenzi\checkstyle-7.6.1-all.jar -c E:\wenzi\google_checks.xml H:\GITLAB\141250061_cseiii_GitMining_GitMining\GitMiningServer\src 
+***************** group 12 **********************
+	
+	java -jar E:\wenzi\checkstyle-7.6.1-all.jar -c E:\wenzi\google_checks.xml H:\GITLAB\141250053_cseiii_SEIII_AnyQuant 
+	
+	java -jar E:\wenzi\checkstyle-7.6.1-all.jar -c E:\wenzi\google_checks.xml H:\GITLAB\141250053_cseiii_anyWeb\anyWeb\src 
+	
+	java -jar E:\wenzi\checkstyle-7.6.1-all.jar -c E:\wenzi\google_checks.xml H:\GITLAB\141250053_cseiii_AnyQuantWeb\AnyQuantWeb\src 
+***************** group 15 **********************
+	
+	java -jar E:\wenzi\checkstyle-7.6.1-all.jar -c E:\wenzi\google_checks.xml H:\GITLAB\141250072_cseiii_AnyQuant_AnyQuant\SAS\src 
+	
+	java -jar E:\wenzi\checkstyle-7.6.1-all.jar -c E:\wenzi\google_checks.xml H:\GITLAB\141250072_cseiii_AnyQuant_AnyQuant\src 
+***************** group 14 **********************
+	
+	java -jar E:\wenzi\checkstyle-7.6.1-all.jar -c E:\wenzi\google_checks.xml H:\GITLAB\141250067_cseiii_Anyquant067\Anyquent-service\src 
+	
+	java -jar E:\wenzi\checkstyle-7.6.1-all.jar -c E:\wenzi\google_checks.xml H:\GITLAB\141250067_cseiii_Anyquant067\Anyquent-web\src 
+***************** group 17 **********************
+	
+	java -jar E:\wenzi\checkstyle-7.6.1-all.jar -c E:\wenzi\google_checks.xml H:\GITLAB\141250085_cesiii_AnyQuant_AnyQuant\Application\AnyQuantMini\src 
+	
+	java -jar E:\wenzi\checkstyle-7.6.1-all.jar -c E:\wenzi\google_checks.xml H:\GITLAB\141250085_cesiii_AnyQuant_AnyQuant\src 
+***************** group 16 **********************
+	
+	java -jar E:\wenzi\checkstyle-7.6.1-all.jar -c E:\wenzi\google_checks.xml H:\GITLAB\141250083_cseiii_00001_cseiii_AnyQuant\FinancialMaster\src 
+com.puppycrawl.tools.checkstyle.api.CheckstyleException: Exception was thrown while processing H:\GITLAB\141250083_cseiii_00001_cseiii_AnyQuant\FinancialMaster\src\main\java\data\IndustryData\FirstLetterUtil.java
+	at com.puppycrawl.tools.checkstyle.Checker.processFiles(Checker.java:293)
+	at com.puppycrawl.tools.checkstyle.Checker.process(Checker.java:211)
+	at com.puppycrawl.tools.checkstyle.Main.runCheckstyle(Main.java:425)
+	at com.puppycrawl.tools.checkstyle.Main.runCli(Main.java:359)
+	at com.puppycrawl.tools.checkstyle.Main.main(Main.java:174)
+Caused by: com.puppycrawl.tools.checkstyle.api.CheckstyleException: TokenStreamRecognitionException occurred during the analysis of file H:\GITLAB\141250083_cseiii_00001_cseiii_AnyQuant\FinancialMaster\src\main\java\data\IndustryData\FirstLetterUtil.java.
+	at com.puppycrawl.tools.checkstyle.TreeWalker.processFiltered(TreeWalker.java:187)
+	at com.puppycrawl.tools.checkstyle.api.AbstractFileSetCheck.process(AbstractFileSetCheck.java:78)
+	at com.puppycrawl.tools.checkstyle.Checker.processFile(Checker.java:314)
+	at com.puppycrawl.tools.checkstyle.Checker.processFiles(Checker.java:284)
+	... 4 more
+Caused by: H:\GITLAB\141250083_cseiii_00001_cseiii_AnyQuant\FinancialMaster\src\main\java\data\IndustryData\FirstLetterUtil.java:8:40: expecting ''', found '?'
+	at com.puppycrawl.tools.checkstyle.grammars.GeneratedJavaLexer.nextToken(GeneratedJavaLexer.java:405)
+	at antlr.TokenStreamHiddenTokenFilter.consume(TokenStreamHiddenTokenFilter.java:38)
+	at antlr.TokenStreamHiddenTokenFilter.nextToken(TokenStreamHiddenTokenFilter.java:134)
+	at antlr.TokenBuffer.fill(TokenBuffer.java:69)
+	at antlr.TokenBuffer.LA(TokenBuffer.java:80)
+	at antlr.LLkParser.LA(LLkParser.java:52)
+	at com.puppycrawl.tools.checkstyle.grammars.GeneratedJavaRecognizer.initializer(GeneratedJavaRecognizer.java:4600)
+	at com.puppycrawl.tools.checkstyle.grammars.GeneratedJavaRecognizer.varInitializer(GeneratedJavaRecognizer.java:4546)
+	at com.puppycrawl.tools.checkstyle.grammars.GeneratedJavaRecognizer.variableDeclarator(GeneratedJavaRecognizer.java:4519)
+	at com.puppycrawl.tools.checkstyle.grammars.GeneratedJavaRecognizer.variableDefinitions(GeneratedJavaRecognizer.java:1555)
+	at com.puppycrawl.tools.checkstyle.grammars.GeneratedJavaRecognizer.field(GeneratedJavaRecognizer.java:3359)
+	at com.puppycrawl.tools.checkstyle.grammars.GeneratedJavaRecognizer.classBlock(GeneratedJavaRecognizer.java:2542)
+	at com.puppycrawl.tools.checkstyle.grammars.GeneratedJavaRecognizer.classDefinition(GeneratedJavaRecognizer.java:634)
+	at com.puppycrawl.tools.checkstyle.grammars.GeneratedJavaRecognizer.typeDefinitionInternal(GeneratedJavaRecognizer.java:556)
+	at com.puppycrawl.tools.checkstyle.grammars.GeneratedJavaRecognizer.typeDefinition(GeneratedJavaRecognizer.java:389)
+	at com.puppycrawl.tools.checkstyle.grammars.GeneratedJavaRecognizer.compilationUnit(GeneratedJavaRecognizer.java:202)
+	at com.puppycrawl.tools.checkstyle.TreeWalker.parse(TreeWalker.java:439)
+	at com.puppycrawl.tools.checkstyle.TreeWalker.processFiltered(TreeWalker.java:174)
+	... 7 more
+***************** group 19 **********************
+	
+	java -jar E:\wenzi\checkstyle-7.6.1-all.jar -c E:\wenzi\google_checks.xml H:\GITLAB\141250093_cseiii_GitMining_GitSearch\src 
+	
+	java -jar E:\wenzi\checkstyle-7.6.1-all.jar -c E:\wenzi\google_checks.xml H:\GITLAB\141250093_cseiii_GitMining_GitTrending_Server\src 
+***************** group 18 **********************
+	
+	java -jar E:\wenzi\checkstyle-7.6.1-all.jar -c E:\wenzi\google_checks.xml H:\GITLAB\141250087_cseiii_AnyQuant_AnyQuant\project 
+***************** group 31 **********************
+	
+	java -jar E:\wenzi\checkstyle-7.6.1-all.jar -c E:\wenzi\google_checks.xml H:\GITLAB\141250145_cseiii_AnyQuant_AnyQuant\VersionⅠ\AnyQuant 
+	
+	java -jar E:\wenzi\checkstyle-7.6.1-all.jar -c E:\wenzi\google_checks.xml H:\GITLAB\141250145_cseiii_AnyQuant_AnyQuant\VersionⅡ\AnyQuant 
+	
+	java -jar E:\wenzi\checkstyle-7.6.1-all.jar -c E:\wenzi\google_checks.xml H:\GITLAB\141250145_cseiii_AnyQuant_AnyQuant\VersionⅢ 
+***************** group 30 **********************
+	
+	java -jar E:\wenzi\checkstyle-7.6.1-all.jar -c E:\wenzi\google_checks.xml H:\GITLAB\141250126_cseiii_CSEIII-Project\CSEIII 
+	
+	java -jar E:\wenzi\checkstyle-7.6.1-all.jar -c E:\wenzi\google_checks.xml H:\GITLAB\141250126_cseiii_CSEIII-Project\CSEIII-Web\src 
+***************** group 37 **********************
+	
+	java -jar E:\wenzi\checkstyle-7.6.1-all.jar -c E:\wenzi\google_checks.xml H:\GITLAB\141250172_cseiii_AnyQuant_AnyQuant\server\src 
+	
+	java -jar E:\wenzi\checkstyle-7.6.1-all.jar -c E:\wenzi\google_checks.xml H:\GITLAB\141250172_cseiii_AnyQuant_AnyQuant\SAS\src 
+***************** group 36 **********************
+	
+	java -jar E:\wenzi\checkstyle-7.6.1-all.jar -c E:\wenzi\google_checks.xml H:\GITLAB\141250169_cseiii_cseiii\code\AnyQuant_old\src 
+	
+	java -jar E:\wenzi\checkstyle-7.6.1-all.jar -c E:\wenzi\google_checks.xml H:\GITLAB\141250169_cseiii_cseiii\code\AnyQuant\src 
+***************** group 35 **********************
+	
+	java -jar E:\wenzi\checkstyle-7.6.1-all.jar -c E:\wenzi\google_checks.xml H:\GITLAB\141250166_cseiii_AnyQuant_Stock_Market_Analysing_System\Stock_Market_Analysing_System\src 
+***************** group 34 **********************
+	
+	java -jar E:\wenzi\checkstyle-7.6.1-all.jar -c E:\wenzi\google_checks.xml H:\GITLAB\141250165_cseiii_AnyQuant_cseiiiAnyQuant\GSAnyQuant\src 
+com.puppycrawl.tools.checkstyle.api.CheckstyleException: Exception was thrown while processing H:\GITLAB\141250165_cseiii_AnyQuant_cseiiiAnyQuant\GSAnyQuant\src\data\impl\OpStock_dataimpl.java
+	at com.puppycrawl.tools.checkstyle.Checker.processFiles(Checker.java:293)
+	at com.puppycrawl.tools.checkstyle.Checker.process(Checker.java:211)
+	at com.puppycrawl.tools.checkstyle.Main.runCheckstyle(Main.java:425)
+	at com.puppycrawl.tools.checkstyle.Main.runCli(Main.java:359)
+	at com.puppycrawl.tools.checkstyle.Main.main(Main.java:174)
+Caused by: com.puppycrawl.tools.checkstyle.api.CheckstyleException: TokenStreamRecognitionException occurred during the analysis of file H:\GITLAB\141250165_cseiii_AnyQuant_cseiiiAnyQuant\GSAnyQuant\src\data\impl\OpStock_dataimpl.java.
+	at com.puppycrawl.tools.checkstyle.TreeWalker.processFiltered(TreeWalker.java:187)
+	at com.puppycrawl.tools.checkstyle.api.AbstractFileSetCheck.process(AbstractFileSetCheck.java:78)
+	at com.puppycrawl.tools.checkstyle.Checker.processFile(Checker.java:314)
+	at com.puppycrawl.tools.checkstyle.Checker.processFiles(Checker.java:284)
+	... 4 more
+Caused by: H:\GITLAB\141250165_cseiii_AnyQuant_cseiiiAnyQuant\GSAnyQuant\src\data\impl\OpStock_dataimpl.java:1:1: Unexpected character 0xfeff in identifier
+	at com.puppycrawl.tools.checkstyle.grammars.GeneratedJavaLexer.nextToken(GeneratedJavaLexer.java:405)
+	at antlr.TokenStreamHiddenTokenFilter.consume(TokenStreamHiddenTokenFilter.java:38)
+	at antlr.TokenStreamHiddenTokenFilter.consumeFirst(TokenStreamHiddenTokenFilter.java:42)
+	at antlr.TokenStreamHiddenTokenFilter.nextToken(TokenStreamHiddenTokenFilter.java:122)
+	at antlr.TokenBuffer.fill(TokenBuffer.java:69)
+	at antlr.TokenBuffer.LA(TokenBuffer.java:80)
+	at antlr.LLkParser.LA(LLkParser.java:52)
+	at com.puppycrawl.tools.checkstyle.grammars.GeneratedJavaRecognizer.compilationUnit(GeneratedJavaRecognizer.java:158)
+	at com.puppycrawl.tools.checkstyle.TreeWalker.parse(TreeWalker.java:439)
+	at com.puppycrawl.tools.checkstyle.TreeWalker.processFiltered(TreeWalker.java:174)
+	... 7 more
+***************** group 33 **********************
+	
+	java -jar E:\wenzi\checkstyle-7.6.1-all.jar -c E:\wenzi\google_checks.xml H:\GITLAB\141250161_cseiii_GitMining_GitMiningByTeamMole\project\gitmining\src 
+	
+	java -jar E:\wenzi\checkstyle-7.6.1-all.jar -c E:\wenzi\google_checks.xml H:\GITLAB\141250161_cseiii_GitMining_GitMiningByTeamMole\project\gitminingserver 
+	
+	java -jar E:\wenzi\checkstyle-7.6.1-all.jar -c E:\wenzi\google_checks.xml H:\GITLAB\141250161_cseiii_GitMining_GitMiningByTeamMole\project\gitminingweb 
+***************** group 32 **********************
+	
+	java -jar E:\wenzi\checkstyle-7.6.1-all.jar -c E:\wenzi\google_checks.xml H:\GITLAB\141250155_cseiii_GitMining_GitMining\code\src 
+***************** group 50 **********************
+	
+	java -jar E:\wenzi\checkstyle-7.6.1-all.jar -c E:\wenzi\google_checks.xml H:\GITLAB\141250216_cseiii_AwesomeProject\database-server\src 
+	
+	java -jar E:\wenzi\checkstyle-7.6.1-all.jar -c E:\wenzi\google_checks.xml H:\GITLAB\141250216_cseiii_AwesomeProject\luckers-stocks\src 
+	
+	java -jar E:\wenzi\checkstyle-7.6.1-all.jar -c E:\wenzi\google_checks.xml H:\GITLAB\141250216_cseiii_AwesomeProject\luckers-stocks-webserver\src 
+
+Process finished with exit code 0

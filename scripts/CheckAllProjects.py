@@ -14,10 +14,10 @@ import commands
 if __name__=='__main__':
     # if len(sys.argv)!=2:
     #     print 'python CheckAllProjects.py project_location_file'
-    file = open('test_location', 'r')
+    file = open('project_location', 'r')
     jar = "E:\\wenzi\\checkstyle-7.6.1-all.jar"
     xml = "E:\\wenzi\\google_checks.xml"
-    folder = sys.path[0]
+    folder = sys.path[0] + '\\checkresult'
     location = {}
     for line in file.readlines():
         line = line.strip()
@@ -31,4 +31,7 @@ if __name__=='__main__':
             file_name = '%s\\%s.checkstyle.result.%d' % (folder, k, v.index(item))
             result_file = open(file_name, 'w')
             # status, output = commands.getstatusoutput(cmd)
-            result_file.write(check_output(cmd, shell=True))
+            try:
+                result_file.write(check_output(cmd, shell=True))
+            except BaseException:
+                continue
