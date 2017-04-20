@@ -18,7 +18,7 @@ public class PMD_Measure {
 	private int naming;
 	private int unusedcode;
 	private int codesize;
-	private int clone;
+	private int braces;
 	private int coupling;
 	private int iter;//第几次迭代
 	
@@ -74,11 +74,11 @@ public class PMD_Measure {
 	public void setCodesize(int codesize) {
 		this.codesize = codesize;
 	}
-	public int getClone() {
-		return clone;
+	public int getBraces() {
+		return braces;
 	}
-	public void setClone(int clone) {
-		this.clone = clone;
+	public void setBraces(int braces) {
+		this.braces = braces;
 	}
 	public int getCoupling() {
 		return coupling;
@@ -89,7 +89,7 @@ public class PMD_Measure {
 	@Override
 	public String toString() {
 		return "PMD_Measure [id=" + id + ", basic=" + basic + ", naming=" + naming
-				+ ", unusedcode=" + unusedcode + ", codesize=" + codesize + ", clone=" + clone + ", coupling="
+				+ ", unusedcode=" + unusedcode + ", codesize=" + codesize + ", braces=" + braces + ", coupling="
 				+ coupling + ", iter=" + iter + "]";
 	}
 	

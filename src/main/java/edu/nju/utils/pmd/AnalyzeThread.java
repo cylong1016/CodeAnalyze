@@ -17,6 +17,7 @@ import org.jsoup.select.Elements;
 import edu.nju.dao.GroupDao;
 import edu.nju.dao.pmd.PMDDao;
 import edu.nju.entities.StudentGroup;
+import edu.nju.entities.StudentScore;
 import edu.nju.entities.pmd.PMD_FileIssues;
 import edu.nju.entities.pmd.PMD_Measure;
 
@@ -45,24 +46,38 @@ public class AnalyzeThread  extends Thread {
 					map.put("groupName", names[i]);
 					List<StudentGroup> groupList = groupDao.getGroupByQuery(map);
 					if (groupList.size() > 0) {
-						long groupId = groupList.get(0).getId();
+						long groupId = groupList.get(0).getId();//一个组名对应一组
 						PMD_Measure measure = new PMD_Measure();
 						measure.setGroupName(names[i]);
 						measure.setGroupId(groupId);
 						measure.setIter(iter);
 						String resultFolder = "E:\\Documents\\graduate\\report\\iter" + iter + "\\" + names[i];
 						String resultPath = resultFolder + "\\basic.html";
-						measure.setBasic(readHtml(resultPath));
+						int basic=readHtml(resultPath);
+						measure.setBasic(basic);
 						resultPath =  resultFolder + "\\naming.html";
-						measure.setNaming(readHtml(resultPath));
+						int naming=readHtml(resultPath);
+						measure.setNaming(naming);
 						resultPath =  resultFolder + "\\unusedcode.html";
-						measure.setUnusedcode(readHtml(resultPath));
+						int unusedcode=readHtml(resultPath);
+						measure.setUnusedcode(unusedcode);
 						resultPath =  resultFolder + "\\codesize.html";
-						measure.setCodesize(readHtml(resultPath));
-						resultPath = resultFolder + "\\clone.html";
-						measure.setClone(readHtml(resultPath));
+						int codesize=readHtml(resultPath);
+						measure.setCodesize(codesize);
+						resultPath = resultFolder + "\\braces.html";
+						int braces=readHtml(resultPath);
+						measure.setBraces(braces);
 						resultPath =  resultFolder + "\\coupling.html";
-						measure.setCoupling(readHtml(resultPath));
+						int coupling=readHtml(resultPath);
+						measure.setCoupling(coupling);
+						StudentScore s_score=new StudentScore();
+						double d_score=(double)basic/10+(double)naming/100+(double)unusedcode/20+
+								(double)codesize/15+(double)braces/25+(double)coupling/110;
+						s_score.setCheckId(iter);
+						s_score.setGroupId(groupId);
+						s_score.setToolName("pmd");
+						s_score.setScore((int)d_score);
+						dao.savePMDScore(s_score);
 						dao.saveIssueNum(measure);
 					}
 				}

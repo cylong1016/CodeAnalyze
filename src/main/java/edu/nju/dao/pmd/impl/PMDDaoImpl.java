@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import edu.nju.dao.BaseDao;
 import edu.nju.dao.pmd.PMDDao;
+import edu.nju.entities.StudentScore;
 import edu.nju.entities.pmd.PMD_FileIssues;
 import edu.nju.entities.pmd.PMD_Iter;
 import edu.nju.entities.pmd.PMD_Measure;
@@ -107,11 +108,11 @@ public class PMDDaoImpl implements PMDDao{
 		for(int i=1;i<=iter;i++){
 			String hql = "from PMD_Measure where iter = :iter";
 			List<PMD_Measure> list=baseDao.getNewSession().createQuery(hql).setParameter("iter", i).getResultList();
-			double basic=0,clone=0,size=0,coupling=0,naming=0,unused=0;
+			double basic=0,braces=0,size=0,coupling=0,naming=0,unused=0;
 			for(int j=0;j<list.size();j++){
 				PMD_Measure mea= list.get(j);
 				basic=basic+mea.getBasic();
-				clone=clone+mea.getClone();
+				braces=braces+mea.getBraces();
 				size=size+mea.getCodesize();
 				coupling=coupling+mea.getCoupling();
 				naming=naming+mea.getNaming();
@@ -121,7 +122,7 @@ public class PMDDaoImpl implements PMDDao{
 			DecimalFormat df = new DecimalFormat("#.##");
 			Double[] darr=new Double[6];
 			darr[0]=Double.parseDouble(df.format(basic/listSize));
-			darr[1]=Double.parseDouble(df.format(clone/listSize));
+			darr[1]=Double.parseDouble(df.format(braces/listSize));
 			darr[2]=Double.parseDouble(df.format(size/listSize));
 			darr[3]=Double.parseDouble(df.format(coupling/listSize));
 			darr[4]=Double.parseDouble(df.format(naming/listSize));
@@ -129,6 +130,16 @@ public class PMDDaoImpl implements PMDDao{
 			result.add(darr);
 		}
 		return result;
+	}
+
+	@Override
+	public boolean savePMDScore(StudentScore score) {
+		try{
+			baseDao.save(score);
+			return true;
+		}catch(Exception e){
+			return false;
+		}
 	}
 
 }

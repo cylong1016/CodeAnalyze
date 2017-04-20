@@ -3,6 +3,7 @@ package edu.nju.dao.pmd;
 import java.util.ArrayList;
 import java.util.List;
 
+import edu.nju.entities.StudentScore;
 import edu.nju.entities.pmd.PMD_FileIssues;
 import edu.nju.entities.pmd.PMD_Measure;
 
@@ -22,5 +23,7 @@ public interface PMDDao {
 	public boolean setIter();
 
 	public ArrayList<Double[]> getAve();
+	
+	public boolean savePMDScore(StudentScore score);
 
 }

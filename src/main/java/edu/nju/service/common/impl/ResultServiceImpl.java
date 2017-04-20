@@ -38,6 +38,12 @@ public class ResultServiceImpl implements ResultService {
 
     @Override
     public List<SingleCheck> getGroupAllPmdChecks(long groupId) {
+	   List<SingleCheck> groupChecks = new ArrayList<>();
+       for(CheckLog check : checkDao.getAllCheck()){
+    	   if(ifCheckdayPass(check.getCheckDate())){
+    		   
+    	   }
+       }
         return null;
     }
 
