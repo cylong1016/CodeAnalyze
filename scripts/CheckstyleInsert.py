@@ -216,6 +216,5 @@ if __name__ == '__main__':
         print k, v
         # sql_type_count = 'INSERT INTO checkstyle_stat_result (check_id, group_id, internal_type , count) VALUES ("%d", "%d", "%s", "%d")' % (check_id, group_id, k, v)
         # cursor.execute(sql_type_count)
-
     # db.commit()
     # db.close()
