@@ -73,6 +73,7 @@ public class AnalyzeThread  extends Thread {
 						StudentScore s_score=new StudentScore();
 						double d_score=(double)basic/10+(double)naming/100+(double)unusedcode/20+
 								(double)codesize/15+(double)braces/25+(double)coupling/110;
+						d_score=100-d_score;
 						s_score.setCheckId(iter);
 						s_score.setGroupId(groupId);
 						s_score.setToolName("pmd");
@@ -86,7 +87,7 @@ public class AnalyzeThread  extends Thread {
 						parseHTML(iter, names[i], rules[j]);
 					}
 				}
-	
+				System.out.println("over");
 			} catch (Exception e) {
 			}
 	}
