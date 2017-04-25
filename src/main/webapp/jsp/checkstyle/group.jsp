@@ -12,10 +12,10 @@
 
 <div>
     <ul class="nav nav-pills nav-stacked left-chart-nav col-md-2 col-sm-2" id="tab" role="tablist">
-        <li role="presentation"><a href="<%=request.getContextPath()%>/api/checkstyle">Check</a></li>
-        <li role="presentation" class="active"><a href="<%=request.getContextPath()%>/api/checkstyle/group">Group</a></li>
+        <%--<li role="presentation"><a href="<%=request.getContextPath()%>/api/checkstyle">Check</a></li>--%>
+        <li role="presentation" class="active"><a href="<%=request.getContextPath()%>/api/checkstyle">Group</a></li>
         <li role="presentation"><a href="<%=request.getContextPath()%>/api/checkstyle/config">Config</a></li>
-        <li role="presentation"><a href="<%=request.getContextPath()%>/api/checkstyle/stats">Statistics</a></li>
+        <%--<li role="presentation"><a href="<%=request.getContextPath()%>/api/checkstyle/stats">Statistics</a></li>--%>
     </ul>
     <div class="col-md-offset-2 col-sm-offset-2" id="content">
 
@@ -39,18 +39,26 @@
             } catch (err) {
                 console.log(err.message);
             }
+            querys.sort(
+                function (a, b) {
+                    var keyA = a.id,
+                        keyB = b.id;
+                    if(keyA > keyB) return 1;
+                    if(keyA < keyB) return -1;
+                    return 0;
+                }
+            )
             console.log(querys);
             drawGroup(querys);
+        });
 
-        })
-
-        function drawGroup(querys) {
+        function drawGroup(data) {
             var count_row = 3;
             var row_num = 0;
             var width = ($(window).width() - $('#tab').width()) / 3.5;
             var height = ($(window).height() - parseInt($('body').css('padding-top')) - $('header').height()) / 1.6;
             $("#content").append('<div id="row_' + row_num + '">');
-            $.each(querys, function (index,value) {
+            $.each(data, function (index,value) {
                 if ( index % count_row == 0) {
                     row_num++;
                     $("#content").append('<div id="row_' + row_num + '">');
@@ -65,9 +73,7 @@
                 $.each(value.briefInfo, function (key,value) {
                     check_log.push(key);
                     legend_data.push(temp_index+"_Warn");
-                    legend_data.push(temp_index+"_Error");
-                    series_data.push({value:value[0], name:temp_index+"_Warn"});
-                    series_data.push({value:value[1]+300, name:temp_index+"_Error"});
+                    series_data.push({value:value, name:temp_index+"_Warn"});
                     temp_index++;
                 });
                 group_chart.setOption({
@@ -119,8 +125,7 @@
 //                        console.log(group_chart.getOption());
                         var group_id = group_chart.getOption().title[0].text.replace(/[^0-9]/ig, "");
                         var check = params.name.split('_')[0];
-                        var type = params.name.split('_')[1];
-                        window.location.href='<%=request.getContextPath()%>/api/checkstyle/group/'+group_id+';check='+check+';type='+type;
+                        window.location.href='<%=request.getContextPath()%>/api/checkstyle/group/'+group_id+';check='+check;
                     }
                 });
             });

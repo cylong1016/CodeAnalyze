@@ -1,5 +1,6 @@
 package edu.nju.Vo.common;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -8,22 +9,23 @@ import java.util.List;
  * Created by Administrator on 2017/4/18.
  */
 public class SingleCheck {
-    private Date checkDate;
+    private String checkDate;
     private List<SingleResult> results;
 
     public SingleCheck(Date checkDate){
-        this.checkDate = checkDate;
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        this.checkDate = sdf.format(checkDate);
         this.results = new ArrayList<>();
     }
 
     public void addSingleResult(SingleResult singleResult){
         this.results.add(singleResult);
     }
-    public Date getCheckDate() {
+    public String getCheckDate() {
         return checkDate;
     }
 
-    public void setCheckDate(Date checkDate) {
+    public void setCheckDate(String checkDate) {
         this.checkDate = checkDate;
     }
 

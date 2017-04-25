@@ -20,6 +20,8 @@ public interface CheckStyleDao {
 
     public boolean check(long checkId, long groupId);
 
+    public List<SubTypeStat> getSubTypeStat(Map<String, Object> querys);
+
     public List<InternalStat> getStatList(Map<String, Object> querys);
 
     public List<CheckstyleRegression> getRegressionByInternalType(String internalType);

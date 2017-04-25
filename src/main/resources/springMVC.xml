@@ -20,7 +20,6 @@
 		<property name="prefix" value="/"></property>
 		<property name="suffix" value=".jsp"></property>
 	</bean>
-
 	<!-- 允许Url使用Matrix variable-->
 	<mvc:annotation-driven enable-matrix-variables="true">
     <!-- 消息转换器 -->
@@ -33,4 +32,6 @@
     </mvc:annotation-driven>
 	<!-- 允许对静态资源的访问 -->
 	<!--<mvc:default-servlet-handler/s>-->
+
 </beans>
+

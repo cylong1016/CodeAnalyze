@@ -15,7 +15,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -45,7 +44,7 @@ public class CheckStyleRESTController {
         return response;
     }
 
-    @GetMapping("/checkstyle/result/{groupId}")
+    @GetMapping("/result/{groupId}")
     public String getCheckstyleResult(@PathVariable String groupId){
         List<SingleCheck> checkstyleResult = resultService.getGroupAllCheckstyleChecks(Long.parseLong(groupId));
         return new Gson().toJson(checkstyleResult);
@@ -87,11 +86,13 @@ public class CheckStyleRESTController {
         if(!file.isEmpty()){
             try {
                 InputStream in = file.getInputStream();
-                BufferedReader reader = new BufferedReader( new InputStreamReader(in) );
+                BufferedReader reader = new BufferedReader( new InputStreamReader(in,"UTF-8") );
                 String line;
                 while((line=reader.readLine())!=null){
+                    System.out.println(line);
                     String[] attrs = line.split(",");
-                    boolean ifSave = service.addGrade(Long.parseLong(checkId), Long.parseLong(attrs[0]), Integer.parseInt(attrs[1]), attrs[2]);
+
+                    boolean ifSave = service.addTeacherScore(Long.parseLong(checkId), Long.parseLong(attrs[0].trim()), Integer.parseInt(attrs[1].trim()), attrs[2].trim());
                     if(!ifSave){
                         json.put("success","Insert Database Error");
                         return json;
@@ -103,7 +104,6 @@ public class CheckStyleRESTController {
                 return json;
             }
         }
-        System.out.println(checkId);
         json.put("success", "0");
         return json;
     }

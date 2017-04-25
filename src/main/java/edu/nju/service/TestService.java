@@ -10,6 +10,7 @@ public class TestService {
 
 	@Autowired
 	private TestDao testDao;
+
 	public void test() {
 		testDao.test();
 	}

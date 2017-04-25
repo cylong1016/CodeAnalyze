@@ -24,7 +24,7 @@ public class MainController {
 
     @GetMapping("/config")
     public String config(){
-        return "";
+        return "jsp/main/config";
     }
 
     /**

@@ -27,6 +27,7 @@ public class CheckController {
     public String addCheck(@RequestParam("year") int year, @RequestParam("month")int month, @RequestParam("day")int day,
                            @RequestParam(name="description", required = false)String description){
         Date date = new Date(year-1900, month-1, day);
+        System.out.println(description);
         if(checkService.addCheck( date, description)){
             SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
             return sdf.format(date);

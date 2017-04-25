@@ -49,92 +49,15 @@ public class CheckStyleDaoImpl implements CheckStyleDao{
         return query.getResultList();
     }
 
-    public List<CheckstyleResult> getResultByTimeLine(Date date) {
-        Map<String, Object> checkLogQuery = new HashMap<>();
-        checkLogQuery.put("check_date", date);
-        List<CheckLog> check = baseDao.find(CheckLog.class, checkLogQuery);
-        long checkId = 0;
-        if (check.size()>1){
-            return null;
-        } else {
-            checkId = check.get(0).getId();
-        }
-        Map<String, Object> resultQuery = new HashMap<>();
-        resultQuery.put("check_id", checkId);
-        return baseDao.find(CheckstyleResult.class, resultQuery);
-    }
-
-    public List<CheckstyleResult> getResultByFatherType(String type) {
-        Map<String, Object> resultQuery = new HashMap<>();
-        resultQuery.put("father_type", type);
-        return baseDao.find(CheckstyleResult.class, resultQuery);
-    }
-
-    public List<CheckstyleResult> getResultBySubType(String type) {
-        Map<String, Object> resultQuery = new HashMap<>();
-        resultQuery.put("sub_type", type);
-        return baseDao.find(CheckstyleResult.class, resultQuery);
-    }
-
-    public List<CheckstyleResult> getResultByGroup(long groupId) {
-        Map<String, Object> resultQuery = new HashMap<>();
-        resultQuery.put("group_id", groupId);
-        return baseDao.find(CheckstyleResult.class, resultQuery);
-    }
-
     @Override
     public boolean check(long checkId, long groupId) {
 //        调用脚本 运行 checkstyle
         return false;
     }
 
-    public boolean addCheck(Date date, String description) {
-        CheckLog check = new CheckLog();
-        check.setCheckDate(date);
-        check.setDescription(description);
-        try{
-            baseDao.save(check);
-        }catch (Exception exp){
-            System.out.println(exp.getMessage());
-            return false;
-        }
-        return true;
-    }
-
-    public CheckLog findCheckById(long id) {
-        Map<String, Object> querys = new HashMap<>();
-        querys.put("id", id);
-        List<CheckLog> checkLogs = baseDao.find(CheckLog.class, querys);
-        if(checkLogs.size()==1){
-            return checkLogs.get(0);
-        }else {
-            return null;
-        }
-    }
-
-    public Group findGroupById(long id) {
-        Map<String, Object> querys = new HashMap<>();
-        querys.put("id", id);
-        List<Group> groups = baseDao.find(Group.class, querys);
-        if(groups.size()==1){
-            return groups.get(0);
-        }else {
-            return null;
-        }
-    }
-
-    public boolean addGrade(Grade grade) {
-        try{
-            baseDao.save(grade);
-        }catch (Exception e){
-            System.out.println(e.getMessage());
-            return false;
-        }
-        return true;
-    }
-
-    public List<Grade> getGradeByQuery(Map<String, Object> querys) {
-        return baseDao.find(Grade.class,querys);
+    @Override
+    public List<SubTypeStat> getSubTypeStat(Map<String, Object> querys) {
+        return baseDao.find(SubTypeStat.class, querys);
     }
 
     @Override
@@ -165,13 +88,6 @@ public class CheckStyleDaoImpl implements CheckStyleDao{
         querys.put("status", Constant.ACTIVE);
         List<CheckType> activeTypes = baseDao.find(CheckType.class, querys);
         return activeTypes;
-    }
-
-    public List<CheckType> getNotActiveType() {
-        Map<String, Object> querys = new HashMap<>();
-        querys.put("status", Constant.NOT_ACTIVE);
-        List<CheckType> notActiveTypes = baseDao.find(CheckType.class, querys);
-        return notActiveTypes;
     }
 
     @Override

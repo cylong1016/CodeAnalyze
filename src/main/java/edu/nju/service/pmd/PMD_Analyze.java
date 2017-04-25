@@ -41,14 +41,14 @@ public class PMD_Analyze {
 	public boolean analyze(HttpServletRequest request) {
 		int iter = dao.getIter();
 		String names[] = getDir("E:/Documents/graduate/project/iter" + iter);// 小组名
-		String[] rules = { "basic", "naming", "unusedcode", "codesize", "braces", "coupling" };
+		String[] rules = {"basic", "naming", "unusedcode", "codesize", "braces", "coupling"};
 		String basePath = request.getServletContext().getRealPath("/") + "pmd-bin-5.5.0/bin";
 		try {
-			for (int i = 0; i < names.length; i++) {
+			for(int i = 0; i < names.length; i++) {
 				String path = "E:\\Documents\\graduate\\project\\iter" + iter + "\\" + names[i];
 				String resultFolder = "E:\\Documents\\graduate\\report\\iter" + iter + "\\" + names[i];
 				createDir(resultFolder);
-				for (int j = 0; j < rules.length; j++) {
+				for(int j = 0; j < rules.length; j++) {
 					String rulePath = "rulesets/java/" + rules[j] + ".xml";
 					String resultPath = resultFolder + "\\" + rules[j] + ".html";
 					String command = "cmd /C pmd -d " + path + " -f html -r " + resultPath + " -R " + rulePath;
@@ -58,12 +58,11 @@ public class PMD_Analyze {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		AnalyzeThread thread = new AnalyzeThread(dao,names,iter,rules,groupDao);
+		AnalyzeThread thread = new AnalyzeThread(dao, names, iter, rules, groupDao);
 		thread.start();
 
 		return true;
 	}
-
 
 	public boolean setIter() {
 		return dao.setIter();
@@ -93,13 +92,12 @@ public class PMD_Analyze {
 		}
 	}
 
-
 	public String[] getDir(String strPath) {
 		File f = new File(strPath);
 		if (f.isDirectory()) {
 			File[] fList = f.listFiles();
 			String[] names = new String[fList.length];
-			for (int j = 0; j < fList.length; j++) {
+			for(int j = 0; j < fList.length; j++) {
 				names[j] = fList[j].getName();
 			}
 			return names;
