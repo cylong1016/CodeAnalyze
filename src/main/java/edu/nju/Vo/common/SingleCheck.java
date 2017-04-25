@@ -29,6 +29,11 @@ public class SingleCheck {
         this.checkDate = checkDate;
     }
 
+    public void setCheckDate(Date date) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        this.checkDate = sdf.format(date);
+    }
+
     public List<SingleResult> getResults() {
         return results;
     }
