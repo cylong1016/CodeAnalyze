@@ -1,10 +1,7 @@
 package edu.nju.Vo.common;
 
-import edu.nju.Vo.checkstyle.GroupForCheck;
-import edu.nju.entities.checkstyle.CheckLog;
-
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.Date;
 
 /**
  * Created by Administrator on 2017/4/7.

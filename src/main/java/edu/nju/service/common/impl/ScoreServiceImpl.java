@@ -38,34 +38,38 @@ public class ScoreServiceImpl implements ScoreService {
 	private GroupDao groupDao;
 
 	@Override
-    public GroupAllScore getGroupAllScore(long groupId) {
-        GroupAllScore groupScores = new GroupAllScore(groupId);
-        List<CheckLog> checks = checkDao.getAllCheck();
-        Collections.sort(checks, Comparator.comparing(CheckLog::getCheckDate));
+	public GroupAllScore getGroupAllScore(long groupId) {
+		GroupAllScore groupScores = new GroupAllScore(groupId);
+		List<CheckLog> checks = checkDao.getAllCheck();
+		Collections.sort(checks, Comparator.comparing(CheckLog::getCheckDate));
 
-        List<TeacherScore> tscores;
-        List<StudentScore> pmdscores;
-        List<StudentScore> checkScores;
-        for(CheckLog item : checks) {
-            if (ifCheckdayPass(item.getCheckDate())) {
-            	Map<String, Object> querys = new HashMap<>();
-            	querys.put("groupId", groupId);
-                querys.put("checkId", item.getId());
-                groupScores.addCheckDate(item.getCheckDate());
-                tscores = teacherScoreDao.getTeacherScoreByQuery(querys);
-                querys.put("toolName", "pmd");
-                pmdscores = studentScoreDao.getStudentScoreByQuery(querys);
-                querys.put("toolName", "checkstyle");
-                checkScores = studentScoreDao.getStudentScoreByQuery(querys);
-                if (tscores.size() > 0 && pmdscores.size() > 0 && checkScores.size() > 0) {
-                    groupScores.addTeacherScore(tscores.get(0).getScore());
-                    groupScores.addCheckstyleScore(checkScores.get(0).getScore());
-                    groupScores.addPmdScore(pmdscores.get(0).getScore());
-                }
-            }
-        }
-        return groupScores;
-    }
+		List<TeacherScore> tscores;
+		List<StudentScore> pmdscores;
+		List<StudentScore> checkScores;
+		for(CheckLog item : checks) {
+			if (ifCheckdayPass(item.getCheckDate())) {
+				Map<String, Object> querys = new HashMap<>();
+				querys.put("groupId", groupId);
+				querys.put("checkId", item.getId());
+				groupScores.addCheckDate(item.getCheckDate());
+				tscores = teacherScoreDao.getTeacherScoreByQuery(querys);
+				if (!tscores.isEmpty()) {
+					groupScores.addTeacherScore(tscores.get(0).getScore());
+				}
+				querys.put("toolName", "pmd");
+				pmdscores = studentScoreDao.getStudentScoreByQuery(querys);
+				if (!pmdscores.isEmpty()) {
+					groupScores.addPmdScore(pmdscores.get(0).getScore());
+				}
+				querys.put("toolName", "checkstyle");
+				checkScores = studentScoreDao.getStudentScoreByQuery(querys);
+				if (!checkScores.isEmpty()) {
+					groupScores.addCheckstyleScore(checkScores.get(0).getScore());
+				}
+			}
+		}
+		return groupScores;
+	}
 
 	private boolean ifCheckdayPass(Date date) {
 		return date.compareTo(new Date()) <= 0;
@@ -83,6 +87,6 @@ public class ScoreServiceImpl implements ScoreService {
 			groupScore.setGroupName(studentGroup.getGroupName());
 			allGroupScore.add(groupScore);
 		}
-        return allGroupScore;
+		return allGroupScore;
 	}
 }
