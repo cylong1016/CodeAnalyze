@@ -1,27 +1,23 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 %>
-	<base href="<%=basePath%>">
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-	<link href="css/pmdcss.css" rel="stylesheet">
-	<link href="css/bootstrap.css" rel="stylesheet">
-	<link href="css/bootstrap-responsive.css" rel="stylesheet">
-	<link href="css/bootstrap-datetimepicker.min.css" rel="stylesheet" media="screen">
-	<script src="js/jquery-3.2.0.min.js"></script>
-	<script src="js/table.js"></script>
-	<script src="js/Chart-1.0.1-beta.4.js"></script>
+	<link href="<%=request.getContextPath()%>/css/pmdcss.css" rel="stylesheet">
+	<link href="<%=request.getContextPath()%>/css/bootstrap.css" rel="stylesheet">
+	<link href="<%=request.getContextPath()%>/css/bootstrap-responsive.css" rel="stylesheet">
+	<link href="<%=request.getContextPath()%>/css/bootstrap-datetimepicker.min.css" rel="stylesheet" media="screen">
+	<script src="<%=request.getContextPath()%>/js/jquery-3.2.0.min.js"></script>
+	<script src="<%=request.getContextPath()%>/js/table.js"></script>
+	<script src="<%=request.getContextPath()%>/js/Chart-1.0.1-beta.4.js"></script>
 	<script>
 	document.getElementById('drop').className="dropdown active";
 	</script>
 	
 <title>One Group</title>
-</head>
 <body style="margin-top:50px">
 <div class="container">
 	<h2>Project Problems Summary</h2>
@@ -53,7 +49,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						<button id="getType" class="btn btn-default" style="margin-top:10px;margin-left:20px">Submit</button>
 						
 						
-						<form id="exportForm" action="api/pmd/export">
+						<form id="exportForm" action="<%=request.getContextPath()%>/api/pmd/export">
 							<center>
 							<h3>Problems found</h3>
 							<span class="commonSpan">
@@ -174,7 +170,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				param.push({name:"iter",value:iter});
 				param.push({name:"type",value:type});
 				param.push({name:"groupName",value:groupName});
-				$.getJSON("api/pmd/getOneGroup",param,function(data){
+				$.getJSON("<%=request.getContextPath()%>/api/pmd/getOneGroup",param,function(data){
 					$("#tbody_content").empty();
 					 var code = data.code;
 					 if(code=="0"){
@@ -200,7 +196,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			var getPie=function(){
 				var param=new Array(1);
 				param.push({name:"groupName",value:groupName});
-		 		$.getJSON("api/pmd/getCurrent",param,function(data){
+		 		$.getJSON("<%=request.getContextPath()%>/api/pmd/getCurrent",param,function(data){
 		 			var code = data.code;
 		 			var fillColorArr=new Array('rgba(210,105,30,1)','rgba(151,187,205,1','rgba(147,112,219,1)',
 		 					'rgba(218,165,32,1)','#999966','rgba(220,220,220,1)');
@@ -234,7 +230,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				var param=new Array(1);
 				param.push({name:"groupName",value:groupName});
 				var labelArr=new Array("Basic","braces","Codesize","Coupling","Naming","Unusedcode");
-		 		$.getJSON("api/pmd/getOneMeasure",param,function(data){
+		 		$.getJSON("<%=request.getContextPath()%>/api/pmd/getOneMeasure",param,function(data){
 		 			var code = data.code;
 		 			if(code=="0"){
 		 				var resultArr=data.data;
@@ -287,6 +283,5 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	
 </div>
 <script src="http://code.jquery.com/jquery-latest.js"></script>
-<script src="js/bootstrap.min.js"></script>
+<script src="<%=request.getContextPath()%>/js/bootstrap.min.js"></script>
 </body>
-</html>

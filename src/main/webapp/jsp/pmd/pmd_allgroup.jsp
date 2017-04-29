@@ -1,21 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 %>
-	<base href="<%=basePath%>">
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-	<link href="css/pmdcss.css" rel="stylesheet">
-	<link href="css/bootstrap.css" rel="stylesheet">
-	<link href="css/bootstrap-responsive.css" rel="stylesheet">
-	<link href="css/bootstrap-datetimepicker.min.css" rel="stylesheet" media="screen">
-	<script src="js/jquery-3.2.0.min.js"></script>
-	<script src="js/table.js"></script>
-	<script src="js/Chart-1.0.1-beta.4.js"></script>
+	<link href="<%=request.getContextPath()%>/css/pmdcss.css" rel="stylesheet">
+	<link href="<%=request.getContextPath()%>/css/bootstrap.css" rel="stylesheet">
+	<link href="<%=request.getContextPath()%>/css/bootstrap-responsive.css" rel="stylesheet">
+	<link href="<%=request.getContextPath()%>/css/bootstrap-datetimepicker.min.css" rel="stylesheet" media="screen">
+	<script src="<%=request.getContextPath()%>/js/jquery-3.2.0.min.js"></script>
+	<script src="<%=request.getContextPath()%>/js/table.js"></script>
+	<script src="<%=request.getContextPath()%>/js/Chart-1.0.1-beta.4.js"></script>
 	<script>
 		$(function(){
 			tableSort($('#dataTable'));
@@ -24,7 +21,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		document.getElementById('drop').className="dropdown active";
 	</script>
 <title>All Group</title>
-</head>
 <body style="margin-top:50px">
 	<div class="container">
 	<h2>Group Problems Summary</h2>
@@ -86,7 +82,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 	<script type="text/javascript">
 	 	var getIter=function(){
-	 		$.getJSON("api/pmdAna/getIter",function(data){
+	 		$.getJSON("<%=request.getContextPath()%>/api/pmdAna/getIter",function(data){
 	 			var colorArr=new Array('#dcdcdc','#97bbcd','#9370DB');
 	 			var code = data.code;
  				if(code=="0"){
@@ -109,7 +105,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	 	
 	 	
 	 	var getBar=function(){
-	 		$.getJSON("api/pmd/getAve",function(data){
+	 		$.getJSON("<%=request.getContextPath()%>/api/pmd/getAve",function(data){
 	 			var code = data.code;
 	 			var labelArr=new Array("Basic","braces","Codesize","Coupling","Naming","Unusedcode");
 	 			var fillColorArr=new Array('rgba(220,220,220,0.5)','rgba(151,187,205,0.5)','rgba(147,112,219,0.5)');
@@ -137,7 +133,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	 		$("#tbody_content").empty();
 	 		 var param = $("#select_query").serializeArray();
 	 		 param.push({name:"iter",value:iter});
-	 		$.getJSON("api/pmd/getAll",param,function(data){
+	 		$.getJSON("<%=request.getContextPath()%>/api/pmd/getAll",param,function(data){
 	 			var code = data.code;
  				if(code=="0"){
  					var arr=data.data;
@@ -152,7 +148,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
  						var coupling=arr[index].coupling;
  						html=html+'<tr>'+
 							  '<td>'+(index+1)+'</td>'+
-							  '<td><a href="api/pmd/onegroup?groupName='+groupName+'&iter='+$("#iterHidden").val()+'">'+groupName+'</a></td>'+
+							  '<td><a href="<%=request.getContextPath()%>/api/pmd/onegroup?groupName='+groupName+'&iter='+$("#iterHidden").val()+'">'+groupName+'</a></td>'+
 							  '<td>'+basic+'</td>'+
 							  '<td>'+naming+'</td>'+
 							  '<td>'+unusedcode+'</td>'+
@@ -182,6 +178,5 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	 </script>
 
 <script src="http://code.jquery.com/jquery-latest.js"></script>
-<script src="js/bootstrap.min.js"></script>
+<script src="<%=request.getContextPath()%>/js/bootstrap.min.js"></script>
 </body>
-</html>
