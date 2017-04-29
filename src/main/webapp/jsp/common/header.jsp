@@ -13,7 +13,7 @@
             </div>
 	            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 	                <ul class="nav navbar-nav">
-	                    <li id="home" class=""><a href="jsp/pmd/main.jsp" onclick="homeActive">Home</a></li>
+	                    <li id="home" class=""><a href="jsp/main/index.jsp">Home</a></li>
 	                    <li id="drop" class="dropdown">
 								<a href="#" class="dropdown-toggle" data-toggle="dropdown">Tools<strong class="caret"></strong></a>
 								<ul class="dropdown-menu active">
@@ -23,12 +23,9 @@
 									<li>
 										 <a href="<%=request.getContextPath()%>/api/pmd">PMD</a>
 									</li>
-									<li>
-										 <a href="#">Findbugs</a>
-									</li>
 								</ul>
 							</li>
-	                    <li id="sta" class=""><a href="jsp/pmd/sta.jsp" onclick="staActive()">Statistics</a></li>
+	                    <li id="sta" class=""><a href="jsp/main/sta.jsp">Statistics</a></li>
 	                </ul>
 					<ul class="nav navbar-nav navbar-right">
 						<li><a href="<%=request.getContextPath()%>/api/config"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Config</a></li>

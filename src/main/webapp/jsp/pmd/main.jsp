@@ -15,7 +15,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<link href="css/bootstrap.css" rel="stylesheet">
 	<link href="css/bootstrap-responsive.css" rel="stylesheet">
 	<script src="js/jquery-3.2.0.min.js"></script>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>CodeAnalyze</title>
 </head>
 <body style="padding-top:60px">
