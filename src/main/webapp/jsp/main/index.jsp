@@ -6,14 +6,36 @@
 <jsp:include page="/jsp/common/head.jsp"></jsp:include>
 <link href="http://cdn.datatables.net/1.10.13/css/jquery.dataTables.min.css" rel="stylesheet">
 <title>CodeAnalyze</title>
+<style type="text/css">
+	table, th, td {
+		text-align: center;
+	}
+	
+	body {
+		padding-top: 60px;
+	}
+	
+	colgroup.odd {
+		background-color: #E6E6E6;
+	}
+	
+	colgroup.even {
+		background-color: #F1F1F1;
+	}
+	
+	.table > thead > tr > th {
+    	vertical-align: middle;
+	}
+	
+</style>
 </head>
-<body style="padding-top: 60px">
+<body>
 	<jsp:include page="/jsp/common/header.jsp"></jsp:include>
-	<table id="overview" class="display table-hover" style="text-align: center">
-		<colgroup span="1" style="background-color: white"></colgroup>
-		<colgroup span="3" style="background-color: #F1F1F1"></colgroup>
-		<colgroup span="3" style="background-color: #E6E6E6"></colgroup>
-		<colgroup span="3" style="background-color: #F1F1F1"></colgroup>
+	<table id="overview" class="table table-hover">
+		<colgroup class="odd" span="1"></colgroup>
+		<colgroup class="even" span="3"></colgroup>
+		<colgroup class="odd" span="3"></colgroup>
+		<colgroup class="even" span="3"></colgroup>
 		<thead>
 			<tr>
 				<th rowspan="2">组名</th>
@@ -48,30 +70,7 @@
 			</tr>
 		</tfoot>
 		<tbody id="tbody_content">
-			<tr>
-				<td>Group 1</td>
-				<td>10</td>
-				<td>10</td>
-				<td>10</td>
-				<td>10</td>
-				<td>10</td>
-				<td>10</td>
-				<td>10</td>
-				<td>10</td>
-				<td>10</td>
-			</tr>
-			<tr>
-				<td>Group 2</td>
-				<td>10</td>
-				<td>10</td>
-				<td>10</td>
-				<td>10</td>
-				<td>10</td>
-				<td>10</td>
-				<td>10</td>
-				<td>10</td>
-				<td>10</td>
-			</tr>
+			<!-- getAllGroupScore -->
 		</tbody>
 	</table>
 
@@ -92,7 +91,7 @@
 				var teacherScore = groupScore.teacherScore;
 				
 				var row = [];
-				row.push("<a href='<%=request.getContextPath()%>/api/score/api/" + groupId + "'>" + groupName + "</a>");
+				row.push("<a href='<%=request.getContextPath()%>/api/group/" + groupId + "'>" + groupName + "</a>");
 
 				$.each(checkDate, function(j) {
 					var csItem = checkstyleScore[j];
@@ -111,8 +110,7 @@
 	}
 
 	
-	$(document).ready(
-			function() {
+	$(document).ready(function() {
 				var dt = $('#overview').DataTable({
 					"pagingType" : "full_numbers",
 					stateSave : true,
@@ -138,6 +136,7 @@
 				});
 
 				getAllGroupScore(dt);
+				
 			});
 </script>
 <script src="http://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
