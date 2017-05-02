@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="<%=request.getContextPath()%>/css/bootstrap.css" type="text/css">
     <title>CodeAnalyze</title>
     <style>
-        body {padding-top: 60px;}
+        body {padding-top: 50px;}
     </style>
 </head>
 <body>

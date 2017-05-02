@@ -11,8 +11,16 @@
 		text-align: center;
 	}
 	
+	.table > thead > tr > th {
+    	vertical-align: middle;
+	}
+
 	body {
-		padding-top: 60px;
+		padding-top: 50px;
+	}
+	
+	.content {
+		margin-top: 10px;
 	}
 	
 	colgroup.odd {
@@ -23,57 +31,54 @@
 		background-color: #F1F1F1;
 	}
 	
-	.table > thead > tr > th {
-    	vertical-align: middle;
-	}
-	
 </style>
 </head>
 <body>
 	<jsp:include page="/jsp/common/header.jsp"></jsp:include>
-	<table id="overview" class="table table-hover">
-		<colgroup class="odd" span="1"></colgroup>
-		<colgroup class="even" span="3"></colgroup>
-		<colgroup class="odd" span="3"></colgroup>
-		<colgroup class="even" span="3"></colgroup>
-		<thead>
-			<tr>
-				<th rowspan="2">组名</th>
-				<th colspan="3">迭代一</th>
-				<th colspan="3">迭代二</th>
-				<th colspan="3">迭代三</th>
-			</tr>
-			<tr>
-				<th>CheckStyle</th>
-				<th>PMD</th>
-				<th>Teacher</th>
-				<th>CheckStyle</th>
-				<th>PMD</th>
-				<th>Teacher</th>
-				<th>CheckStyle</th>
-				<th>PMD</th>
-				<th>Teacher</th>
-			</tr>
-		</thead>
-		<tfoot>
-			<tr>
-				<th>Group</th>
-				<th>CheckStyle</th>
-				<th>PMD</th>
-				<th>Teacher</th>
-				<th>CheckStyle</th>
-				<th>PMD</th>
-				<th>Teacher</th>
-				<th>CheckStyle</th>
-				<th>PMD</th>
-				<th>Teacher</th>
-			</tr>
-		</tfoot>
-		<tbody id="tbody_content">
-			<!-- getAllGroupScore -->
-		</tbody>
-	</table>
-
+	<div class="content">
+		<table id="overview" class="table table-hover">
+			<colgroup class="odd" span="1"></colgroup>
+			<colgroup class="even" span="3"></colgroup>
+			<colgroup class="odd" span="3"></colgroup>
+			<colgroup class="even" span="3"></colgroup>
+			<thead>
+				<tr>
+					<th rowspan="2">组名</th>
+					<th colspan="3">迭代一</th>
+					<th colspan="3">迭代二</th>
+					<th colspan="3">迭代三</th>
+				</tr>
+				<tr>
+					<th>CheckStyle</th>
+					<th>PMD</th>
+					<th>Teacher</th>
+					<th>CheckStyle</th>
+					<th>PMD</th>
+					<th>Teacher</th>
+					<th>CheckStyle</th>
+					<th>PMD</th>
+					<th>Teacher</th>
+				</tr>
+			</thead>
+			<tfoot>
+				<tr>
+					<th>Group</th>
+					<th>CheckStyle</th>
+					<th>PMD</th>
+					<th>Teacher</th>
+					<th>CheckStyle</th>
+					<th>PMD</th>
+					<th>Teacher</th>
+					<th>CheckStyle</th>
+					<th>PMD</th>
+					<th>Teacher</th>
+				</tr>
+			</tfoot>
+			<tbody id="tbody_content">
+				<!-- getAllGroupScore -->
+			</tbody>
+		</table>
+	</div>
 </body>
 <jsp:include page="/jsp/common/footer.jsp"></jsp:include>
 
