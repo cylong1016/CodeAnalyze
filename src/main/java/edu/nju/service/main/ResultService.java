@@ -1,4 +1,4 @@
-package edu.nju.service.common;
+package edu.nju.service.main;
 
 import edu.nju.Vo.common.SingleCheck;
 

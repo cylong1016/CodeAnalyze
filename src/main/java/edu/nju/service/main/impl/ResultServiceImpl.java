@@ -1,4 +1,4 @@
-package edu.nju.service.common.impl;
+package edu.nju.service.main.impl;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -18,7 +18,7 @@ import edu.nju.entities.CheckLog;
 import edu.nju.entities.checkstyle.CheckType;
 import edu.nju.entities.checkstyle.SubTypeStat;
 import edu.nju.entities.pmd.PMD_Measure;
-import edu.nju.service.common.ResultService;
+import edu.nju.service.main.ResultService;
 
 /**
  * Created by Administrator on 2017/4/18.

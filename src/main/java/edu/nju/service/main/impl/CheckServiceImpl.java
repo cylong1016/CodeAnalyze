@@ -1,10 +1,11 @@
-package edu.nju.service.common.impl;
+package edu.nju.service.main.impl;
 
 import edu.nju.Vo.common.Check;
 import edu.nju.dao.CheckDao;
 import edu.nju.dao.checkstyle.CheckStyleDao;
 import edu.nju.entities.CheckLog;
-import edu.nju.service.common.CheckService;
+import edu.nju.service.main.CheckService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

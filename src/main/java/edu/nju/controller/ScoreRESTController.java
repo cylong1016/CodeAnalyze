@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.google.gson.Gson;
 
 import edu.nju.Vo.common.GroupAllScore;
-import edu.nju.service.common.ScoreService;
+import edu.nju.service.main.ScoreService;
 
 /**
  * Created by Administrator on 2017/4/18.

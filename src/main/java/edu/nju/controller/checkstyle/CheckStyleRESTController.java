@@ -5,8 +5,9 @@ import edu.nju.Vo.checkstyle.GroupBriefInfo;
 import edu.nju.Vo.checkstyle.GroupInfo;
 import edu.nju.Vo.common.SingleCheck;
 import edu.nju.service.checkstyle.CheckstyleService;
-import edu.nju.service.common.ResultService;
-import edu.nju.service.common.ScoreService;
+import edu.nju.service.main.ResultService;
+import edu.nju.service.main.ScoreService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;

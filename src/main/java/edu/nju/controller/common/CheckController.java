@@ -1,7 +1,9 @@
 package edu.nju.controller.common;
 
 import com.google.gson.Gson;
-import edu.nju.service.common.CheckService;
+
+import edu.nju.service.main.CheckService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

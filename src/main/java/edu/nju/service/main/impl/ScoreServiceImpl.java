@@ -1,4 +1,4 @@
-package edu.nju.service.common.impl;
+package edu.nju.service.main.impl;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -20,7 +20,7 @@ import edu.nju.entities.CheckLog;
 import edu.nju.entities.StudentGroup;
 import edu.nju.entities.StudentScore;
 import edu.nju.entities.TeacherScore;
-import edu.nju.service.common.ScoreService;
+import edu.nju.service.main.ScoreService;
 
 /**
  * Created by Administrator on 2017/4/18.
@@ -76,7 +76,7 @@ public class ScoreServiceImpl implements ScoreService {
 	}
 
 	/**
-	 * @see edu.nju.service.common.ScoreService#getAllGroupScore()
+	 * @see edu.nju.service.main.ScoreService#getAllGroupScore()
 	 */
 	@Override
 	public List<GroupAllScore> getAllGroupScore() {
