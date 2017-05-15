@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.google.gson.Gson;
 
 import edu.nju.Vo.common.GroupAllScore;
+import edu.nju.entities.Regression;
 import edu.nju.service.main.ScoreService;
 
 /**
@@ -39,6 +40,19 @@ public class ScoreRESTController {
 	public String getAllGroupScore() {
 		List<GroupAllScore> allGroupScore = scoreService.getAllGroupScore();
 		String response = new Gson().toJson(allGroupScore);
+		return response;
+	}
+
+	/**
+	 * 获得相关性数据。
+	 * @return
+	 * @author cylong
+	 * @version 2017年5月15日 下午11:08:41
+	 */
+	@GetMapping("/getRegression/{iter}")
+	public String getRegression(@PathVariable String iter) {
+		List<Regression> regression = scoreService.getRegression(iter);
+		String response = new Gson().toJson(regression);
 		return response;
 	}
 

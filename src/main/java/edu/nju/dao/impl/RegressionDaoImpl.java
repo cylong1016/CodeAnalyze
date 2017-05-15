@@ -23,9 +23,10 @@ public class RegressionDaoImpl implements RegressionDao {
         return baseDao.find(Regression.class, querys);
     }
 
-    @Override
-    public List getRegressionByHql(String hql) {
-        Query query = baseDao.getNewSession().createQuery(hql);
-        return query.getResultList();
+    @SuppressWarnings("unchecked")
+	@Override
+    public List<Regression> getRegressionByHql(String hql) {
+        Query<?> query = baseDao.getNewSession().createQuery(hql);
+        return (List<Regression>)query.getResultList();
     }
 }

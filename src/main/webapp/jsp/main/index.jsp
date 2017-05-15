@@ -31,6 +31,16 @@
 		background-color: #F1F1F1;
 	}
 	
+	select.form-control {
+		display: inline;
+		width: inherit;
+	}
+	
+	input[type="search"].form-control {
+		display: inline;
+		width: inherit;
+	}
+	
 </style>
 </head>
 <body>
@@ -84,9 +94,10 @@
 
 <script>
 	document.getElementById('home').className = "active";
+	var basePath = '<%=request.getContextPath()%>';
 
 	var getAllGroupScore = function(dt) {
-		$.getJSON("api/score/api/allGroupScore", function(data) {
+		$.getJSON(basePath + "/api/score/api/allGroupScore", function(data) {
 			$.each(data, function(i, groupScore) {
 				var groupId = groupScore.groupId;
 				var groupName = groupScore.groupName;
@@ -116,33 +127,34 @@
 
 	
 	$(document).ready(function() {
-				var dt = $('#overview').DataTable({
-					"pagingType" : "full_numbers",
-					stateSave : true,
-					"info" : true,
-					"language" : {
-						"lengthMenu" : "每页 _MENU_ 条记录",
-						"zeroRecords" : "没有找到记录",
-						"info" : "第 _PAGE_ 页 ( 总共 _PAGES_ 页 )",
-						"infoEmpty" : "无记录",
-						"infoFiltered" : "(从 _MAX_ 条记录过滤)",
-						"paginate" : {
-							"first" : "首页",
-							"last" : "尾页",
-							"next" : "下一页",
-							"previous" : "上一页"
-						},
-						"search" : "搜索："
-					},
-					"columnDefs": [{
-						"defaultContent": "-",
-						"targets": "_all"
-					}]
-				});
-
-				getAllGroupScore(dt);
-				
-			});
+		var dt = $('#overview').DataTable({
+			"pagingType" : "full_numbers",
+			stateSave : true,
+			"info" : true,
+			"language" : {
+				"lengthMenu" : "每页 _MENU_ 条记录",
+				"zeroRecords" : "没有找到记录",
+				"info" : "第 _PAGE_ 页 ( 总共 _PAGES_ 页 )",
+				"infoEmpty" : "无记录",
+				"infoFiltered" : "(从 _MAX_ 条记录过滤)",
+				"paginate" : {
+					"first" : "首页",
+					"last" : "尾页",
+					"next" : "下一页",
+					"previous" : "上一页"
+				},
+				"search" : "搜索："
+			},
+			"columnDefs": [{
+				"defaultContent": "-",
+				"targets": "_all"
+			}]
+		});
+		
+		$("select").addClass("form-control");
+		$("input[type=search]").addClass("form-control");
+		getAllGroupScore(dt);
+	});
 </script>
 <script src="http://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
 </html>

@@ -24,4 +24,6 @@
     <jsp:include page="${partial}"></jsp:include>
     <jsp:include page="footer.jsp"></jsp:include>
 </body>
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+<script src="<%=request.getContextPath()%>/js/bootstrap.min.js"></script>
 </html>

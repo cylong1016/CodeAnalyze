@@ -14,9 +14,11 @@ import org.springframework.stereotype.Service;
 import edu.nju.Vo.common.GroupAllScore;
 import edu.nju.dao.CheckDao;
 import edu.nju.dao.GroupDao;
+import edu.nju.dao.RegressionDao;
 import edu.nju.dao.StudentScoreDao;
 import edu.nju.dao.TeacherScoreDao;
 import edu.nju.entities.CheckLog;
+import edu.nju.entities.Regression;
 import edu.nju.entities.StudentGroup;
 import edu.nju.entities.StudentScore;
 import edu.nju.entities.TeacherScore;
@@ -36,6 +38,8 @@ public class ScoreServiceImpl implements ScoreService {
 	private CheckDao checkDao;
 	@Autowired
 	private GroupDao groupDao;
+	@Autowired
+	private RegressionDao regressionDao;
 
 	@Override
 	public GroupAllScore getGroupAllScore(long groupId) {
@@ -88,5 +92,16 @@ public class ScoreServiceImpl implements ScoreService {
 			allGroupScore.add(groupScore);
 		}
 		return allGroupScore;
+	}
+
+	/**
+	 * @see edu.nju.service.main.ScoreService#getRegression()
+	 */
+	@Override
+	public List<Regression> getRegression(String iter) {
+		Map<String, Object> querys = new HashMap<>();
+		querys.put("checkId", Long.parseLong(iter));
+		List<Regression> regression = regressionDao.getRegressionByQuery(querys);
+		return regression;
 	}
 }

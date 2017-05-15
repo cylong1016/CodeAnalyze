@@ -12,5 +12,5 @@ public interface RegressionDao {
 
     public List<Regression> getRegressionByQuery(Map<String, Object> querys);
 
-    public List getRegressionByHql(String hql);
+    public List<Regression> getRegressionByHql(String hql);
 }

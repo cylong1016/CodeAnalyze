@@ -24,8 +24,8 @@ public class TeacherScoreDaoImpl implements TeacherScoreDao{
     }
 
     @Override
-    public List getTeacherScoreByHql(String hql) {
-        Query query = baseDao.getNewSession().createQuery(hql);
+    public List<?> getTeacherScoreByHql(String hql) {
+        Query<?> query = baseDao.getNewSession().createQuery(hql);
         return query.getResultList();
     }
 
