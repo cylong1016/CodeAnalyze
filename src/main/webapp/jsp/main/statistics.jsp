@@ -30,7 +30,7 @@
 
 </style>
 
-<div class="title">老师给分与编码规范相关性统计</div>
+<div class="title">老师评分与编码规范相关性统计</div>
 
 <select id="iter" class="form-control"></select>
 
@@ -106,7 +106,7 @@
 				formatter : '(x, y): ({c})'
 			},
 			xAxis : {
-				name: '老师给分',
+				name: '老师评分',
 				gridIndex : 0,
 				min : 0,
 				max : 100
@@ -149,7 +149,7 @@
 				markLineOpt.label.normal.formatter = fun;
 				markLineOpt.data[0][0].coord = [0, reg.cffcB];
 				markLineOpt.data[0][1].coord = [100, 100 * reg.cffcA + reg.cffcB];
-				var title = reg.toolName.toUpperCase() + " 给分";
+				var title = reg.toolName.toUpperCase() + " 评分";
 				option.title.text = title;
 				option.yAxis.name = title;
 
