@@ -133,24 +133,34 @@
 	var getRegression = function(options) {
 		$.getJSON(basePath + "/api/score/api/getRegression/" + currentIter, function(data) {
 			$.each(data, function(i, reg) {
-				var fun;
+				var fun = "";
+				var correlation = "";
 				var option = options[i];
-				if(reg.cffcA == 1 && reg.cffcB == 0) {
-					fun = "y = x";
-				} else if(reg.cffcA == 1 && reg.cffcB != 0) {
-					fun = "y = x + " + reg.cffcB;
-				} else if(reg.cffcA != 1 && reg.cffcB == 0) {
-					fun = "y = " + reg.cffcA + " * x";
+				if(reg.cffA != 0) {
+					if(reg.cffcA == 1 && reg.cffcB == 0) {
+						fun = "y = x";
+					} else if(reg.cffcA == 1 && reg.cffcB != 0) {
+						fun = "y = x + " + reg.cffcB;
+					} else if(reg.cffcA != 1 && reg.cffcB == 0) {
+						fun = "y = " + reg.cffcA + " * x";
+					} else {
+						fun = "y = " + reg.cffcA + " * x + " + reg.cffcB;
+					}
+					var markLineOpt = option.series.markLine;
+					markLineOpt.tooltip.formatter = fun;
+					markLineOpt.label.normal.formatter = fun;
+					markLineOpt.data[0][0].coord = [0, reg.cffcB];
+					markLineOpt.data[0][1].coord = [100, 100 * reg.cffcA + reg.cffcB];
+					if(reg.cffcA > 0) {
+						correlation = "（正线性相关）";
+					} else {
+						correlation = "（负线性相关）";
+					}
 				} else {
-					fun = "y = " + reg.cffcA + " * x + " + reg.cffcB;
+					correlation = "（非线性相关）";
 				}
-				var markLineOpt = option.series.markLine;
-				markLineOpt.tooltip.formatter = fun;
-				markLineOpt.label.normal.formatter = fun;
-				markLineOpt.data[0][0].coord = [0, reg.cffcB];
-				markLineOpt.data[0][1].coord = [100, 100 * reg.cffcA + reg.cffcB];
 				var title = reg.toolName.toUpperCase() + " 评分";
-				option.title.text = title;
+				option.title.text = title + correlation;
 				option.yAxis.name = title;
 
 				echarts.init($(".charts")[i]).setOption(option);
