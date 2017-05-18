@@ -168,7 +168,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	 		getBar();
 	 	 });
 	 </script>
-	 <script src="js/groupBar.js"></script>
+	 <script src="<%=request.getContextPath()%>/js/groupBar.js"></script>
 	 
 	 <script>
 	 $("#iter").change(function(){
