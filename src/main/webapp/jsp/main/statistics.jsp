@@ -15,11 +15,16 @@
 	font-weight: bold;
 }
 
+.charts-list {
+	width: 100%;
+	height: 100%;
+}
+
 .charts {
-	height: 500px;
-	width: 50%;
+	height: 200px;
+	width: 33%;
 	float: left;
-	margin-top: 10px;
+	margin-top: 20px;
 }
 
 #iter {
@@ -34,8 +39,7 @@
 
 <select id="iter" class="form-control"></select>
 
-<div class="charts"></div>
-<div class="charts"></div>
+<div class="charts-list"></div>
 
 <script src="http://code.jquery.com/jquery-latest.js"></script>
 <script src="<%=request.getContextPath()%>/js/bootstrap.min.js"></script>
@@ -97,10 +101,10 @@
 				y : 0
 			},
 			grid : {
-				x : '10%',
-				y : '15%',
-				width : '80%',
-				height : '75%'
+				x : '18%',
+				y : '26%',
+				width : '65%',
+				height : '60%'
 			},
 			tooltip : {
 				formatter : '(x, y): ({c})'
@@ -136,7 +140,7 @@
 				var fun = "";
 				var correlation = "";
 				var option = options[i];
-				if(reg.cffA != 0) {
+				if(reg.cffcA !== 0) {
 					if(reg.cffcA == 1 && reg.cffcB == 0) {
 						fun = "y = x";
 					} else if(reg.cffcA == 1 && reg.cffcB != 0) {
@@ -149,17 +153,18 @@
 					var markLineOpt = option.series.markLine;
 					markLineOpt.tooltip.formatter = fun;
 					markLineOpt.label.normal.formatter = fun;
-					markLineOpt.data[0][0].coord = [0, reg.cffcB];
-					markLineOpt.data[0][1].coord = [100, 100 * reg.cffcA + reg.cffcB];
+					markLineOpt.data[0][1].coord = [100, -1];
 					if(reg.cffcA > 0) {
+						markLineOpt.data[0][0].coord = [0, reg.cffcA];
 						correlation = "（正线性相关）";
 					} else {
+						markLineOpt.data[0][0].coord = [(0.0 - reg.cffcB) / reg.cffcA, 0];
 						correlation = "（负线性相关）";
 					}
 				} else {
 					correlation = "（非线性相关）";
 				}
-				var title = reg.toolName.toUpperCase() + " 评分";
+				var title = reg.toolName;
 				option.title.text = title + correlation;
 				option.yAxis.name = title;
 
@@ -168,36 +173,45 @@
 		});
 	}
 	
-	var getAllGroupScore = function(options) {
-		var pmdData = new Array();
-		var checkstyleData = new Array();
+	var getScatter = function(options) {
 				
-		$.getJSON(basePath + "/api/score/api/allGroupScore", function(data) {
-			$.each(data, function(i, groupScore) {
-				var groupId = groupScore.groupId;
-				var groupName = groupScore.groupName;
-				var checkDate = groupScore.checkDate;
-				var checkstyleScore = groupScore.checkstyleScore;
-				var pmdScore = groupScore.pmdScore;
-				var teacherScore = groupScore.teacherScore;
-				
-				var index = currentIter - 1;
-				pmdData[i] = [pmdScore[index], teacherScore[index]];
-				checkstyleData[i] = [checkstyleScore[index], teacherScore[index]];
+		$.getJSON(basePath + "/api/score/api/getScatter/" + currentIter, function(data) {
+			$(".charts").each(function(i, chart) {
+				var toolData = data[$(chart).attr("id")];
+				options[i].yAxis.max = toolData[0][1];
+				options[i].series.data = toolData;
+				echarts.init($(".charts")[i]).setOption(options[i]);
 			});
-			
-			options[0].series.data = pmdData;
-			echarts.init($(".charts")[0]).setOption(options[0]);
-			options[1].series.data = checkstyleData;
-			echarts.init($(".charts")[1]).setOption(options[1]);
-			
 		});
 	}
 	
 	var refreshCharts = function() {
-		var options = [createOption(), createOption()];
+		var names = ["checkstyle",
+		             "pmd",
+		             "Annotations",
+                     "Block Checks",
+                     "Class Design",
+                     "Coding",
+                     "Header",
+                     "Imports",
+                     "Javadoc Comments",
+                     "Metrics",
+                     "Miscellaneous",
+                     "Modifiers",
+                     "Naming Conventions",
+                     "Regexp",
+                     "Size Violations",
+                     "WhiteSpaces"];
+		var options = [];
+		for(var i = 0; i < names.length; i++) {
+			$('<div />', {
+				class : "charts",
+				id : names[i],
+		    }).appendTo(".charts-list");
+			options[i] = createOption();
+		}
 		getRegression(options);
-		getAllGroupScore(options);
+		getScatter(options);
 	}
 	
 	$(document).ready(function() {

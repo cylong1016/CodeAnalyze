@@ -17,12 +17,15 @@ import edu.nju.dao.GroupDao;
 import edu.nju.dao.RegressionDao;
 import edu.nju.dao.StudentScoreDao;
 import edu.nju.dao.TeacherScoreDao;
+import edu.nju.dao.checkstyle.CheckStyleDao;
 import edu.nju.entities.CheckLog;
 import edu.nju.entities.Regression;
 import edu.nju.entities.StudentGroup;
 import edu.nju.entities.StudentScore;
 import edu.nju.entities.TeacherScore;
+import edu.nju.entities.checkstyle.InternalStat;
 import edu.nju.service.main.ScoreService;
+import edu.nju.utils.Constant;
 
 /**
  * Created by Administrator on 2017/4/18.
@@ -40,6 +43,8 @@ public class ScoreServiceImpl implements ScoreService {
 	private GroupDao groupDao;
 	@Autowired
 	private RegressionDao regressionDao;
+	@Autowired
+	private CheckStyleDao checkStyleDao;
 
 	@Override
 	public GroupAllScore getGroupAllScore(long groupId) {
@@ -104,4 +109,58 @@ public class ScoreServiceImpl implements ScoreService {
 		List<Regression> regression = regressionDao.getRegressionByQuery(querys);
 		return regression;
 	}
+	
+	public Map<String, Object> getScatter(long checkId) {
+        Map<String, Object> returnMap = new HashMap<>();
+
+        Map<String, Object> querys = new HashMap<>();
+        querys.put("checkId", checkId);
+        List<TeacherScore> tscore = teacherScoreDao.getTeacherScoreByQuery(querys);
+        Map<Long, Integer> tscoreMap = new HashMap<>();
+        for(TeacherScore t : tscore){
+            tscoreMap.put(t.getGroupId(), t.getScore());
+        }
+
+        querys.put("toolName", Constant.CHECKSTYLE);
+        List<StudentScore> cscore = studentScoreDao.getStudentScoreByQuery(querys);
+        Collections.sort(cscore, Comparator.comparing(StudentScore::getScore));
+        for(StudentScore s : cscore){
+            int[][] checkstylescore = new int[tscore.size()][2];
+            for(int i=0; i<checkstylescore.length; i++){
+                checkstylescore[i][0] = tscoreMap.get(s.getGroupId());
+                checkstylescore[i][1] = s.getScore();
+            }
+            returnMap.put(Constant.CHECKSTYLE, checkstylescore);
+        }
+
+        querys.put("toolName", Constant.PMD);
+        List<StudentScore> pscore = studentScoreDao.getStudentScoreByQuery(querys);
+        Collections.sort(pscore, Comparator.comparing(StudentScore::getScore));
+        for(StudentScore s : pscore){
+            int[][] pmdscore = new int[tscore.size()][2];
+            for(int i=0; i<pmdscore.length; i++){
+                pmdscore[i][0] = tscoreMap.get(s.getGroupId());
+                pmdscore[i][1] = s.getScore();
+            }
+            returnMap.put(Constant.PMD, pmdscore);
+        }
+
+        querys.remove("toolName");
+        for(String errorName : Constant.ERROR_NAME){
+            querys.put("internalType", errorName);
+            List<InternalStat> eStat = checkStyleDao.getStatList(querys);
+            Collections.sort(eStat, Comparator.comparing(InternalStat::getCount));
+            for(InternalStat e : eStat){
+                int[][] errorStat = new int[tscore.size()][2];
+                for(int i=0; i<errorStat.length; i++){
+                    errorStat[i][0] = tscoreMap.get(e.getGroupId());
+                    errorStat[i][1] = e.getCount();
+                }
+                returnMap.put(errorName, errorStat);
+            }
+        }
+        return returnMap;
+
+    }
+
 }

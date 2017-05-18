@@ -1,6 +1,7 @@
 package edu.nju.service.main;
 
 import java.util.List;
+import java.util.Map;
 
 import edu.nju.Vo.common.GroupAllScore;
 import edu.nju.entities.Regression;
@@ -27,5 +28,7 @@ public interface ScoreService {
 	 * @version 2017年5月15日  下午11:10:47
 	 */
 	public List<Regression> getRegression(String iter);
+	
+	public Map<String, Object> getScatter(long checkId);
 
 }

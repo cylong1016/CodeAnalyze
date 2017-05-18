@@ -1,6 +1,7 @@
 package edu.nju.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -53,6 +54,13 @@ public class ScoreRESTController {
 	public String getRegression(@PathVariable String iter) {
 		List<Regression> regression = scoreService.getRegression(iter);
 		String response = new Gson().toJson(regression);
+		return response;
+	}
+
+	@GetMapping("/getScatter/{iter}")
+	public String getScatter(@PathVariable Long iter) {
+		Map<String, Object> scatter = scoreService.getScatter(iter);
+		String response = new Gson().toJson(scatter);
 		return response;
 	}
 
