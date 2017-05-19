@@ -100,7 +100,6 @@ public class ScoreServiceImpl implements ScoreService {
 	}
 
 	/**
-	 * @see edu.nju.service.main.ScoreService#getRegression()
 	 */
 	@Override
 	public List<Regression> getRegression(String iter) {
@@ -124,41 +123,101 @@ public class ScoreServiceImpl implements ScoreService {
 		querys.put("toolName", Constant.CHECKSTYLE);
 		List<StudentScore> cscore = studentScoreDao.getStudentScoreByQuery(querys);
 		Collections.sort(cscore, Collections.reverseOrder(Comparator.comparing(StudentScore::getScore)));
+		List<Regression> regressionList = regressionDao.getRegressionByQuery(querys);
+		Regression regression = regressionList.get(0);
+		Map<String, Object> content = getContent(cscore.get(0).getScore(), regression);
+		// 获取散点
 		int[][] checkstylescore = new int[cscore.size()][2];
 		for(int i = 0; i < cscore.size(); i++) {
 			StudentScore s = cscore.get(i);
 			checkstylescore[i][0] = tscoreMap.get(s.getGroupId());
 			checkstylescore[i][1] = s.getScore();
 		}
-		returnMap.put(Constant.CHECKSTYLE, checkstylescore);
+		content.put("scatter", checkstylescore);
+		returnMap.put(Constant.CHECKSTYLE, content);
 
 		querys.put("toolName", Constant.PMD);
 		List<StudentScore> pscore = studentScoreDao.getStudentScoreByQuery(querys);
 		Collections.sort(pscore, Collections.reverseOrder(Comparator.comparing(StudentScore::getScore)));
+		regressionList = regressionDao.getRegressionByQuery(querys);
+		regression = regressionList.get(0);
+		content = getContent(cscore.get(0).getScore(), regression);
 		int[][] pmdscore = new int[pscore.size()][2];
 		for(int i = 0; i < pscore.size(); i++) {
 			StudentScore s = pscore.get(i);
 			pmdscore[i][0] = tscoreMap.get(s.getGroupId());
 			pmdscore[i][1] = s.getScore();
 		}
-		returnMap.put(Constant.PMD, pmdscore);
+		content.put("scatter", pmdscore);
+		returnMap.put(Constant.PMD, content);
 
-		querys.remove("toolName");
+		Map<String, Object> internalTypeQuery = new HashMap<>();
+		internalTypeQuery.put("checkId", checkId);
 		for(String errorName : Constant.ERROR_NAME) {
-			querys.put("internalType", errorName);
-			List<InternalStat> eStat = checkStyleDao.getStatList(querys);
+			internalTypeQuery.put("internalType", errorName);
+			querys.put("toolName", errorName);
+			List<InternalStat> eStat = checkStyleDao.getStatList(internalTypeQuery);
 			Collections.sort(eStat, Collections.reverseOrder(Comparator.comparing(InternalStat::getCount)));
+			regressionList = regressionDao.getRegressionByQuery(querys);
+			regression = regressionList.get(0);
+			content = getContent(cscore.get(0).getScore(), regression);
 			int[][] errorStat = new int[tscore.size()][2];
 			for(int i = 0; i < eStat.size(); i++) {
 				InternalStat e = eStat.get(i);
 				errorStat[i][0] = tscoreMap.get(e.getGroupId());
 				errorStat[i][1] = e.getCount();
 			}
-			returnMap.put(errorName, errorStat);
+			content.put("scatter", errorStat);
+			returnMap.put(errorName, content);
 		}
 		return returnMap;
-
 	}
 
+	private Map<String, Object> getContent(int maxScore, Regression regression){
+		Map<String, Object> content = new HashMap<>();
+		// 获取回归线起点
+		double[] start = new double[2];
+		if ( regression.getCffcA() < 0 ){
+			start[1] = 0.0;
+			start[0] = computeX(0.0, regression);
+		} else {
+			if (regression.getCffcA() > maxScore ){
+				start[1] = maxScore;
+				start[0] = computeX(start[1], regression);
+			}else{
+				start[0] = 0.0;
+				start[1] = computeY(0.0, regression);
+			}
+		}
+		content.put("start", start);
+		// 获取回归线终点
+		double[] end = new double[2];
+		if ( regression.getCffcB() < 0 ){
+			if ( computeX(0.0, regression) > 100 ){
+				end[0] = 100.0;
+				end[1] = computeY(end[0], regression);
+			} else {
+				end[1] = 0.0;
+				end[0] = computeX(end[1], regression);
+			}
+		} else {
+			if ( computeX(maxScore, regression) > 100 ){
+				end[0] = 100.0;
+				end[1] = computeY(end[0], regression);
+			}else {
+				end[1] = maxScore;
+				end[0] = computeX(end[1], regression);
+			}
+		}
+		content.put("end", end);
+		return content;
+	}
+
+	private double computeX(double y, Regression regression){
+		return (y - regression.getCffcA()) / regression.getCffcB();
+	}
+	private double computeY(double x, Regression regression){
+		return regression.getCffcA() + regression.getCffcB() * x;
+	}
 
 }

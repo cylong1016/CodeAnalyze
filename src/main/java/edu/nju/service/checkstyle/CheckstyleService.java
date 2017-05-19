@@ -185,7 +185,7 @@ public class CheckstyleService {
            Map<String, Object> querys = new HashMap<>();
            querys.put("internalType", internalTypeName);
            for(CheckType subType : dao.findTypeByQuery(querys)){
-               boolean status = ( subType.getStatus()==1 ) ? true : false;
+               boolean status = subType.getStatus()==1 ? true : false;
                internalType.addSubType( new SubType(subType.getId(),subType.getSubType(), status));
            }
            resultList.add(internalType);
@@ -194,18 +194,17 @@ public class CheckstyleService {
     }
 
     public boolean updateCheckConfig(List<Long> checkedIds){
-////        String hql = "SELECT C.id FROM CheckType C";
-//        for(CheckType typeItem : dao.getAllCheckType()){
-//            if( checkedIds.indexOf(typeItem.getId())==-1 ){
-//                typeItem.setStatus(0);
-//            }else {
-//                typeItem.setStatus(1);
-//            }
-//            boolean ifSave = dao.updateCheckType(typeItem);
-//            if(!ifSave){
-//                return false;
-//            }
-//        }
+        for(CheckType typeItem : dao.getAllCheckType()){
+            if( checkedIds.indexOf(typeItem.getId())==-1 ){
+                typeItem.setStatus(0);
+            }else {
+                typeItem.setStatus(1);
+            }
+            boolean ifSave = dao.updateCheckType(typeItem);
+            if(!ifSave){
+                return false;
+            }
+        }
         return true;
     }
 

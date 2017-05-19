@@ -41,7 +41,7 @@
 </div>
 
 <script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery-3.2.0.min.js"></script>
-<script type="text/javascript" src="<%=request.getContextPatsh()%>/js/fileinput.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/js/fileinput.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/js/gijgo.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/js/echarts.common.min.js"></script>
 <script type="text/javascript">
@@ -57,6 +57,7 @@
             checkboxes: true,
             checkedField: 'status'
         });
+
         $('#save_config').on('click', function () {
             var checkIds = checkTree.getCheckedNodes();
             $.ajax({
