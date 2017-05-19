@@ -82,7 +82,6 @@
             } catch(err){
                 console.log(err.message);
             }
-            console.log(grades);
 
             $("#line_charts").attr("style", "width:" + panel_width + "px;height:" + panel_height + "px;");
             var line_charts = echarts.init(document.getElementById("line_charts"));
@@ -132,6 +131,7 @@
             function (data) {
                 try{
                     data = JSON.parse(data);
+                    console.log(data);
                     drawDetailPanel('pmd', $("#pmd"), data);
                 }catch (err){
                     console.log(err.message);
@@ -278,7 +278,7 @@
                     html.push('<div id="collapse_'+index+'" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading_'+index+'">');
                 }
                 html.push('<div class="panel-body">');
-                html.push('<table id="'+index+'" class="table table-striped table-bordered datatable">');
+                html.push('<table id="'+panel_id+'-'+index+'" class="table table-striped table-bordered datatable">');
                 html.push('<thead><tr><td>Error类型</td><td>数量</td></tr></thead>');
                 html.push('<tbody>');
                 $.each(value.results, function (index2, value2) {
@@ -298,7 +298,8 @@
             father_obj.on('show.bs.collapse','.collapse', function() {
                 father_obj.find('.collapse.in').collapse('hide');
             });
-            $.each($('.datatable'), function (index, obj) {
+            var regex = '#'+ panel_id + ' .datatable';
+            $.each($(regex), function (index, obj) {
                 $(obj).DataTable({
                     'searching': false,
                     'info': false,
