@@ -126,7 +126,7 @@
         );
 
         $.ajax({
-            url: basePath+"/api/pmd/api/result/"+groupId,
+            url: basePath+"/api/checkstyle/api/pmdresult/"+groupId,
             method: "GET",
         }).done(
             function (data) {

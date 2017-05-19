@@ -119,4 +119,10 @@ public class CheckStyleRESTController {
         json.put("success", "Upload Success");
         return json;
     }
+    
+	@GetMapping("/pmdresult/{groupId}")
+	public String getPmdResult(@PathVariable String groupId){
+		List<SingleCheck> pmdResult = resultService.getGroupAllPmdChecks(Long.parseLong(groupId));
+		return new Gson().toJson(pmdResult);
+	}
 }

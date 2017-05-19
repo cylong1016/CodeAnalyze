@@ -76,14 +76,6 @@ public class ResultServiceImpl implements ResultService {
 				groupChecks.add(singleCheck);
 			}
 		}
-		for(int i=0;i<groupChecks.size();i++){
-			System.out.println(groupChecks.get(i).getCheckDate());
-			List<SingleResult> singleResult=groupChecks.get(i).getResults();
-			for(int j=0;j<singleResult.size();j++){
-				System.out.println("  "+singleResult.get(j).getCount()+singleResult.get(j).getName());
-			}
-			System.out.println();
-		}
 		return groupChecks;
 	}
 
