@@ -189,7 +189,6 @@ public class ScoreServiceImpl implements ScoreService {
 				start[1] = computeY(0.0, regression);
 			}
 		}
-		System.out.println(start[0]+"-"+start[1]);
 		content.put("start", start);
 		// 获取回归线终点
 		double[] end = new double[2];
@@ -210,7 +209,6 @@ public class ScoreServiceImpl implements ScoreService {
 				end[0] = computeX(end[1], regression);
 			}
 		}
-		System.out.println(end[0]+"-"+end[1]);
 		content.put("end", end);
 		return content;
 	}
