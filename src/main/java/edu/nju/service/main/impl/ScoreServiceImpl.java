@@ -111,56 +111,54 @@ public class ScoreServiceImpl implements ScoreService {
 	}
 	
 	public Map<String, Object> getScatter(long checkId) {
-        Map<String, Object> returnMap = new HashMap<>();
+		Map<String, Object> returnMap = new HashMap<>();
 
-        Map<String, Object> querys = new HashMap<>();
-        querys.put("checkId", checkId);
-        List<TeacherScore> tscore = teacherScoreDao.getTeacherScoreByQuery(querys);
-        Map<Long, Integer> tscoreMap = new HashMap<>();
-        for(TeacherScore t : tscore){
-            tscoreMap.put(t.getGroupId(), t.getScore());
-        }
+		Map<String, Object> querys = new HashMap<>();
+		querys.put("checkId", checkId);
+		List<TeacherScore> tscore = teacherScoreDao.getTeacherScoreByQuery(querys);
+		Map<Long, Integer> tscoreMap = new HashMap<>();
+		for(TeacherScore t : tscore) {
+			tscoreMap.put(t.getGroupId(), t.getScore());
+		}
 
-        querys.put("toolName", Constant.CHECKSTYLE);
-        List<StudentScore> cscore = studentScoreDao.getStudentScoreByQuery(querys);
-        Collections.sort(cscore, Comparator.comparing(StudentScore::getScore));
-        for(StudentScore s : cscore){
-            int[][] checkstylescore = new int[tscore.size()][2];
-            for(int i=0; i<checkstylescore.length; i++){
-                checkstylescore[i][0] = tscoreMap.get(s.getGroupId());
-                checkstylescore[i][1] = s.getScore();
-            }
-            returnMap.put(Constant.CHECKSTYLE, checkstylescore);
-        }
+		querys.put("toolName", Constant.CHECKSTYLE);
+		List<StudentScore> cscore = studentScoreDao.getStudentScoreByQuery(querys);
+		Collections.sort(cscore, Collections.reverseOrder(Comparator.comparing(StudentScore::getScore)));
+		int[][] checkstylescore = new int[cscore.size()][2];
+		for(int i = 0; i < cscore.size(); i++) {
+			StudentScore s = cscore.get(i);
+			checkstylescore[i][0] = tscoreMap.get(s.getGroupId());
+			checkstylescore[i][1] = s.getScore();
+		}
+		returnMap.put(Constant.CHECKSTYLE, checkstylescore);
 
-        querys.put("toolName", Constant.PMD);
-        List<StudentScore> pscore = studentScoreDao.getStudentScoreByQuery(querys);
-        Collections.sort(pscore, Comparator.comparing(StudentScore::getScore));
-        for(StudentScore s : pscore){
-            int[][] pmdscore = new int[tscore.size()][2];
-            for(int i=0; i<pmdscore.length; i++){
-                pmdscore[i][0] = tscoreMap.get(s.getGroupId());
-                pmdscore[i][1] = s.getScore();
-            }
-            returnMap.put(Constant.PMD, pmdscore);
-        }
+		querys.put("toolName", Constant.PMD);
+		List<StudentScore> pscore = studentScoreDao.getStudentScoreByQuery(querys);
+		Collections.sort(pscore, Collections.reverseOrder(Comparator.comparing(StudentScore::getScore)));
+		int[][] pmdscore = new int[pscore.size()][2];
+		for(int i = 0; i < pscore.size(); i++) {
+			StudentScore s = pscore.get(i);
+			pmdscore[i][0] = tscoreMap.get(s.getGroupId());
+			pmdscore[i][1] = s.getScore();
+		}
+		returnMap.put(Constant.PMD, pmdscore);
 
-        querys.remove("toolName");
-        for(String errorName : Constant.ERROR_NAME){
-            querys.put("internalType", errorName);
-            List<InternalStat> eStat = checkStyleDao.getStatList(querys);
-            Collections.sort(eStat, Comparator.comparing(InternalStat::getCount));
-            for(InternalStat e : eStat){
-                int[][] errorStat = new int[tscore.size()][2];
-                for(int i=0; i<errorStat.length; i++){
-                    errorStat[i][0] = tscoreMap.get(e.getGroupId());
-                    errorStat[i][1] = e.getCount();
-                }
-                returnMap.put(errorName, errorStat);
-            }
-        }
-        return returnMap;
+		querys.remove("toolName");
+		for(String errorName : Constant.ERROR_NAME) {
+			querys.put("internalType", errorName);
+			List<InternalStat> eStat = checkStyleDao.getStatList(querys);
+			Collections.sort(eStat, Collections.reverseOrder(Comparator.comparing(InternalStat::getCount)));
+			int[][] errorStat = new int[tscore.size()][2];
+			for(int i = 0; i < eStat.size(); i++) {
+				InternalStat e = eStat.get(i);
+				errorStat[i][0] = tscoreMap.get(e.getGroupId());
+				errorStat[i][1] = e.getCount();
+			}
+			returnMap.put(errorName, errorStat);
+		}
+		return returnMap;
 
-    }
+	}
+
 
 }
