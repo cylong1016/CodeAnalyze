@@ -139,25 +139,15 @@
 				var fun = "";
 				var correlation = "";
 				var option = options[i];
-				if(reg.cffcA !== 0) {
-					if(reg.cffcA == 1 && reg.cffcB == 0) {
-						fun = "y = x";
-					} else if(reg.cffcA == 1 && reg.cffcB != 0) {
-						fun = "y = x + " + reg.cffcB;
-					} else if(reg.cffcA != 1 && reg.cffcB == 0) {
-						fun = "y = " + reg.cffcA + " * x";
-					} else {
-						fun = "y = " + reg.cffcA + " * x + " + reg.cffcB;
-					}
-					var markLineOpt = option.series.markLine;
-					markLineOpt.tooltip.formatter = fun;
-					markLineOpt.label.normal.formatter = fun;
-					markLineOpt.data[0][1].coord = [100, -1];
-					if(reg.cffcA > 0) {
-						markLineOpt.data[0][0].coord = [0, reg.cffcA];
+				if(reg.cffcB !== 0) {
+					// fun = "y = " + reg.cffcB + " * x + " + reg.cffcA;
+					// var markLineOpt = option.series.markLine;
+					// markLineOpt.tooltip.formatter = fun;
+					// markLineOpt.label.normal.formatter = fun;
+					
+					if(reg.cffcB > 0) {
 						correlation = "（正线性相关）";
 					} else {
-						markLineOpt.data[0][0].coord = [(0.0 - reg.cffcB) / reg.cffcA, 0];
 						correlation = "（负线性相关）";
 					}
 				} else {
@@ -177,8 +167,11 @@
 		$.getJSON(basePath + "/api/score/api/getScatter/" + currentIter, function(data) {
 			$(".charts").each(function(i, chart) {
 				var toolData = data[$(chart).attr("id")];
-				options[i].yAxis.max = toolData[0][1];
-				options[i].series.data = toolData;
+				options[i].yAxis.max = toolData["scatter"][0][1];
+				options[i].series.data = toolData["scatter"];
+				var markLineOpt = options[i].series.markLine;
+				markLineOpt.data[0][0].coord = toolData["start"];
+				markLineOpt.data[0][1].coord = toolData["end"];
 				echarts.init($(".charts")[i]).setOption(options[i]);
 			});
 		});
