@@ -13,4 +13,4 @@ String basePath = request.getScheme()
 %>
 <base href="<%=basePath%>">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<link href="<%=path%>/css/bootstrap.css" rel="stylesheet">
+

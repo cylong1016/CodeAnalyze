@@ -13,7 +13,7 @@
             </div>
 	            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 	                <ul class="nav navbar-nav">
-	                    <li id="home" class=""><a href="<%=request.getContextPath()%>/jsp/main/index.jsp">Home</a></li>
+	                    <li id="home" class=""><a href="<%=request.getContextPath()%>/api/index">Home</a></li>
 	                    <li id="drop" class="dropdown">
 								<a href="#" class="dropdown-toggle" data-toggle="dropdown">Tools<strong class="caret"></strong></a>
 								<ul class="dropdown-menu active">

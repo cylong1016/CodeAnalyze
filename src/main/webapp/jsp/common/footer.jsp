@@ -20,7 +20,5 @@
                 <%--© Gitlab Monitor All Rights Reserved.--%>
             <%--</p>--%>
         <%--</div>--%>
-	<script src="http://code.jquery.com/jquery-latest.js"></script>
-	<script src="<%=request.getContextPath()%>/js/bootstrap.min.js"></script>
 </footer>
 

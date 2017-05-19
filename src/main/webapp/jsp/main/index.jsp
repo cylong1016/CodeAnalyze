@@ -1,9 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<jsp:include page="/jsp/common/head.jsp"></jsp:include>
+
 <link href="http://cdn.datatables.net/1.10.13/css/jquery.dataTables.min.css" rel="stylesheet">
 <title>CodeAnalyze</title>
 <style type="text/css">
@@ -42,9 +39,7 @@
 	}
 	
 </style>
-</head>
-<body>
-	<jsp:include page="/jsp/common/header.jsp"></jsp:include>
+
 	<div class="content">
 		<table id="overview" class="table table-hover">
 			<colgroup class="odd" span="1"></colgroup>
@@ -89,8 +84,6 @@
 			</tbody>
 		</table>
 	</div>
-</body>
-<jsp:include page="/jsp/common/footer.jsp"></jsp:include>
 
 <script>
 	document.getElementById('home').className = "active";
@@ -156,5 +149,6 @@
 		getAllGroupScore(dt);
 	});
 </script>
+
 <script src="http://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
 </html>

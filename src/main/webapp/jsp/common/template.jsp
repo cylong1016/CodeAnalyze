@@ -14,6 +14,8 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <link rel="stylesheet" href="<%=request.getContextPath()%>/css/bootstrap.css" type="text/css">
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <script src="<%=request.getContextPath()%>/js/bootstrap.min.js"></script>
     <title>CodeAnalyze</title>
     <style>
         body {padding-top: 50px;}
@@ -24,6 +26,5 @@
     <jsp:include page="${partial}"></jsp:include>
     <jsp:include page="footer.jsp"></jsp:include>
 </body>
-<script src="http://code.jquery.com/jquery-latest.js"></script>
-<script src="<%=request.getContextPath()%>/js/bootstrap.min.js"></script>
+
 </html>
