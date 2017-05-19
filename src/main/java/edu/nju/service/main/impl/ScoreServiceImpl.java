@@ -141,7 +141,7 @@ public class ScoreServiceImpl implements ScoreService {
 		Collections.sort(pscore, Collections.reverseOrder(Comparator.comparing(StudentScore::getScore)));
 		regressionList = regressionDao.getRegressionByQuery(querys);
 		regression = regressionList.get(0);
-		content = getContent(cscore.get(0).getScore(), regression);
+		content = getContent(pscore.get(0).getScore(), regression);
 		int[][] pmdscore = new int[pscore.size()][2];
 		for(int i = 0; i < pscore.size(); i++) {
 			StudentScore s = pscore.get(i);
@@ -160,7 +160,7 @@ public class ScoreServiceImpl implements ScoreService {
 			Collections.sort(eStat, Collections.reverseOrder(Comparator.comparing(InternalStat::getCount)));
 			regressionList = regressionDao.getRegressionByQuery(querys);
 			regression = regressionList.get(0);
-			content = getContent(cscore.get(0).getScore(), regression);
+			content = getContent(eStat.get(0).getCount(), regression);
 			int[][] errorStat = new int[tscore.size()][2];
 			for(int i = 0; i < eStat.size(); i++) {
 				InternalStat e = eStat.get(i);
