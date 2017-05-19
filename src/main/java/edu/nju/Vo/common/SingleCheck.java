@@ -41,4 +41,9 @@ public class SingleCheck {
     public void setResults(List<SingleResult> results) {
         this.results = results;
     }
+
+	@Override
+	public String toString() {
+		return "SingleCheck [checkDate=" + checkDate + ", results=" + results + "]";
+	}
 }
