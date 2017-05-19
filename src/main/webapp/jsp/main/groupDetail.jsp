@@ -44,7 +44,7 @@
                 <ul class="nav nav-tabs" role="tablist" id="detail_tab">
                     <li role="presentation" id="li_checkstyle" class="active"><a href="#checkstyle_panel" aria-controls="checkstyle_panel" role="tab" data-toggle="tab">CheckStyle</a></li>
                     <li role="presentation" id="li_pmd"><a href="#pmd_panel" aria-controls="pmd_panel" aria-controls="pmd_panel" role="tab" data-toggle="tab">PMD</a></li>
-                    <li role="presentation" id="li_sq"><a href="#sq_panel" aria-controls="sq_panel" aria-controls="sq_panel" role="tab" data-toggle="tab">SonarQube</a></li>
+                    <!-- <li role="presentation" id="li_sq"><a href="#sq_panel" aria-controls="sq_panel" aria-controls="sq_panel" role="tab" data-toggle="tab">SonarQube</a></li> -->
                 </ul>
                 <div class="tab-content" id="detail_content">
                     <div role="tabpanel" class="tab-pane active" id="checkstyle_panel"><br />
@@ -53,9 +53,9 @@
                     <div role="tabpanel" class="tab-pane" id="pmd_panel"><br />
                         <div class="panel-group" id="pmd" role="tablist"></div>
                     </div>
-                    <div role="tabpanel" class="tab-pane" id="sq_panel"><br />
+                    <!-- <div role="tabpanel" class="tab-pane" id="sq_panel"><br />
                         <div class="panel-group" id="sq" role="tablist"></div>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>
@@ -258,23 +258,7 @@
                                 {type: 'average', name: '平均值'},
                             ]
                         }
-                    },{
-                        name: line_name[4],
-                        type: 'line',
-                        data: data.sqScore.reverse(),
-//                        yAxisIndex: 1,
-                        markPoint: {
-                            data: [
-//                                {type: 'max', name: '最大值'},
-//                                {type: 'min', name: '最小值'}
-                            ]
-                        },
-                        markLine: {
-                            data: [
-                                {type: 'average', name: '平均值'},
-                            ]
-                        }
-                    }
+                    },
                 ]
             };
             obj.setOption(option);
