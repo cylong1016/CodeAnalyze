@@ -42,7 +42,6 @@
 <div class="charts-list"></div>
 
 <script src="http://code.jquery.com/jquery-latest.js"></script>
-<script src="<%=request.getContextPath()%>/js/bootstrap.min.js"></script>
 <script src="<%=request.getContextPath()%>/js/echarts.common.min.js"></script>
 
 <script>

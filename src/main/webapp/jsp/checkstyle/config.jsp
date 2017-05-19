@@ -7,7 +7,6 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
-<link rel="stylesheet" href="<%=request.getContextPath()%>/css/bootstrap.css" type="text/css">
 <link rel="stylesheet" href="<%=request.getContextPath()%>/css/checkstyle.css" type="text/css"/>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/css/fileinput.css" type="text/css"/>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/css/gijgo.css" type="text/css"/>
@@ -42,8 +41,7 @@
 </div>
 
 <script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery-3.2.0.min.js"></script>
-<script type="text/javascript" src="<%=request.getContextPath()%>/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="<%=request.getContextPath()%>/js/fileinput.js"></script>
+<script type="text/javascript" src="<%=request.getContextPatsh()%>/js/fileinput.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/js/gijgo.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/js/echarts.common.min.js"></script>
 <script type="text/javascript">

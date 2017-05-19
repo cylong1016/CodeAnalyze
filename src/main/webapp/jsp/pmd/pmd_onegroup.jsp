@@ -7,7 +7,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 %>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<link href="<%=request.getContextPath()%>/css/pmdcss.css" rel="stylesheet">
-	<link href="<%=request.getContextPath()%>/css/bootstrap.css" rel="stylesheet">
 	<link href="<%=request.getContextPath()%>/css/bootstrap-responsive.css" rel="stylesheet">
 	<link href="<%=request.getContextPath()%>/css/bootstrap-datetimepicker.min.css" rel="stylesheet" media="screen">
 	<script src="<%=request.getContextPath()%>/js/jquery-3.2.0.min.js"></script>
@@ -283,5 +282,4 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	
 </div>
 <script src="http://code.jquery.com/jquery-latest.js"></script>
-<script src="<%=request.getContextPath()%>/js/bootstrap.min.js"></script>
 </body>

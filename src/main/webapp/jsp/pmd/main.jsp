@@ -12,7 +12,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 %>
 	<base href="<%=basePath%>">
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-	<link href="css/bootstrap.css" rel="stylesheet">
 	<link href="css/bootstrap-responsive.css" rel="stylesheet">
 	<script src="js/jquery-3.2.0.min.js"></script>
     <title>CodeAnalyze</title>
@@ -25,5 +24,4 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     Main frame
 </body>
 <script src="http://code.jquery.com/jquery-latest.js"></script>
-<script src="js/bootstrap.min.js"></script>
 </html>
