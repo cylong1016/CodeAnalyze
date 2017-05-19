@@ -66,7 +66,7 @@ public class CheckstyleService {
         List<GroupBriefInfo> briefInfos = new ArrayList<>();
         List<StudentGroup> allGroup = groupDao.getAllGroup();
         List<CheckLog> allCheck = checkDao.getAllCheck();
-        List<String> activeTypes = getActiveTypes();
+//        List<String> activeTypes = getActiveTypes();
         // 根据check时间排序
         Collections.sort(allCheck, Comparator.comparing(CheckLog::getCheckDate));
         for(StudentGroup group : allGroup){
@@ -75,30 +75,19 @@ public class CheckstyleService {
                 if( !ifCheckdayPass(check.getCheckDate())){
                     continue;
                 }
-//                if ( !ifCheckActive())
                 Map<String, Object> query = new HashMap<>();
                 query.put("groupId", group.getId());
+
                 query.put("checkId", check.getId());
-                query.put("fatherType", Constant.FATHER_TYPE_WARN);
-                List<CheckstyleResult> warnList = dao.findResult(query);
-                Iterator<CheckstyleResult> warnListItr = warnList.iterator();
-                while(warnListItr.hasNext()){
-                    CheckstyleResult result = warnListItr.next();
-                    if(activeTypes.indexOf(result.getSubType())==-1){
-                        warnListItr.remove();
-                    }
-                }
-                singleGroupBriefInfo.addSingleCheckBriefInfo(check.getCheckDate(),warnList.size());
-//                query.put("fatherType", Constant.FATHER_TYPE_ERROR);
-//                List<CheckstyleResult> errorList = dao.findResult(query);
-//                Iterator<CheckstyleResult> errorListItr = errorList.iterator();
-//                while(errorListItr.hasNext()){
-//                    CheckstyleResult result = errorListItr.next();
+//                query.put("fatherType", Constant.FATHER_TYPE_WARN);
+//                Iterator<CheckstyleResult> warnListItr = warnList.iterator();
+//                while(warnListItr.hasNext()){
+//                    CheckstyleResult result = warnListItr.next();
 //                    if(activeTypes.indexOf(result.getSubType())==-1){
-//                        errorListItr.remove();
+//                        warnListItr.remove();
 //                    }
 //                }
-//                singleCheckBriefInfo[1] = errorList.size();
+                singleGroupBriefInfo.addSingleCheckBriefInfo(check.getCheckDate(),dao.findResult(query).size());
             }
             briefInfos.add(singleGroupBriefInfo);
         }

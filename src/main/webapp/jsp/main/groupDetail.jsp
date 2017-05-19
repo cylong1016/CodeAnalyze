@@ -127,19 +127,19 @@
             }
         );
 
-//        $.ajax({
-//            url: basePath+"/api/pmd/api/result"+groupId,
-//            method: "GET",
-//        }).done(
-//            function (data) {
-//                try{
-//                    data = JSON.parse(data);
-//                    drawDetailPanel('pmd', $("#pmd"), data);
-//                }catch (err){
-//                    console.log(err.message);
-//                }
-//            }
-//        );
+        $.ajax({
+            url: basePath+"/api/pmd/api/result/"+groupId,
+            method: "GET",
+        }).done(
+            function (data) {
+                try{
+                    data = JSON.parse(data);
+                    drawDetailPanel('pmd', $("#pmd"), data);
+                }catch (err){
+                    console.log(err.message);
+                }
+            }
+        );
 //
 //        $.ajax({
 //            url: basePath+"/api/snoarqube/api/result"+groupId,

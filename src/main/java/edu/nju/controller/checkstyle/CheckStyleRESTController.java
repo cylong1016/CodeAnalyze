@@ -105,7 +105,7 @@ public class CheckStyleRESTController {
                 return json;
             }
         }
-        json.put("success", "0");
+        json.put("success", "Upload Success");
         return json;
     }
 }
