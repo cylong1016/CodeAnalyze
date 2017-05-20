@@ -11,17 +11,6 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/checkstyle")
 public class CheckStyleController {
 
-    @RequestMapping(method = RequestMethod.GET)
-    public String totalInfo(Model model) {
-        return "jsp/checkstyle/group";
-    }
-
-//    @GetMapping("/group")
-//    public String groupTotal() {
-////        ArrayList<>
-//        return "jsp/checkstyle/group";
-//    }
-
     @GetMapping("/group/{groupId}")
     public String groupInfo(@PathVariable String groupId,
                             @MatrixVariable(required = false, defaultValue = "1")int check,
@@ -30,6 +19,12 @@ public class CheckStyleController {
         model.addAttribute("groupId", groupId);
         return "jsp/checkstyle/groupDetail";
     }
+
+    @RequestMapping(method = RequestMethod.GET)
+    public String totalInfo(Model model) {
+        return "jsp/checkstyle/group";
+    }
+
 
     @GetMapping("/config")
     public String config(Model model){

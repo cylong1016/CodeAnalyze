@@ -66,7 +66,7 @@ public class CheckstyleService {
         List<GroupBriefInfo> briefInfos = new ArrayList<>();
         List<StudentGroup> allGroup = groupDao.getAllGroup();
         List<CheckLog> allCheck = checkDao.getAllCheck();
-//        List<String> activeTypes = getActiveTypes();
+        List<String> activeTypes = getActiveTypes();
         // 根据check时间排序
         Collections.sort(allCheck, Comparator.comparing(CheckLog::getCheckDate));
         for(StudentGroup group : allGroup){
@@ -79,15 +79,16 @@ public class CheckstyleService {
                 query.put("groupId", group.getId());
 
                 query.put("checkId", check.getId());
+                List<CheckstyleResult> warnList = dao.findResult(query);
 //                query.put("fatherType", Constant.FATHER_TYPE_WARN);
-//                Iterator<CheckstyleResult> warnListItr = warnList.iterator();
-//                while(warnListItr.hasNext()){
-//                    CheckstyleResult result = warnListItr.next();
-//                    if(activeTypes.indexOf(result.getSubType())==-1){
-//                        warnListItr.remove();
-//                    }
-//                }
-                singleGroupBriefInfo.addSingleCheckBriefInfo(check.getCheckDate(),dao.findResult(query).size());
+                Iterator<CheckstyleResult> warnListItr = warnList.iterator();
+                while(warnListItr.hasNext()){
+                    CheckstyleResult result = warnListItr.next();
+                    if(activeTypes.indexOf(result.getSubType())==-1){
+                        warnListItr.remove();
+                    }
+                }
+                singleGroupBriefInfo.addSingleCheckBriefInfo(check.getCheckDate(),warnList.size());
             }
             briefInfos.add(singleGroupBriefInfo);
         }
