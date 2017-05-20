@@ -268,14 +268,14 @@
             $.each(data, function (index, value) {
                 html.push('<div class="panel panel-default">');
                 html.push('<div class="panel-heading" role="tab" id="heading_'+index+'">');
-                html.push('<h4 class="panel-title"> <a role="button" data-toggle="collapse" data-parent="#'+panel_id+'" href="#collapse_'+index+'" aria-expanded="true" aria-controls="collapse_'+index+'">');
+                html.push('<h4 class="panel-title"> <a role="button" data-toggle="collapse" data-parent="#'+panel_id+'" href="#collapse_'+panel_id+'_'+index+'" aria-expanded="true" aria-controls="collapse_'+panel_id+'_'+index+'">');
                 html.push( value.checkDate +'  第'+ (index+1) + '次检查');
                 html.push('</a></h4></div>');
                 // 判断 要展开哪次 检查详情
                 if(index == 0 ){
-                    html.push('<div id="collapse_'+index+'" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="heading_'+index+'">');
+                    html.push('<div id="collapse_'+panel_id+'_'+index+'" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="heading_'+index+'">');
                 }else{
-                    html.push('<div id="collapse_'+index+'" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading_'+index+'">');
+                    html.push('<div id="collapse_'+panel_id+'_'+index+'" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading_'+index+'">');
                 }
                 html.push('<div class="panel-body">');
                 html.push('<table id="'+panel_id+'-'+index+'" class="table table-striped table-bordered datatable">');

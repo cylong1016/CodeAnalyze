@@ -70,7 +70,7 @@
                 <fieldset>
                     <legend>添加项目小组</legend>
                     <div class="form-group">
-                        <label for="group_id">检查时间</label>
+                        <label for="group_id">小组编号</label>
                         <input type="text" class="form-control" id="group_id" >
                     </div>
                     <div class="form-group">
