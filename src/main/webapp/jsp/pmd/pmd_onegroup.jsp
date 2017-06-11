@@ -42,7 +42,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 							<option value="naming">naming</option> 
 							<option value="unusedcode">unusedcode</option> 
 							<option value="codesize">codesize</option> 
-							<option value="braces">braces</option> 
+							<option value="design">design</option> 
 							<option value="coupling">coupling</option> 
 						</select>
 						<button id="getType" class="btn btn-default" style="margin-top:10px;margin-left:20px">Submit</button>
@@ -93,7 +93,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 								<td height=40 align="center"><div class="square" style="background:rgba(218,165,32,1)"></div></td>
 								<td align="center">Codesize</td>
 								<td align="center"><div class="square" style="background:#999966"></div></td>
-								<td align="center">braces</td>
+								<td align="center">design</td>
 							</tr>
 						</tbody>
 						
@@ -203,12 +203,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	 				var measure=data.data;
 	 				var pieArr=new Array(6);
 	 				var dataArr=new Array(6);
-	 				var labelArr=new Array("Basic","Naming","Unusedcode","Codesize","braces","Coupling");
+	 				var labelArr=new Array("Basic","Naming","Unusedcode","Codesize","design","Coupling");
 	 				dataArr[0]=measure.basic;
 	 				dataArr[1]=measure.naming;
 	 				dataArr[2]=measure.unusedcode;
 	 				dataArr[3]=measure.codesize;
-	 				dataArr[4]=measure.braces;
+	 				dataArr[4]=measure.design;
 	 				dataArr[5]=measure.coupling;
 					for(var i=0;i<6;i++){
 						pieArr[i]={
@@ -228,7 +228,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			var getBar=function(){
 				var param=new Array(1);
 				param.push({name:"groupName",value:groupName});
-				var labelArr=new Array("Basic","braces","Codesize","Coupling","Naming","Unusedcode");
+				var labelArr=new Array("Basic","design","Codesize","Coupling","Naming","Unusedcode");
 		 		$.getJSON("<%=request.getContextPath()%>/api/pmd/getOneMeasure",param,function(data){
 		 			var code = data.code;
 		 			if(code=="0"){
@@ -241,9 +241,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		 						var naming=resultArr[index].naming;
 		 						var unusedcode=resultArr[index].unusedcode;
 		 						var codesize=resultArr[index].codesize;
-		 						var braces=resultArr[index].braces;
+		 						var design=resultArr[index].design;
 		 						var coupling=resultArr[index].coupling;
-		 						dataArr[index]=new Array(basic,braces,codesize,coupling,naming,unusedcode);
+		 						dataArr[index]=new Array(basic,design,codesize,coupling,naming,unusedcode);
 		 				 });
 		 				
 		 				

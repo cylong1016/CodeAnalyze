@@ -41,23 +41,25 @@ public class PMD_Analyze {
 	public boolean analyze(HttpServletRequest request) {
 		int iter = dao.getIter();
 		String names[] = getDir("E:/Documents/graduate/project/iter" + iter);// 小组名
-		String[] rules = {"basic", "naming", "unusedcode", "codesize", "braces", "coupling"};
+//		String names[]={"A10"};
+		String[] rules = {"basic", "naming", "unusedcode", "codesize", "design", "coupling"};
 		String basePath = request.getServletContext().getRealPath("/") + "pmd-bin-5.5.0/bin";
-		try {
-			for(int i = 0; i < names.length; i++) {
-				String path = "E:\\Documents\\graduate\\project\\iter" + iter + "\\" + names[i];
-				String resultFolder = "E:\\Documents\\graduate\\report\\iter" + iter + "\\" + names[i];
-				createDir(resultFolder);
-				for(int j = 0; j < rules.length; j++) {
-					String rulePath = "rulesets/java/" + rules[j] + ".xml";
-					String resultPath = resultFolder + "\\" + rules[j] + ".html";
-					String command = "cmd /C pmd -d " + path + " -f html -r " + resultPath + " -R " + rulePath;
-					Runtime.getRuntime().exec(command, null, new File(basePath));
-				}
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+//		try {
+//			for(int i = 0; i < names.length; i++) {
+//				String path = "E:\\Documents\\graduate\\project\\iter" + iter + "\\" + names[i];
+//				String resultFolder = "E:\\Documents\\graduate\\report\\iter" + iter + "\\" + names[i];
+//				createDir(resultFolder);
+//				for(int j = 0; j < rules.length; j++) {
+//					String rulePath = "rulesets/java/" + rules[j] + ".xml";
+//					String resultPath = resultFolder + "\\" + rules[j] + ".html";
+//					String command = "cmd /C pmd -d " + path + " -f html -r " + resultPath + " -R " + rulePath;
+//					Runtime.getRuntime().exec(command, null, new File(basePath));
+//				}
+//				System.out.println(i);
+//			}
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
 		AnalyzeThread thread = new AnalyzeThread(dao, names, iter, rules, groupDao);
 		thread.start();
 

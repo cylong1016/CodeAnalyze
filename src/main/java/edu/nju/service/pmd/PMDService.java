@@ -169,4 +169,9 @@ public class PMDService {
 		return resultObj.toString();
 	}
 
+	public String insertGroup() {
+		dao.insertGroup();
+		return null;
+	}
+
 }

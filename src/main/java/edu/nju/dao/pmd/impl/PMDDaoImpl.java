@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import edu.nju.dao.BaseDao;
 import edu.nju.dao.pmd.PMDDao;
+import edu.nju.entities.StudentGroup;
 import edu.nju.entities.StudentScore;
 import edu.nju.entities.pmd.PMD_FileIssues;
 import edu.nju.entities.pmd.PMD_Iter;
@@ -108,11 +109,11 @@ public class PMDDaoImpl implements PMDDao {
 		for(int i = 1; i <= iter; i++) {
 			String hql = "from PMD_Measure where iter = :iter";
 			List<PMD_Measure> list = baseDao.getNewSession().createQuery(hql).setParameter("iter", i).getResultList();
-			double basic = 0, braces = 0, size = 0, coupling = 0, naming = 0, unused = 0;
+			double basic = 0, design = 0, size = 0, coupling = 0, naming = 0, unused = 0;
 			for(int j = 0; j < list.size(); j++) {
 				PMD_Measure mea = list.get(j);
 				basic = basic + mea.getBasic();
-				braces = braces + mea.getBraces();
+				design = design + mea.getDesign();
 				size = size + mea.getCodesize();
 				coupling = coupling + mea.getCoupling();
 				naming = naming + mea.getNaming();
@@ -122,7 +123,7 @@ public class PMDDaoImpl implements PMDDao {
 			DecimalFormat df = new DecimalFormat("#.##");
 			Double[] darr = new Double[6];
 			darr[0] = Double.parseDouble(df.format(basic / listSize));
-			darr[1] = Double.parseDouble(df.format(braces / listSize));
+			darr[1] = Double.parseDouble(df.format(design / listSize));
 			darr[2] = Double.parseDouble(df.format(size / listSize));
 			darr[3] = Double.parseDouble(df.format(coupling / listSize));
 			darr[4] = Double.parseDouble(df.format(naming / listSize));
@@ -151,6 +152,22 @@ public class PMDDaoImpl implements PMDDao {
 			return list.get(0);
 		}
 		return null;
+	}
+
+	@Override
+	public void insertGroup() {
+		for(int i=1;i<13;i++){
+			StudentGroup sgroup=new StudentGroup();
+			sgroup.setGroupName("A"+i);
+			sgroup.setProjectName("A"+i+"project");
+			baseDao.save(sgroup);
+		}
+		for(int i=1;i<44;i++){
+			StudentGroup sgroup=new StudentGroup();
+			sgroup.setGroupName("B"+i);
+			sgroup.setProjectName("B"+i+"project");
+			baseDao.save(sgroup);
+		}
 	}
 
 }

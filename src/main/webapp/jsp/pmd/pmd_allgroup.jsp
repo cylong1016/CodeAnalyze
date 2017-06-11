@@ -50,7 +50,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 							  <th datatype="int">naming</th>
 							  <th datatype="int">unusedcode</th>
 							  <th datatype="int">codesize</th>
-							  <th datatype="int">braces</th>
+							  <th datatype="int">design</th>
 							  <th datatype="int">coupling</th>
 							</tr>
 						  </thead>
@@ -106,7 +106,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	 	var getBar=function(){
 	 		$.getJSON("<%=request.getContextPath()%>/api/pmd/getAve",function(data){
 	 			var code = data.code;
-	 			var labelArr=new Array("Basic","braces","Codesize","Coupling","Naming","Unusedcode");
+	 			var labelArr=new Array("Basic","design","Codesize","Coupling","Naming","Unusedcode");
 	 			var fillColorArr=new Array('rgba(220,220,220,0.5)','rgba(151,187,205,0.5)','rgba(147,112,219,0.5)');
  				if(code=="0"){
  				var dataArr=data.data;
@@ -143,7 +143,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
  						var naming=arr[index].naming;
  						var unusedcode=arr[index].unusedcode;
  						var codesize=arr[index].codesize;
- 						var braces=arr[index].braces;
+ 						var design=arr[index].design;
  						var coupling=arr[index].coupling;
  						html=html+'<tr>'+
 							  '<td>'+(index+1)+'</td>'+
@@ -152,7 +152,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 							  '<td>'+naming+'</td>'+
 							  '<td>'+unusedcode+'</td>'+
 							  '<td>'+codesize+'</td>'+
-							  '<td>'+braces+'</td>'+
+							  '<td>'+design+'</td>'+
 							  '<td>'+coupling+'</td>'+
 							  '</tr>';
  					 });

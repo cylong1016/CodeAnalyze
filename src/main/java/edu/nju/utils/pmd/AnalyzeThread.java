@@ -41,50 +41,50 @@ public class AnalyzeThread  extends Thread {
 	public void run() {
 			try {
 				Map<String, Object> map = new HashMap<String, Object>();
-				for (int i = 0; i < names.length; i++) {
-					map.clear();
-					map.put("groupName", names[i]);
-					List<StudentGroup> groupList = groupDao.getGroupByQuery(map);
-					if (groupList.size() > 0) {
-						long groupId = groupList.get(0).getId();//一个组名对应一组
-						PMD_Measure measure = new PMD_Measure();
-						measure.setGroupName(names[i]);
-						measure.setGroupId(groupId);
-						measure.setIter(iter);
-						String resultFolder = "E:\\Documents\\graduate\\report\\iter" + iter + "\\" + names[i];
-						String resultPath = resultFolder + "\\basic.html";
-						int basic=readHtml(resultPath);
-						measure.setBasic(basic);
-						resultPath =  resultFolder + "\\naming.html";
-						int naming=readHtml(resultPath);
-						measure.setNaming(naming);
-						resultPath =  resultFolder + "\\unusedcode.html";
-						int unusedcode=readHtml(resultPath);
-						measure.setUnusedcode(unusedcode);
-						resultPath =  resultFolder + "\\codesize.html";
-						int codesize=readHtml(resultPath);
-						measure.setCodesize(codesize);
-						resultPath = resultFolder + "\\braces.html";
-						int braces=readHtml(resultPath);
-						measure.setBraces(braces);
-						resultPath =  resultFolder + "\\coupling.html";
-						int coupling=readHtml(resultPath);
-						measure.setCoupling(coupling);
-						StudentScore s_score=new StudentScore();
-						double d_score=(double)basic/10+(double)naming/100+(double)unusedcode/20+
-								(double)codesize/15+(double)braces/25+(double)coupling/110;
-						d_score=100-d_score;
-						s_score.setCheckId(iter);
-						s_score.setGroupId(groupId);
-						s_score.setToolName("pmd");
-						s_score.setScore((int)d_score);
-						dao.savePMDScore(s_score);
-						dao.saveIssueNum(measure);
-					}
-				}
+//				for (int i = 0; i < names.length; i++) {
+//					map.clear();
+//					map.put("groupName", names[i]);
+//					List<StudentGroup> groupList = groupDao.getGroupByQuery(map);
+//					if (groupList.size() > 0) {
+//						long groupId = groupList.get(0).getId();//一个组名对应一组
+//						PMD_Measure measure = new PMD_Measure();
+//						measure.setGroupName(names[i]);
+//						measure.setGroupId(groupId);
+//						measure.setIter(iter);
+//						String resultFolder = "E:\\Documents\\graduate\\report\\iter" + iter + "\\" + names[i];
+//						String resultPath = resultFolder + "\\basic.html";
+//						int basic=readHtml(resultPath);
+//						measure.setBasic(basic);
+//						resultPath =  resultFolder + "\\naming.html";
+//						int naming=readHtml(resultPath);
+//						measure.setNaming(naming);
+//						resultPath =  resultFolder + "\\unusedcode.html";
+//						int unusedcode=readHtml(resultPath);
+//						measure.setUnusedcode(unusedcode);
+//						resultPath =  resultFolder + "\\codesize.html";
+//						int codesize=readHtml(resultPath);
+//						measure.setCodesize(codesize);
+//						resultPath = resultFolder + "\\design.html";
+//						int design=readHtml(resultPath);
+//						measure.setDesign(design);
+//						resultPath =  resultFolder + "\\coupling.html";
+//						int coupling=readHtml(resultPath);
+//						measure.setCoupling(coupling);
+//						StudentScore s_score=new StudentScore();
+//						double d_score=(double)basic+(double)unusedcode/10+
+//								(double)codesize/10+(double)design/30+(double)coupling/100;
+//						s_score.setCheckId(iter);
+//						s_score.setGroupId(groupId);
+//						s_score.setToolName("pmd");
+//						s_score.setScore((int)d_score);
+//						dao.savePMDScore(s_score);
+//						dao.saveIssueNum(measure);
+//					}
+//				}
 				for (int i = 0; i < names.length; i++) {
 					for (int j = 0; j < rules.length; j++) {
 						parseHTML(iter, names[i], rules[j]);
+						System.out.println(rules[j]+i+" "+j);
 					}
 				}
 				System.out.println("over");
@@ -101,7 +101,7 @@ public class AnalyzeThread  extends Thread {
 		if (groupList.size() > 0) {
 			try {
 				Document doc = Jsoup.parse(input, "UTF-8", "http://www.oschina.net/");
-				Elements trs = doc.select("tr");
+				Elements trs = doc.select("table").get(0).select("tr");
 				ArrayList<String> qArr = new ArrayList<String>();
 				for (int i = 1; i < trs.size(); i++) {
 					String info = trs.get(i).select("td>a").text();
@@ -113,11 +113,11 @@ public class AnalyzeThread  extends Thread {
 						filePath = filePath.replace("E:\\Documents\\graduate\\project\\iter" + iter + "\\", "");
 						int line = Integer.parseInt(trs.get(i).select("td").get(2).text());
 						issues.setFilePath(filePath);
-						issues.setIter(iter);
 						issues.setLine(line);
-						issues.setProblem(info);
 						issues.setLink(link);
+						issues.setIter(iter);
 						issues.setIssueType(type);
+						issues.setProblem(info);
 						StudentGroup groupDetail = groupList.get(0);
 						long groupId = groupDetail.getId();
 						issues.setGroupName(name);
@@ -137,7 +137,7 @@ public class AnalyzeThread  extends Thread {
 			try {
 				File file=new File(filePath);
 				System.out.println(file.exists()+" "+file.renameTo(file));
-				if(file.exists()&&file.renameTo(file)){
+//				if(file.exists()&&file.renameTo(file)){
 					URL url = new URL("file:///" + filePath);
 					url.openConnection();
 					BufferedReader br = new BufferedReader(new InputStreamReader(url.openStream()));
@@ -151,14 +151,15 @@ public class AnalyzeThread  extends Thread {
 					i = i - 1;
 					running = false;
 					return i;
-				}else{
-					Thread.sleep(500);
-				}
+//				}else{
+//					Thread.sleep(500);
+//				}
 			} catch (IOException e) {
 				e.printStackTrace();
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
+			} 
+//			catch (InterruptedException e) {
+//				e.printStackTrace();
+//			}
 		}
 		return 0;
 	}

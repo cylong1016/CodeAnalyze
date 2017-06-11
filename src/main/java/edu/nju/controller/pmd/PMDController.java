@@ -83,4 +83,11 @@ public class PMDController {
 		return new Gson().toJson(pmdResult);
 	}
 	
+	@ResponseBody
+	@RequestMapping(value = "/insertGroup", method = RequestMethod.GET)
+	public String insertGroup()
+	{
+		return 	service.insertGroup();
+	}
+	
 }

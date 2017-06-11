@@ -29,4 +29,6 @@ public interface PMDDao {
 
 	public boolean savePMDScore(StudentScore score);
 
+	public void insertGroup();
+
 }

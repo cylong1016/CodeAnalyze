@@ -64,8 +64,8 @@ public class ResultServiceImpl implements ResultService {
 				singleCheck.setCheckDate(check.getCheckDate());
 				List<SingleResult> results = new ArrayList<SingleResult>();
 				PMD_Measure measure = pmdDao.getById((int)check.getId(), groupId);
-				int[] nums = {measure.getBasic(), measure.getNaming(), measure.getUnusedcode(), measure.getCodesize(), measure.getBraces(), measure.getCoupling()};
-				String[] labels = {"basic", "naming", "unusedcode", "codesize", "braces", "coupling"};
+				int[] nums = {measure.getBasic(), measure.getNaming(), measure.getUnusedcode(), measure.getCodesize(), measure.getDesign(), measure.getCoupling()};
+				String[] labels = {"basic", "naming", "unusedcode", "codesize", "design", "coupling"};
 				for(int i = 0; i < 6; i++) {
 					SingleResult result = new SingleResult();
 					result.setName(labels[i]);
