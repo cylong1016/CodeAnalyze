@@ -48,6 +48,7 @@
 			<colgroup class="even" span="3"></colgroup>
 			<thead>
 				<tr>
+					<th rowspan="2"></th>
 					<th rowspan="2">组名</th>
 					<th colspan="3">迭代一</th>
 					<th colspan="3">迭代二</th>
@@ -67,6 +68,7 @@
 			</thead>
 			<tfoot>
 				<tr>
+					<th></th>
 					<th>Group</th>
 					<th>CheckStyle</th>
 					<th>PMD</th>
@@ -90,6 +92,7 @@
 	var basePath = '<%=request.getContextPath()%>';
 
 	var getAllGroupScore = function(dt) {
+
 		$.getJSON(basePath + "/api/score/api/allGroupScore", function(data) {
 			$.each(data, function(i, groupScore) {
 				var groupId = groupScore.groupId;
@@ -100,6 +103,7 @@
 				var teacherScore = groupScore.teacherScore;
 				
 				var row = [];
+				row.push()
 				row.push("<a href='<%=request.getContextPath()%>/api/group/" + groupId + "'>" + groupName + "</a>");
 
 				$.each(checkDate, function(j) {
@@ -146,7 +150,13 @@
 		
 		$("select").addClass("form-control");
 		$("input[type=search]").addClass("form-control");
+
 		getAllGroupScore(dt);
+        dt.on( 'order.dt search.dt', function () {
+            dt.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
+                cell.innerHTML = i+1;
+            } );
+        } ).draw();
 	});
 </script>
 
